@@ -68,10 +68,12 @@ int main(void) {
 	/* Main Loop */
 	int i = 0;
 	while (1) {
+		doPing()
 		
 		// Wait for the PRU interrupt
-		prussdrv_pru_wait_event (PRU_EVTOUT_0);
-		prussdrv_pru_clear_event(PRU_EVTOUT_0, PRU0_ARM_INTERRUPT);
+		// prussdrv_pru_wait_event (PRU_EVTOUT_0);
+		// prussdrv_pru_clear_event(PRU_EVTOUT_0, PRU0_ARM_INTERRUPT);
+
 		
 		// Print the distance received from the sonar
 		// At 20 degrees in dry air the speed of sound is 342.2 cm/sec
@@ -91,3 +93,12 @@ int main(void) {
 
 
 
+
+
+
+int doPing(void) {
+	prussdrv_pru_wait_event (PRU_EVTOUT_0);
+	prussdrv_pru_clear_event(PRU_EVTOUT_0, PRU0_ARM_INTERRUPT);
+
+
+}
