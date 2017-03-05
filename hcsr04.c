@@ -4,6 +4,13 @@
 #include <prussdrv.h>
 #include <pruss_intc_mapping.h>
 
+
+
+
+
+
+
+// main function 
 int main(void) {
 
 	/* Initialize the PRU */
@@ -30,9 +37,9 @@ int main(void) {
 	printf(">> Executing HCSR-04 code\n");
 	prussdrv_exec_program(0, "hcsr04.bin");
 
-	/* Get measurements */
+	/* Main Loop */
 	int i = 0;
-	while (i++ < 20) {
+	while (1) {
 		
 		// Wait for the PRU interrupt
 		prussdrv_pru_wait_event (PRU_EVTOUT_0);
@@ -42,7 +49,7 @@ int main(void) {
 		// At 20 degrees in dry air the speed of sound is 342.2 cm/sec
 		// so it takes 29.12 us to make 1 cm, i.e. 58.44 us for a roundtrip of 1 cm
 		printf("%3d: Distance = %.2f cm\n", i, (float) pruData[0] / 58.44);
-		sleep(0.01);
+		// sleep(0.01);
 	}
 
 	/* Disable PRU and close memory mapping*/
@@ -53,3 +60,6 @@ int main(void) {
 	return (0);
 
 }
+
+
+
