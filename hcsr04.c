@@ -41,6 +41,14 @@ const int connections[nch][maxCon] = {  // row i indicates (densly) the connecti
 // main function 
 int main(void) {
 
+	// initialize variables
+	float target_distance = 0;
+
+
+
+
+
+
 	/* Initialize the PRU */
 	printf(">> Initializing PRU\n");
 	tpruss_intc_initdata pruss_intc_initdata = PRUSS_INTC_INITDATA;
@@ -65,11 +73,14 @@ int main(void) {
 	printf(">> Executing HCSR-04 code\n");
 	prussdrv_exec_program(0, "hcsr04.bin");
 
+
+
 	/* Main Loop */
 	int i = 0;
 	while (1) {
 		doPing()
-		
+		target_distance = (float) pruData[0] / 58.44;
+
 		// Wait for the PRU interrupt
 		// prussdrv_pru_wait_event (PRU_EVTOUT_0);
 		// prussdrv_pru_clear_event(PRU_EVTOUT_0, PRU0_ARM_INTERRUPT);
@@ -78,7 +89,7 @@ int main(void) {
 		// Print the distance received from the sonar
 		// At 20 degrees in dry air the speed of sound is 342.2 cm/sec
 		// so it takes 29.12 us to make 1 cm, i.e. 58.44 us for a roundtrip of 1 cm
-		printf("%3d: Distance = %.2f cm\n", i, (float) pruData[0] / 58.44);
+		printf("%3d: Distance = %.2f cm\n", i, target_distance);
 		// sleep(0.01);
 	}
 
@@ -97,6 +108,7 @@ int main(void) {
 
 
 int doPing(void) {
+	// Wait for the PRU interrupt
 	prussdrv_pru_wait_event (PRU_EVTOUT_0);
 	prussdrv_pru_clear_event(PRU_EVTOUT_0, PRU0_ARM_INTERRUPT);
 
