@@ -7,6 +7,34 @@
 
 
 
+const int minIPI = 100; // minimum interping interval in miliseconds
+const float sense_thresh_i = 500; // threshold where responses turn on
+
+//
+float sense_thresh = sense_thresh_i;
+boolean button_pressed = false;
+int mode = 0;
+float target_distance = sense_thresh;
+long last_ping = 0;
+long currentIPI = minIPI;
+
+// connection settings - declare connections between neurons
+const int maxCon = 5;
+const int connections[nch][maxCon] = {  // row i indicates (densly) the connections emmenating from the ith element
+  // -1 is a placeholder for no connection.  each row needs macCon entries
+  {1, 2, 3, -1, -1  }, // 0's outputs
+  {2, 3, -1, -1, -1  }, // 1's outputs
+  {3, 4, 5, -1, -1  }, // 2's outputs
+  {4, 5, 9, -1, -1  }, // 3's outputs
+  {4, 5, 6, 8,  -1  }, // 4's outputs
+  {3, 4, 6, 7, 8    }, // 5's outputs
+  {3, 5, 7, 8, 9    }, // 6's outputs
+  {8, 9, 4, -1, -1  }, // 7's outputs
+  {9, 6, 5, -1, -1  }, // 8's outputs
+  {6, 7, 8, -1, -1  }
+}; // 9's outputs
+
+
 
 
 
