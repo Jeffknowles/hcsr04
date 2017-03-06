@@ -5,6 +5,7 @@
 #include <pruss_intc_mapping.h>
 
 
+#include <stdbool.h>
 
 
 
