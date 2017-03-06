@@ -7,16 +7,25 @@
 
 
 
+
+const int pingLen = 20.; // ping length in microseconds
 const int minIPI = 100; // minimum interping interval in miliseconds
 const float sense_thresh_i = 500; // threshold where responses turn on
+const int pingPin = 11; // trigger for sonar pulses
+const int echoPin = 12; // return for sonar pulses
+const int phonePin1 = 9; //
+const int phonePin2 = 10;
+const int dialPin = 5;  // analog pin for the dial
+//const int modePins[2] = {3, 4}; // pins for the 3way mode switch
+//const int buttonPin = 2;  // pin for the tigger button
+const int nch = 10; // number of neurons
+const int ledPins[nch] = {5, 6, 7, 8, 13, 3, 2, 4}; // indicates the arduino pin for each light
+const int sensory_factor = 10;
+const boolean printout = false;
+const boolean pong_only_in_range = true;
 
-//
-float sense_thresh = sense_thresh_i;
-boolean button_pressed = false;
-int mode = 0;
-float target_distance = sense_thresh;
-long last_ping = 0;
-long currentIPI = minIPI;
+
+
 
 // connection settings - declare connections between neurons
 const int maxCon = 5;
@@ -43,7 +52,18 @@ int main(void) {
 
 	// initialize variables
 	float target_distance = 0;
+	float sense_thresh = sense_thresh_i;
+	bool button_pressed = false;
+	int mode = 0;
+	float target_distance = sense_thresh;
+	long last_ping = 0;
+	long currentIPI = minIPI;
+		//// pin settings
 
+
+
+	const int minIPI = 100; // minimum interping interval in miliseconds
+	const float sense_thresh_i = 500; // threshold where responses turn on
 
 
 
@@ -78,19 +98,14 @@ int main(void) {
 	/* Main Loop */
 	int i = 0;
 	while (1) {
+
+		// measure distance
 		doPing()
 		target_distance = (float) pruData[0] / 58.44;
-
-		// Wait for the PRU interrupt
-		// prussdrv_pru_wait_event (PRU_EVTOUT_0);
-		// prussdrv_pru_clear_event(PRU_EVTOUT_0, PRU0_ARM_INTERRUPT);
-
-		
-		// Print the distance received from the sonar
-		// At 20 degrees in dry air the speed of sound is 342.2 cm/sec
-		// so it takes 29.12 us to make 1 cm, i.e. 58.44 us for a roundtrip of 1 cm
 		printf("%3d: Distance = %.2f cm\n", i, target_distance);
 		// sleep(0.01);
+
+
 	}
 
 	/* Disable PRU and close memory mapping*/
