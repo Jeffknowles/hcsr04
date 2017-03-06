@@ -56,7 +56,6 @@ int main(void) {
 	float sense_thresh = sense_thresh_i;
 	bool button_pressed = false;
 	int mode = 0;
-	float target_distance = sense_thresh;
 	long last_ping = 0;
 	long currentIPI = minIPI;
 		//// pin settings
