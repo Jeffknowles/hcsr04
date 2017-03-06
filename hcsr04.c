@@ -98,6 +98,7 @@ int main(void) {
 	/* Main Loop */
 	int i = 0;
 	while (1) {
+		i = i + 1;
 
 		// measure distance
 		doPing()
