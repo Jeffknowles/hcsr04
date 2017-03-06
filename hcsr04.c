@@ -101,7 +101,7 @@ int main(void) {
 		i = i + 1;
 
 		// measure distance
-		doPing()
+		doPing();
 		target_distance = (float) pruData[0] / 58.44;
 		printf("%d: Distance = %.2f cm\n", i, target_distance);
 		// sleep(0.01);
