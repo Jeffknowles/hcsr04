@@ -123,10 +123,11 @@ int main(void) {
 
 
 
-int doPing(void) {
+float doPing(void) {
 	// Wait for the PRU interrupt
 	prussdrv_pru_wait_event (PRU_EVTOUT_0);
 	prussdrv_pru_clear_event(PRU_EVTOUT_0, PRU0_ARM_INTERRUPT);
 
+	return (float) pruData[0]
 
 }
