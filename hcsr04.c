@@ -21,8 +21,8 @@ const int dialPin = 5;  // analog pin for the dial
 const int nch = 10; // number of neurons
 const int ledPins[nch] = {5, 6, 7, 8, 13, 3, 2, 4}; // indicates the arduino pin for each light
 const int sensory_factor = 10;
-const boolean printout = false;
-const boolean pong_only_in_range = true;
+const bool printout = false;
+const bool pong_only_in_range = true;
 
 
 
@@ -96,7 +96,7 @@ int main(void) {
 
 
 	/* Main Loop */
-	int i = 1;
+	int i = 0;
 	while (1) {
 		i = i + 1;
 
