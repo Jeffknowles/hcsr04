@@ -52,6 +52,7 @@ const int connections[nch][maxCon] = {  // row i indicates (densly) the connecti
 int main(void) {
 
 	// initialize variables
+	float duration = 0; 
 	float target_distance = 0;
 	float sense_thresh = sense_thresh_i;
 	bool button_pressed = false;
@@ -101,8 +102,8 @@ int main(void) {
 		i = i + 1;
 
 		// measure distance
-		doPing();
-		target_distance = (float) pruData[0] / 58.44;
+		duration = doPing();
+		target_distance = (float) duration / 58.44;
 		printf("%d: Distance = %.2f cm\n", i, target_distance);
 		// sleep(0.01);
 
