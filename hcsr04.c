@@ -72,7 +72,7 @@ int main(void) {
 	struct timeval new_time, last_time;
     double dt;
     gettimeofday(&last_time, NULL);
-    gettimeofdat(&new_time, NULL);
+    gettimeofday(&new_time, NULL);
 
 	// uint64_t last_time = GetTimeStamp(NULL);
 	float duration = 0; 
