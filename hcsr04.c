@@ -7,6 +7,7 @@
 #include <math.h>
 #include <stdlib.h> 
 #include <tgmath.h> 
+
 const int pingLen = 20.; // ping length in microseconds
 const int minIPI = 100; // minimum interping interval in miliseconds
 const float sense_thresh_i = 500; // threshold where responses turn on
@@ -56,7 +57,9 @@ float dur2cm(float dur) {
 int main(void) {
 
 	// initialize variables
-
+	int ch 
+	int i
+	int syn
 
 	time_t last_time = time(NULL);
 	float duration = 0; 
@@ -68,7 +71,6 @@ int main(void) {
 	long currentIPI = minIPI;
 	float v[nch] =  {0,   0,   0,   0,   0,  0,   0,   0,   0,   0};
 	long spike_len[nch] =     {1,  20,  35,  20,  10, 27,  31,  50,  70, 300};
-
 
 	int connections[nch][maxCon] = {  // row i indicates (densly) the connections emmenating from the ith element
 	  // -1 is a placeholder for no connection.  each row needs macCon entries
@@ -115,7 +117,7 @@ int main(void) {
 
 
 	/* Main Loop */
-	int i = 0;
+	i = 0;
 	while (1) {
 		i = i + 1;
 
@@ -133,7 +135,7 @@ int main(void) {
 		 }
 
 		// loop thru neurons
-		for (int ch = 0; ch < nch; ch++) {
+		for (ch = 0; ch < nch; ch++) {
 		if (v[ch] >= 0) { // if neuron is in integrate mode
 		    v[ch] = v[ch]  - k * v[ch] * (float) dt; // decay v to 0
 		    v[ch] = fmax(v[ch], 0);
@@ -144,7 +146,7 @@ int main(void) {
 		        // }
 		        sprintf("%d spike", ch);
 		        v[ch] = -1; // v<0 stores that the neuron is in firing state
-		        for (int syn = 0; syn < maxCon; syn++) { // loop thru synaptic outputs
+		        for (syn = 0; syn < maxCon; syn++) { // loop thru synaptic outputs
 		          	// if connection is real and postsyn element is not in firing, incriment its v
 		          	if (connections[ch][syn] >= 0 & v[connections[ch][syn]] >= 0) {
 		            	v[connections[ch][syn]] ++;
