@@ -133,7 +133,7 @@ int main(void) {
         printf("\n");
 		
 
-		float dt = (float) time(NULL) - last_time;
+		float dt = (float) time(NULL) - (float) last_time;
 		last_time = time(NULL);
 		  // set v[0] based on sonar
 		 if (target_distance < sense_thresh & v[0] >= 0) {
