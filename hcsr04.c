@@ -86,7 +86,7 @@ int main(void) {
 	/* Get pointers to PRU local memory */
 	void *pruDataMem;
 	prussdrv_map_prumem(PRUSS0_PRU0_DATARAM, &pruDataMem);
-	*pruData = (unsigned int *) pruDataMem;
+    unsigned in pruuData = (unsigned int *) pruDataMem;
 
 	printf("%d",sizeof(pruData));
 	/* Execute code on PRU */
