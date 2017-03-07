@@ -79,8 +79,8 @@ int main(void) {
 	double target_distance = 0;
 	double sense_thresh = sense_thresh_i;
 	double currentIPI = minIPI;
-	double v[nch] =  {0,   0,   0,   0,   0,  0,   0,   0,   0,   0};
-	double spike_len[nch] =    {10}
+	double v[nch] =  {0};
+	double spike_len[nch] =   {10};
 
 	int connections[nch][maxCon];
 	// = {  // row i indicates (densly) the connections emmenating from the ith element
