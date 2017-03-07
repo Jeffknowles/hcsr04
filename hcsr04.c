@@ -144,7 +144,7 @@ int main(void) {
 		        // if (ledPins[ch] > 0) {
 		        //   digitalWrite(ledPins[ch], HIGH);
 		        // }
-		        sprintf("%d spike", ch);
+		        printf("%d spike", ch);
 		        v[ch] = -1; // v<0 stores that the neuron is in firing state
 		        for (syn = 0; syn < maxCon; syn++) { // loop thru synaptic outputs
 		          	// if connection is real and postsyn element is not in firing, incriment its v
