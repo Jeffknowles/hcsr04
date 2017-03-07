@@ -44,23 +44,36 @@ const bool pong_only_in_range = true;
 
 
 /* Get pointers to PRU local memory */
-void *pruDataMem;
 unsigned int *pruData; //= (unsigned int *) pruDataMem;
 
 
 
 
 
+/* Initialize the PRU */
+	printf(">> Initializing PRU\n");
+	tpruss_intc_initdata pruss_intc_initdata = PRUSS_INTC_INITDATA;
+	prussdrv_init();
 
+	/* Open PRU Interrupt */
+	if (prussdrv_open (PRU_EVTOUT_0)) {
+		// Handle failure
+		fprintf(stderr, ">> PRU open failed\n");
+		return 1;
+	}
 
+	/* Get the interrupt initialized */
+	prussdrv_pruintc_init(&pruss_intc_initdata);
 
-float doPing(void) {
-	// Wait for the PRU interrupt
-	prussdrv_pru_wait_event (PRU_EVTOUT_0);
-	prussdrv_pru_clear_event(PRU_EVTOUT_0, PRU0_ARM_INTERRUPT);
+	/* Get pointers to PRU local memory */
+	void *pruDataMem;
+	prussdrv_map_prumem(PRUSS0_PRU0_DATARAM, &pruDataMem);
+	pruData = (unsigned int *) pruDataMem;
 
-	return (float) pruData[0];
-}
+	/* Execute code on PRU */
+	printf(">> Executing HCSR-04 code\n");
+	prussdrv_exec_program(0, "hcsr04.bin");
+
 
 
 // main function 
@@ -84,12 +97,12 @@ int main(void) {
 	tpruss_intc_initdata pruss_intc_initdata = PRUSS_INTC_INITDATA;
 	prussdrv_init();
 
-/* Open PRU Interrupt */
-if (prussdrv_open (PRU_EVTOUT_0)) {
+	/* Open PRU Interrupt */
+	if (prussdrv_open (PRU_EVTOUT_0)) {
 	// Handle failure
 	fprintf(stderr, ">> PRU open failed\n");
 	return 1;
-}
+	}
 
 	/* Get the interrupt initialized */
 	prussdrv_pruintc_init(&pruss_intc_initdata);
@@ -120,6 +133,17 @@ if (prussdrv_open (PRU_EVTOUT_0)) {
 	
 	return (0);
 
+}
+
+
+
+
+float doPing(void) {
+	// Wait for the PRU interrupt
+	prussdrv_pru_wait_event (PRU_EVTOUT_0);
+	prussdrv_pru_clear_event(PRU_EVTOUT_0, PRU0_ARM_INTERRUPT);
+
+	return (float) pruData[0];
 }
 
 
