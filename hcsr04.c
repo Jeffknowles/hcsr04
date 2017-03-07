@@ -159,7 +159,7 @@ int main(void) {
 		}
 
 		printf("%05.5f  %05.5f  ", dt, time_since_last_ping);
-		printf("%d: Distance = %.2f cm   ", i, target_distance);
+		printf("%d: Distance = %02.2f cm   ", i, target_distance);
 		for (ii=0;ii<20;++ii) {
  			 printf("% 04.1f ", v[ii]);
 		 }
