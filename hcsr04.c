@@ -140,9 +140,14 @@ int main(void) {
 
 
 		// measure distance
-		if last_ping = 0;
-		duration = doPing(pruData);
-		target_distance = dur2cm(duration);
+		if (time_since_last_ping > currentIPI) {
+				duration = doPing(pruData);
+				target_distance = dur2cm(duration);
+				time_since_last_ping = 0; 
+		}
+		else {
+			time_since_last_ping = time_since_last_ping + dt; 
+		}
 
 		printf("%.10f  ", dt);
 		printf("%d: Distance = %.2f cm   ", i, target_distance);
