@@ -4,6 +4,7 @@
 #include <prussdrv.h> 
 #include <pruss_intc_mapping.h>
 #include <time.h>
+#include <math.h>
 
 const int pingLen = 20.; // ping length in microseconds
 const int minIPI = 100; // minimum interping interval in miliseconds
