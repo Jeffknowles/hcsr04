@@ -38,11 +38,11 @@ const double k = 1; // magnitude of the leak
 
 
 
-uint64_t GetTimeStamp() {
-    struct timeval tv;
-    gettimeofday(&tv,NULL);
-    return tv.tv_sec*(uint64_t)1000000+tv.tv_usec;
-}
+// uint64_t GetTimeStamp() {
+//     struct timeval tv;
+//     gettimeofday(&tv,NULL);
+//     return tv.tv_sec*(uint64_t)1000000+tv.tv_usec;
+// }
 
 
 double doPing(unsigned int *pruData) {
