@@ -53,7 +53,7 @@ const bool pong_only_in_range = true;
 
 
 
-unsigned int *pruData;
+// unsigned int *pruData;
 
 // main function 
 int main(void) {
@@ -88,7 +88,7 @@ int main(void) {
 	prussdrv_map_prumem(PRUSS0_PRU0_DATARAM, &pruDataMem);
 	*pruData = (unsigned int *) pruDataMem;
 
-
+	printf("%d",sizeof(pruData));
 	/* Execute code on PRU */
 	printf(">> Executing HCSR-04 code\n");
 	prussdrv_exec_program(0, "hcsr04.bin");
