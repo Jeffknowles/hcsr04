@@ -153,7 +153,7 @@ int main(void) {
         dt += (new_time.tv_usec - last_time.tv_usec)/1000000;   // us to ms
 		last_time = new_time;
 
-		printf("%10f  ", dt);
+		printf("%.10f  ", dt);
 		
 		  // set v[0] based on sonar
 		 if (target_distance < sense_thresh & v[0] >= 0) {
