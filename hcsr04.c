@@ -69,7 +69,7 @@ int main(void) {
 	int syn;
 
 
-	struct timeval new_time, last_time;
+	struct timeval new_time, last_time, last_ping;
     double dt;
     gettimeofday(&last_time, NULL);
     gettimeofday(&new_time, NULL);
@@ -80,7 +80,6 @@ int main(void) {
 	float sense_thresh = sense_thresh_i;
 	bool button_pressed = false;
 	int mode = 0;
-	long last_ping = 0;
 	long currentIPI = minIPI;
 	float v[nch] =  {0,   0,   0,   0,   0,  0,   0,   0,   0,   0};
 	long spike_len[nch] =     {1,  20,  35,  20,  10, 27,  31,  50,  70, 300};
@@ -135,6 +134,7 @@ int main(void) {
 		i = i + 1;
 
 		// measure distance
+
 		duration = doPing(pruData);
 		target_distance = dur2cm(duration);
 
