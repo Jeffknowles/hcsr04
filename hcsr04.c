@@ -7,6 +7,7 @@
 #include <math.h>
 #include <stdlib.h> 
 #include <tgmath.h> 
+#include <inttypes.h>
 
 const int pingLen = 20.; // ping length in microseconds
 const int minIPI = 100; // minimum interping interval in miliseconds
@@ -139,7 +140,7 @@ int main(void) {
 
 		float dt = (float)  GetTimeStamp(NULL) - last_time;
 		last_time = GetTimeStamp(NULL);
-		printf("%f", dt);
+		printf("%f  ", dt);
 		  // set v[0] based on sonar
 		 if (target_distance < sense_thresh & v[0] >= 0) {
 		    v[0] = v[0] + (float) 1 * sense_thresh / target_distance;
