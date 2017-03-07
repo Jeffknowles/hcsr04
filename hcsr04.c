@@ -10,14 +10,13 @@
 #include <inttypes.h>
 #include <sys/time.h>  
 
-const int pingLen = 20.; // ping length in microseconds
 const double minIPI = 0.1; // minimum interping interval in miliseconds
 const float sense_thresh_i = 300; // threshold where responses turn on
-const int pingPin = 11; // trigger for sonar pulses
-const int echoPin = 12; // return for sonar pulses
-const int phonePin1 = 9; //
-const int phonePin2 = 10;
-const int dialPin = 5;  // analog pin for the dial
+// const int pingPin = 11; // trigger for sonar pulses
+// const int echoPin = 12; // return for sonar pulses
+// const int phonePin1 = 9; //
+// const int phonePin2 = 10;
+// const int dialPin = 5;  // analog pin for the dial
 //const int modePins[2] = {3, 4}; // pins for the 3way mode switch
 //const int buttonPin = 2;  // pin for the tigger button
 
