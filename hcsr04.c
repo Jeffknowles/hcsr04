@@ -70,7 +70,7 @@ int main(void) {
 
 
 	struct timeval new_time, last_time;
-    double elapsedTime;
+    double dt;
 
 
 	uint64_t last_time = GetTimeStamp(NULL);
