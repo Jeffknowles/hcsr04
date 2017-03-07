@@ -65,6 +65,7 @@ int main(void) {
 	int ch;
 	int i;
 	int ii;
+	int iii;
 	int syn;
 
 
@@ -104,6 +105,9 @@ int main(void) {
 		connections[ii][2] = ii + 3;
 		connections[ii][3] = ii + 4;
 		connections[ii][4] = ii + 5;
+		for (iii=5; iii<maxCon, iii++){
+			connections[ii][iii]=rand(nch);
+		}
 	}
 
 
