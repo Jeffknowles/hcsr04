@@ -19,8 +19,6 @@ const double sense_thresh_i = 100; // threshold where responses turn on
 // const int dialPin = 5;  // analog pin for the dial
 //const int modePins[2] = {3, 4}; // pins for the 3way mode switch
 //const int buttonPin = 2;  // pin for the tigger button
-
-// int ledPins[nch] = {5, 6, 7, 8, 13, 3, 2, 4,-1,-1}; // indicates the arduino pin for each light
 const int sensory_factor = 10;
 const bool printout = false;
 const bool pong_only_in_range = true;
@@ -33,16 +31,8 @@ const double k = 1; // magnitude of the leak
 // connection settings - declare connections between neurons
 #define maxCon 40
 #define nch 1000 // number of neurons
-// const int maxCon = 5;
 
 
-
-
-// uint64_t GetTimeStamp() {
-//     struct timeval tv;
-//     gettimeofday(&tv,NULL);
-//     return tv.tv_sec*(uint64_t)1000000+tv.tv_usec;
-// }
 
 
 double doPing(unsigned int *pruData) {
@@ -68,37 +58,25 @@ int main(void) {
 	int iii;
 	int syn;
 
-
+	// setup timers
 	struct timeval new_time, last_time;
     double dt;
     double time_since_last_ping = 0;
     gettimeofday(&last_time, NULL);
     gettimeofday(&new_time, NULL);
-    // gettimeofdat($last_ping, NULL);
-	// uint64_t last_time = GetTimeStamp(NULL);
+
+    // initialize sonar parameters
 	double duration = 0; 
 	double target_distance = 0;
 	double sense_thresh = sense_thresh_i;
 	double currentIPI = minIPI;
+
+	// initialize neurons 
 	double v[nch] =  {0};
 	double spike_len[nch] =   {10};
-
 	int connections[nch][maxCon];
-	// = {  // row i indicates (densly) the connections emmenating from the ith element
-	//   // -1 is a placeholder for no connection.  each row needs macCon entries
-	//   {1, 2, 3, -1, -1  },  // 0's outputs
-	//   {2, 3, -1, -1, -1 }, // 1's outputs
-	//   {3, 4, 5, -1, -1  }, // 2's outputs
-	//   {4, 5, 9, -1, -1  }, // 3's outputs
-	//   {4, 5, 6, 8,  -1  }, // 4's outputs
-	//   {3, 4, 6, 7, 8    }, // 5's outputs
-	//   {3, 5, 7, 8, 9    }, // 6's outputs
-	//   {8, 9, 4, -1, -1  }, // 7's outputs
-	//   {9, 6, 5, -1, -1  }, // 8's outputs
-	//   {6, 7, 8, -1, -1  }  // 9's outputs
-	// }; 
 
-
+	// generate connections among neurons
 	for ( ii=0; ii<(nch-10); ii++){
 		connections[ii][0] = ii + 1; 
 		for (iii=1; iii<maxCon; iii++){
@@ -108,32 +86,26 @@ int main(void) {
 
 
 
-
-
 	/* Initialize the PRU */
 	printf(">> Initializing PRU\n");
 	tpruss_intc_initdata pruss_intc_initdata = PRUSS_INTC_INITDATA;
 	prussdrv_init();
-
 	/* Open PRU Interrupt */
 	if (prussdrv_open (PRU_EVTOUT_0)) {
 		// Handle failure
 		fprintf(stderr, ">> PRU open failed\n");
 		return 1;
 	}
-
 	/* Get the interrupt initialized */
 	prussdrv_pruintc_init(&pruss_intc_initdata);
-
 	/* Get pointers to PRU local memory */
 	void *pruDataMem;
 	prussdrv_map_prumem(PRUSS0_PRU0_DATARAM, &pruDataMem);
     unsigned int pruData = (unsigned int *) pruDataMem;
-
-	// printf("%d",sizeof(pruData));
 	/* Execute code on PRU */
 	printf(">> Executing HCSR-04 code\n");
 	prussdrv_exec_program(0, "hcsr04.bin");
+
 
 
 	/* Main Loop */
@@ -164,11 +136,6 @@ int main(void) {
  	// 		 printf("% 04.1f ", v[ii]);
 		//  }
   //       printf("\n");
-		
-
-       
- 
-		
 		
 		  // set v[0] based on sonar
 		 if (target_distance < sense_thresh & v[0] >= 0) {
