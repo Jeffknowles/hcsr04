@@ -190,7 +190,7 @@ int main(void) {
 		        for (syn = 0; syn < maxCon; syn++) { // loop thru synaptic outputs
 		          	// if connection is real and postsyn element is not in firing, incriment its v
 		          	if (connections[ch][syn] >= 0 & v[connections[ch][syn]] >= 0) {
-		            	v[connections[ch][syn]] += 2;
+		            	v[connections[ch][syn]] += 5;
 		            }
 		        }
 		      }
