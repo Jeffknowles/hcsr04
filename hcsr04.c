@@ -73,7 +73,7 @@ int main(void) {
     double dt;
 
 
-	uint64_t last_time = GetTimeStamp(NULL);
+	// uint64_t last_time = GetTimeStamp(NULL);
 	float duration = 0; 
 	float target_distance = 0;
 	float sense_thresh = sense_thresh_i;
