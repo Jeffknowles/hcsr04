@@ -63,7 +63,7 @@ float doPing(unsigned int *pruData) {
 
 
 float dur2cm(float dur) {
-	return (float) duration / 58.44;
+	return (float) dur / 58.44;
 }
 
 // main function 
