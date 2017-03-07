@@ -8,6 +8,7 @@
 #include <stdlib.h> 
 #include <tgmath.h> 
 #include <inttypes.h>
+#include <sys/time.h>  
 
 const int pingLen = 20.; // ping length in microseconds
 const int minIPI = 100; // minimum interping interval in miliseconds
