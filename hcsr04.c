@@ -65,8 +65,6 @@ int main(void) {
 	int mode = 0;
 	long last_ping = 0;
 	long currentIPI = minIPI;
-		//// pin settings
-
 
 
 	/* Initialize the PRU */
