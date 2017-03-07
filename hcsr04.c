@@ -97,7 +97,9 @@ int main(void) {
 	}; 
 
 
-	for 
+	for (ii=0; ii<nch-10; ii++){
+		connections[nch][1]
+	}
 
 
 
