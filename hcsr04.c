@@ -71,7 +71,7 @@ int main(void) {
 
 	struct timeval new_time, last_time;
     double dt;
-    gettimeofday(&t1, NULL);
+    gettimeofday(&last_time, NULL);
 
 	// uint64_t last_time = GetTimeStamp(NULL);
 	float duration = 0; 
@@ -146,7 +146,7 @@ int main(void) {
 
        
         gettimeofday(&new_time, NULL);
-        
+
 		dt = (float) GetTimeStamp(NULL) - last_time;
 		last_time = GetTimeStamp(NULL);
 		printf("%f  ", dt);
