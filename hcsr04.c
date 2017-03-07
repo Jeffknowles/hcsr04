@@ -101,8 +101,7 @@ int main(void) {
 
 	for ( ii=0; ii<(nch-10); ii++){
 		connections[ii][0] = ii + 1; 
-		connections[ii][1] = ii + 2;
-		for (iii=2; iii<maxCon; iii++){
+		for (iii=1; iii<maxCon; iii++){
 			connections[ii][iii]=rand() % nch;
 		}
 	}
