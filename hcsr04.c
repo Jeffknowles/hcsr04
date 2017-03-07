@@ -98,7 +98,7 @@ int main(void) {
 	// }; 
 
 
-	for (ii=0; ii<nch-10; ii++){
+	for (ii=0; ii<nch-10; ii++;){
 		connections[ii][0] = ii + 1; 
 		connections[ii][1] = ii + 2;
 		connections[ii][2] = ii + 3;
