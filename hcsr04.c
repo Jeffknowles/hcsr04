@@ -37,7 +37,11 @@ const float k = 1; // magnitude of the leak
 
 
 
-
+uint64_t GetTimeStamp() {
+    struct timeval tv;
+    gettimeofday(&tv,NULL);
+    return tv.tv_sec*(uint64_t)1000000+tv.tv_usec;
+}
 
 
 float doPing(unsigned int *pruData) {
@@ -62,7 +66,7 @@ int main(void) {
 	int ii;
 	int syn;
 
-	time_t last_time = time(NULL);
+	uint64_t last_time = GetTimeStamp(NULL);
 	float duration = 0; 
 	float target_distance = 0;
 	float sense_thresh = sense_thresh_i;
@@ -133,8 +137,9 @@ int main(void) {
         printf("\n");
 		
 
-		float dt = (float) time(NULL) - (float) last_time;
-		last_time = time(NULL);
+		float dt = (float)  GetTimeStamp(NULL) - last_time;
+		last_time = GetTimeStamp(NULL);
+		printf("%f", dt);
 		  // set v[0] based on sonar
 		 if (target_distance < sense_thresh & v[0] >= 0) {
 		    v[0] = v[0] + (float) 1 * sense_thresh / target_distance;
@@ -168,7 +173,6 @@ int main(void) {
 		        // }
 		      }
 		      else {
-		      	printf("%f", dt);
 		        v[ch] = v[ch] - (float) dt * 1000; // otherwise decrment v by dt to record time
 		      }
 		    }
