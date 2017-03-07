@@ -106,7 +106,7 @@ int main(void) {
 		connections[ii][3] = ii + 4;
 		connections[ii][4] = ii + 5;
 		for (iii=5; iii<maxCon; iii++){
-			connections[ii][iii]=rand() % 20;
+			connections[ii][iii]=rand() % nch;
 		}
 	}
 
