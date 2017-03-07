@@ -16,7 +16,7 @@ hcsr04.bin: hcsr04.p
 hcsr04: hcsr04.c
 	@echo "\n>> Compiling HC-SR04 example"
 	$(CC) $(CFLAGS) -c -o hcsr04.o hcsr04.c -lm
-	$(CC) -lpthread -lprussdrv -o hcsr04 hcsr04.o
+	$(CC) -lpthread -lprussdrv -o hcsr04 hcsr04.o -lm
 
 # hcsr04dev: hcsr04.c
 # 	@echo "\n>> Compiling HC-SR04 example dev"
