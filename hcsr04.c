@@ -161,7 +161,7 @@ int main(void) {
 		printf("%.5f  %0.5f  ", dt, time_since_last_ping);
 		printf("%d: Distance = %.2f cm   ", i, target_distance);
 		for (ii=0;ii<20;++ii) {
- 			 printf("%02.0f ", v[ii]);
+ 			 printf("%02.1f ", v[ii]);
 		 }
         printf("\n");
 		
