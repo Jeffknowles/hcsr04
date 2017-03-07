@@ -81,7 +81,7 @@ int main(void) {
 	float sense_thresh = sense_thresh_i;
 	bool button_pressed = false;
 	int mode = 0;
-	long currentIPI = minIPI;
+	double currentIPI = minIPI;
 	float v[nch] =  {0,   0,   0,   0,   0,  0,   0,   0,   0,   0};
 	long spike_len[nch] =     {1,  20,  35,  20,  10, 27,  31,  50,  70, 300};
 
