@@ -1,5 +1,5 @@
 CC = gcc 
-CFLAGS = -w -std=c99
+CFLAGS = -w 
 PRU_ASM = pasm
 DTC = dtc
 
