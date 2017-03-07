@@ -134,7 +134,6 @@ int main(void) {
 		i = i + 1;
 
 		// measure distance
-
 		duration = doPing(pruData);
 		target_distance = dur2cm(duration);
 
