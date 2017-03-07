@@ -85,7 +85,7 @@ int main(void) {
 	/* Get pointers to PRU local memory */
 	void *pruDataMem;
 	prussdrv_map_prumem(PRUSS0_PRU0_DATARAM, &pruDataMem);
-	pruData = (unsigned int *) pruDataMem;
+	unsigned int *pruData = (unsigned int *) pruDataMem;
 
 	/* Execute code on PRU */
 	printf(">> Executing HCSR-04 code\n");
@@ -98,7 +98,7 @@ int main(void) {
 		i = i + 1;
 
 		// measure distance
-		duration = doPing();
+		// duration = doPing();
 		target_distance = (float) duration / 58.44;
 		printf("%d: Distance = %.2f cm\n", i, target_distance);
 		// sleep(0.01);
@@ -118,13 +118,13 @@ int main(void) {
 
 
 
-float doPing(void) {
-	// Wait for the PRU interrupt
-	prussdrv_pru_wait_event (PRU_EVTOUT_0);
-	prussdrv_pru_clear_event(PRU_EVTOUT_0, PRU0_ARM_INTERRUPT);
+// float doPing(void) {
+// 	// Wait for the PRU interrupt
+// 	prussdrv_pru_wait_event (PRU_EVTOUT_0);
+// 	prussdrv_pru_clear_event(PRU_EVTOUT_0, PRU0_ARM_INTERRUPT);
 
-	return (float) pruData[0];
-}
+// 	return (float) pruData[0];
+// }
 
 
 
