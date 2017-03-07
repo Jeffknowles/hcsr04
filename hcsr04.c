@@ -130,7 +130,7 @@ int main(void) {
 
 	/* Main Loop */
 	i = 0;
-	while (1) {
+	while (i<100) {
 		i = i + 1;
 
 		gettimeofday(&new_time, NULL);
