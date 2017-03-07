@@ -128,7 +128,7 @@ int main(void) {
 
 	/* Main Loop */
 	i = 0;
-	while (i<1000) {
+	while (i<10000) {
 		i = i + 1;
 
 		gettimeofday(&new_time, NULL);
