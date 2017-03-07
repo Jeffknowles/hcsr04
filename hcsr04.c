@@ -82,19 +82,20 @@ int main(void) {
 	double v[nch] =  {0,   0,   0,   0,   0,  0,   0,   0,   0,   0};
 	double spike_len[nch] =     {10,  20,  35,  20,  10, 27,  31,  50,  70, 300};
 
-	int connections[nch][maxCon] = {  // row i indicates (densly) the connections emmenating from the ith element
-	  // -1 is a placeholder for no connection.  each row needs macCon entries
-	  {1, 2, 3, -1, -1  },  // 0's outputs
-	  {2, 3, -1, -1, -1 }, // 1's outputs
-	  {3, 4, 5, -1, -1  }, // 2's outputs
-	  {4, 5, 9, -1, -1  }, // 3's outputs
-	  {4, 5, 6, 8,  -1  }, // 4's outputs
-	  {3, 4, 6, 7, 8    }, // 5's outputs
-	  {3, 5, 7, 8, 9    }, // 6's outputs
-	  {8, 9, 4, -1, -1  }, // 7's outputs
-	  {9, 6, 5, -1, -1  }, // 8's outputs
-	  {6, 7, 8, -1, -1  }  // 9's outputs
-	}; 
+	int connections[nch][maxCon] 
+	// = {  // row i indicates (densly) the connections emmenating from the ith element
+	//   // -1 is a placeholder for no connection.  each row needs macCon entries
+	//   {1, 2, 3, -1, -1  },  // 0's outputs
+	//   {2, 3, -1, -1, -1 }, // 1's outputs
+	//   {3, 4, 5, -1, -1  }, // 2's outputs
+	//   {4, 5, 9, -1, -1  }, // 3's outputs
+	//   {4, 5, 6, 8,  -1  }, // 4's outputs
+	//   {3, 4, 6, 7, 8    }, // 5's outputs
+	//   {3, 5, 7, 8, 9    }, // 6's outputs
+	//   {8, 9, 4, -1, -1  }, // 7's outputs
+	//   {9, 6, 5, -1, -1  }, // 8's outputs
+	//   {6, 7, 8, -1, -1  }  // 9's outputs
+	// }; 
 
 
 	for (ii=0; ii<nch-10; ii++){
