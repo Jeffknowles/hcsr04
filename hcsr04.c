@@ -82,7 +82,7 @@ int main(void) {
 	int mode = 0;
 	double currentIPI = minIPI;
 	double v[nch] =  {0,   0,   0,   0,   0,  0,   0,   0,   0,   0};
-	long spike_len[nch] =     {1,  20,  35,  20,  10, 27,  31,  50,  70, 300};
+	double spike_len[nch] =     {1,  20,  35,  20,  10, 27,  31,  50,  70, 300};
 
 	int connections[nch][maxCon] = {  // row i indicates (densly) the connections emmenating from the ith element
 	  // -1 is a placeholder for no connection.  each row needs macCon entries
@@ -194,7 +194,7 @@ int main(void) {
 		        // }
 		      }
 		      else {
-		        v[ch] = v[ch] - (double) dt / 1000; // otherwise decrment v by dt to record time
+		        v[ch] = v[ch] - dt; // otherwise decrment v by dt to record time
 		      }
 		    }
 		  }
