@@ -69,9 +69,9 @@ int main(void) {
 	int syn;
 
 
-	struct timeval t1, t2;
+	struct timeval new_time, last_time;
     double elapsedTime;
-	
+
 
 	uint64_t last_time = GetTimeStamp(NULL);
 	float duration = 0; 
