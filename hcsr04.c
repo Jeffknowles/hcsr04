@@ -71,6 +71,7 @@ int main(void) {
 
 	struct timeval new_time, last_time;
     double dt;
+    time_since_last_ping = 0;
     gettimeofday(&last_time, NULL);
     gettimeofday(&new_time, NULL);
     gettimeofdat($last_ping, NULL);
