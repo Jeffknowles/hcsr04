@@ -1,8 +1,7 @@
 CC = gcc 
-CFLAGS = -w 
+CFLAGS = -w -std=gnu99
 PRU_ASM = pasm
 DTC = dtc
-cflags-y := -std=gnu99
 
 all: hcsr04-00A0.dtbo hcsr04.bin hcsr04
 
