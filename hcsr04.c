@@ -168,7 +168,7 @@ int main(void) {
 		        // }
 		      }
 		      else {
-		        v[ch] = v[ch] - (float) dt / 1000; // otherwise decrment v by dt to record time
+		        v[ch] = v[ch] - (float) dt * 1000; // otherwise decrment v by dt to record time
 		      }
 		    }
 		  }
