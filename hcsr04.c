@@ -53,7 +53,7 @@ const bool pong_only_in_range = true;
 
 
 
-unsigned int *pruData
+unsigned int *pruData;
 
 // main function 
 int main(void) {
