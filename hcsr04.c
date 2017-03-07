@@ -143,7 +143,7 @@ int main(void) {
  			 printf("%.2f ", v[ii]);
 		 }
         printf("\n");
-		
+		printf("%.10f  ", dt);
 
        
         gettimeofday(&new_time, NULL);
@@ -153,7 +153,7 @@ int main(void) {
         dt += (double) (new_time.tv_usec - last_time.tv_usec)/1000000;   // us to ms
 		last_time = new_time;
 
-		printf("%.10f  ", dt);
+		
 		
 		  // set v[0] based on sonar
 		 if (target_distance < sense_thresh & v[0] >= 0) {
