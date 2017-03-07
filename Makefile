@@ -1,6 +1,5 @@
 CC = gcc 
-CFLAGS = -w 
- # -std=gnu99
+CFLAGS = -w -std=c99
 PRU_ASM = pasm
 DTC = dtc
 
