@@ -10,7 +10,7 @@
 
 const int pingLen = 20.; // ping length in microseconds
 const int minIPI = 100; // minimum interping interval in miliseconds
-const float sense_thresh_i = 500; // threshold where responses turn on
+const float sense_thresh_i = 100; // threshold where responses turn on
 const int pingPin = 11; // trigger for sonar pulses
 const int echoPin = 12; // return for sonar pulses
 const int phonePin1 = 9; //
