@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <prussdrv.h> 
 #include <pruss_intc_mapping.h>
+#include <time.h>
 
 const int pingLen = 20.; // ping length in microseconds
 const int minIPI = 100; // minimum interping interval in miliseconds
@@ -14,38 +15,21 @@ const int phonePin2 = 10;
 const int dialPin = 5;  // analog pin for the dial
 //const int modePins[2] = {3, 4}; // pins for the 3way mode switch
 //const int buttonPin = 2;  // pin for the tigger button
-const int nch = 8; // number of neurons
+
 // int ledPins[nch] = {5, 6, 7, 8, 13, 3, 2, 4,-1,-1}; // indicates the arduino pin for each light
 const int sensory_factor = 10;
 const bool printout = false;
 const bool pong_only_in_range = true;
+	
 
-
+const float thresh = 100;
+const float k = 1; // magnitude of the leak
 
 
 // connection settings - declare connections between neurons
+#define maxCon 5
+#define nch 8 // number of neurons
 // const int maxCon = 5;
-// int connections[nch][maxCon] = {  // row i indicates (densly) the connections emmenating from the ith element
-//   // -1 is a placeholder for no connection.  each row needs macCon entries
-//   {1, 2, 3, -1, -1  }, // 0's outputs
-//   {2, 3, -1, -1, -1  }, // 1's outputs
-//   {3, 4, 5, -1, -1  }, // 2's outputs
-//   {4, 5, 9, -1, -1  }, // 3's outputs
-//   {4, 5, 6, 8,  -1  }, // 4's outputs
-//   {3, 4, 6, 7, 8    }, // 5's outputs
-//   {3, 5, 7, 8, 9    }, // 6's outputs
-//   {8, 9, 4, -1, -1  }, // 7's outputs
-//   {9, 6, 5, -1, -1  }, // 8's outputs
-//   {6, 7, 8, -1, -1  }
-// }; // 9's outputs
-
-
-
-
-
-/* Get pointers to PRU local memory */
-// unsigned int *pruData; //= (unsigned int *) pruDataMem;
-
 
 
 
@@ -70,6 +54,9 @@ float dur2cm(float dur) {
 int main(void) {
 
 	// initialize variables
+
+
+	time_t last_time = time(NULL);
 	float duration = 0; 
 	float target_distance = 0;
 	float sense_thresh = sense_thresh_i;
@@ -77,6 +64,26 @@ int main(void) {
 	int mode = 0;
 	long last_ping = 0;
 	long currentIPI = minIPI;
+	float v[nch] =  {0,   0,   0,   0,   0,  0,   0,   0,   0,   0};
+	long spike_len[nch] =     {1,  20,  35,  20,  10, 27,  31,  50,  70, 300};
+
+
+	int connections[nch][maxCon] = {  // row i indicates (densly) the connections emmenating from the ith element
+	  // -1 is a placeholder for no connection.  each row needs macCon entries
+	  {1, 2, 3, -1, -1  },  // 0's outputs
+	  {2, 3, -1, -1, -1 }, // 1's outputs
+	  {3, 4, 5, -1, -1  }, // 2's outputs
+	  {4, 5, 9, -1, -1  }, // 3's outputs
+	  {4, 5, 6, 8,  -1  }, // 4's outputs
+	  {3, 4, 6, 7, 8    }, // 5's outputs
+	  {3, 5, 7, 8, 9    }, // 6's outputs
+	  {8, 9, 4, -1, -1  }, // 7's outputs
+	  {9, 6, 5, -1, -1  }, // 8's outputs
+	  {6, 7, 8, -1, -1  }  // 9's outputs
+	}; 
+
+
+
 
 
 	/* Initialize the PRU */
@@ -114,6 +121,47 @@ int main(void) {
 		duration = doPing(pruData);
 		target_distance = dur2cm(duration);
 		printf("%d: Distance = %.2f cm\n", i, target_distance);
+
+
+		float dt = (float) time(NULL) - last_time;
+		last_time = time(NULL);
+		  // set v[0] based on sonar
+		 if (target_distance < sense_thresh & v[0] >= 0) {
+		    v[0] = v[0] + (float) 1 * sense_thresh / target_distance;
+		 }
+
+		// loop thru neurons
+		for (int ch = 0; ch < nch; ch++) {
+		if (v[ch] >= 0) { // if neuron is in integrate mode
+		    v[ch] = v[ch]  - k * v[ch] * (float) dt; // decay v to 0
+		    v[ch] = max(v[ch], 0);
+		    // if the neuron crosses threshold, fire and increment outputs
+		    if (v[ch] > thresh) {
+		        // if (ledPins[ch] > 0) {
+		        //   digitalWrite(ledPins[ch], HIGH);
+		        // }
+		        sprintf("%d spike", ch);
+		        v[ch] = -1; // v<0 stores that the neuron is in firing state
+		        for (int syn = 0; syn < maxCon; syn++) { // loop thru synaptic outputs
+		          	// if connection is real and postsyn element is not in firing, incriment its v
+		          	if (connections[ch][syn] >= 0 & v[connections[ch][syn]] >= 0) {
+		            	v[connections[ch][syn]] ++;
+		            }
+		        }
+		      }
+		    }
+		    else { // otherwise if neuron is in spike mode
+		      if (v[ch] < -1 * spike_len[ch]) { // if the time since spike onset is up, end spike
+		        v[ch] = 0; // set voltage to 0
+		        // if (ledPins[ch] > 0) {
+		        //   digitalWrite(ledPins[ch], LOW);
+		        // }
+		      }
+		      else {
+		        v[ch] = v[ch] - (float) dt / 1000; // otherwise decrment v by dt to record time
+		      }
+		    }
+		  }
 		// sleep(0.01);
 
 

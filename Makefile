@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall
+CFLAGS = -w
 PRU_ASM = pasm
 DTC = dtc
 
@@ -20,7 +20,7 @@ hcsr04: hcsr04.c
 
 # hcsr04dev: hcsr04.c
 # 	@echo "\n>> Compiling HC-SR04 example dev"
-# 	$(CC) $(CFLAGS) -Irdev/ -c -o hcsr04.o hcsr04.c
+# 	$(CC) $(CFLAGS) -Irdev/ -c -o  hcsr04.o hcsr04.c
 # 	$(CC) -lpthread -lprussdrv -o hcsr04 hcsr04.o 
 
 clean:
