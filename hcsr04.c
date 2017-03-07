@@ -125,7 +125,7 @@ float doPing(unsigned int *pruData) {
 	prussdrv_pru_wait_event (PRU_EVTOUT_0);
 	prussdrv_pru_clear_event(PRU_EVTOUT_0, PRU0_ARM_INTERRUPT);
 
-	return (float) pruData[0];
+	return (float) 1;
 }
 
 
