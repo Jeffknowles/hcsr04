@@ -138,12 +138,12 @@ int main(void) {
 		duration = doPing(pruData);
 		target_distance = dur2cm(duration);
 
-		printf("%.10f  ", dt);
-		printf("%d: Distance = %.2f cm   ", i, target_distance);
-		for(ii=0;ii<nch;++ii) {
- 			 printf("%.2f ", v[ii]);
-		 }
-        printf("\n");
+		// printf("%.10f  ", dt);
+		// printf("%d: Distance = %.2f cm   ", i, target_distance);
+		// for(ii=0;ii<nch;++ii) {
+ 	// 		 printf("%.2f ", v[ii]);
+		//  }
+  //       printf("\n");
 		
 
        
