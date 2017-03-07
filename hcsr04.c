@@ -154,7 +154,7 @@ int main(void) {
 		last_time = new_time;
 
 		printf("%f  ", dt);
-		printf("%d ",last_time);
+		
 		  // set v[0] based on sonar
 		 if (target_distance < sense_thresh & v[0] >= 0) {
 		    v[0] = v[0] + (float) 1 * sense_thresh / target_distance;
