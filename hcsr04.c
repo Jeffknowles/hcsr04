@@ -71,7 +71,7 @@ int main(void) {
 
 	struct timeval new_time, last_time;
     double dt;
-
+    gettimeofday(&t1, NULL);
 
 	// uint64_t last_time = GetTimeStamp(NULL);
 	float duration = 0; 
