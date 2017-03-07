@@ -69,7 +69,7 @@ int main(void) {
 	int syn;
 
 
-	struct timeval new_time, last_time, last_ping;
+	struct timeval new_time, last_time;
     double dt;
     gettimeofday(&last_time, NULL);
     gettimeofday(&new_time, NULL);
