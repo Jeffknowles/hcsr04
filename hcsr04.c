@@ -145,7 +145,7 @@ int main(void) {
 		
 
 
-		float dt = (float) GetTimeStamp(NULL) - last_time;
+		dt = (float) GetTimeStamp(NULL) - last_time;
 		last_time = GetTimeStamp(NULL);
 		printf("%f  ", dt);
 		printf("%d ",last_time);
