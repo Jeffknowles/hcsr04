@@ -150,10 +150,10 @@ int main(void) {
 
 		printf("%.10f  %0.10f  ", dt, time_since_last_ping);
 		printf("%d: Distance = %.2f cm   ", i, target_distance);
-		for(ii=0;ii<nch;++ii) {
- 			 printf("%.2f ", v[ii]);
-		 }
-        printf("\n");
+		// for(ii=0;ii<nch;++ii) {
+ 	// 		 printf("%.2f ", v[ii]);
+		//  }
+  //       printf("\n");
 		
 
        
