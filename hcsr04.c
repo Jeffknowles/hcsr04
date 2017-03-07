@@ -124,7 +124,12 @@ int main(void) {
 		// measure distance
 		duration = doPing(pruData);
 		target_distance = dur2cm(duration);
+
 		printf("%d: Distance = %.2f cm\n", i, target_distance);
+		for(int ii=0;ii<nch;++ii) {
+ 			 printf("%.2f ", v[ii]);
+		}
+       printf("\n");
 		// printf(v);
 
 		float dt = (float) time(NULL) - last_time;
