@@ -53,10 +53,6 @@ const bool pong_only_in_range = true;
 
 
 
-// unsigned int *pruData;
-
-
-
 float doPing(unsigned int *pruData) {
 	// Wait for the PRU interrupt
 	prussdrv_pru_wait_event (PRU_EVTOUT_0);
@@ -66,6 +62,9 @@ float doPing(unsigned int *pruData) {
 }
 
 
+float dur2cm(float dur) {
+	return (float) duration / 58.44;
+}
 
 // main function 
 int main(void) {
@@ -113,7 +112,7 @@ int main(void) {
 
 		// measure distance
 		duration = doPing(pruData);
-		target_distance = (float) duration / 58.44;
+		target_distance = dur2cm(dur);
 		printf("%d: Distance = %.2f cm\n", i, target_distance);
 		// sleep(0.01);
 
