@@ -5,6 +5,7 @@
 #include <pruss_intc_mapping.h>
 #include <time.h>
 #include <math.h>
+#include <stdlib.h> 
 
 const int pingLen = 20.; // ping length in microseconds
 const int minIPI = 100; // minimum interping interval in miliseconds
