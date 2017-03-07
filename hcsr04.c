@@ -126,12 +126,12 @@ int main(void) {
 		duration = doPing(pruData);
 		target_distance = dur2cm(duration);
 
-		printf("%d: Distance = %.2f cm\n", i, target_distance);
+		printf("%d: Distance = %.2f cm   ", i, target_distance);
 		for(ii=0;ii<nch;++ii) {
  			 printf("%.2f ", v[ii]);
 		 }
-         printf("\n");
-		// printf(v);
+        printf("\n");
+		
 
 		float dt = (float) time(NULL) - last_time;
 		last_time = time(NULL);
@@ -168,6 +168,7 @@ int main(void) {
 		        // }
 		      }
 		      else {
+		      	printf("%f", dt);
 		        v[ch] = v[ch] - (float) dt * 1000; // otherwise decrment v by dt to record time
 		      }
 		    }
