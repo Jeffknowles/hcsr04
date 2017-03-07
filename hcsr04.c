@@ -149,7 +149,7 @@ int main(void) {
         gettimeofday(&new_time, NULL);
 
 		// dt = (float) GetTimeStamp(NULL) - last_time;
-		dt = (t2.tv_sec - t1.tv_sec) * 1000.0;      // sec to ms
+		dt = (new_time.tv_sec - last_time.tv_sec) * 1000000;      // sec to ms
     elapsedTime += (t2.tv_usec - t1.tv_usec) / 1000.0;   // us to ms
 		last_time = new_time;
 
