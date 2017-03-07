@@ -146,6 +146,7 @@ int main(void) {
 
        
         gettimeofday(&new_time, NULL);
+        
 		dt = (float) GetTimeStamp(NULL) - last_time;
 		last_time = GetTimeStamp(NULL);
 		printf("%f  ", dt);
