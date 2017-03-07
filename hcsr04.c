@@ -6,7 +6,7 @@
 #include <time.h>
 #include <math.h>
 #include <stdlib.h> 
-
+#include <tgmath.h> 
 const int pingLen = 20.; // ping length in microseconds
 const int minIPI = 100; // minimum interping interval in miliseconds
 const float sense_thresh_i = 500; // threshold where responses turn on
