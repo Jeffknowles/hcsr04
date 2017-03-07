@@ -68,6 +68,11 @@ int main(void) {
 	int ii;
 	int syn;
 
+
+	struct timeval t1, t2;
+    double elapsedTime;
+	
+
 	uint64_t last_time = GetTimeStamp(NULL);
 	float duration = 0; 
 	float target_distance = 0;
