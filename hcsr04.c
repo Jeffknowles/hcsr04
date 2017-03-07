@@ -25,7 +25,7 @@ const bool printout = false;
 const bool pong_only_in_range = true;
 	
 
-const float thresh = 100;
+const float thresh = 10;
 const float k = 1; // magnitude of the leak
 
 
@@ -125,7 +125,7 @@ int main(void) {
 		duration = doPing(pruData);
 		target_distance = dur2cm(duration);
 		// printf("%d: Distance = %.2f cm\n", i, target_distance);
-		printf(v);
+		// printf(v);
 
 		float dt = (float) time(NULL) - last_time;
 		last_time = time(NULL);
