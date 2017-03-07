@@ -133,7 +133,15 @@ int main(void) {
 	while (1) {
 		i = i + 1;
 
+		 gettimeofday(&new_time, NULL);
+		// dt = (float) GetTimeStamp(NULL) - last_time;
+		dt = (double) (new_time.tv_sec - last_time.tv_sec);      // sec 
+        dt += (double) (new_time.tv_usec - last_time.tv_usec)/1000000;   // us to s
+		last_time = new_time;
+
+
 		// measure distance
+		if (
 		duration = doPing(pruData);
 		target_distance = dur2cm(duration);
 
@@ -146,12 +154,7 @@ int main(void) {
 		
 
        
-        gettimeofday(&new_time, NULL);
-		// dt = (float) GetTimeStamp(NULL) - last_time;
-		dt = (double) (new_time.tv_sec - last_time.tv_sec);      // sec 
-        dt += (double) (new_time.tv_usec - last_time.tv_usec)/1000000;   // us to s
-		last_time = new_time;
-
+ 
 		
 		
 		  // set v[0] based on sonar
