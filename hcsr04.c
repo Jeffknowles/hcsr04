@@ -134,7 +134,7 @@ int main(void) {
 		for (int ch = 0; ch < nch; ch++) {
 		if (v[ch] >= 0) { // if neuron is in integrate mode
 		    v[ch] = v[ch]  - k * v[ch] * (float) dt; // decay v to 0
-		    v[ch] = max(v[ch], 0);
+		    v[ch] = fmax(v[ch], 0);
 		    // if the neuron crosses threshold, fire and increment outputs
 		    if (v[ch] > thresh) {
 		        // if (ledPins[ch] > 0) {
