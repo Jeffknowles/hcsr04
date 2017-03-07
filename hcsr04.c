@@ -87,6 +87,7 @@ int main(void) {
 	void *pruDataMem;
 	prussdrv_map_prumem(PRUSS0_PRU0_DATARAM, &pruDataMem);
 	unsigned int *pruData = (unsigned int *) pruDataMem;
+	printf(pruData)
 
 	/* Execute code on PRU */
 	printf(">> Executing HCSR-04 code\n");
