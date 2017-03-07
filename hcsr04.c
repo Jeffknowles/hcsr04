@@ -158,7 +158,7 @@ int main(void) {
 		
 		  // set v[0] based on sonar
 		 if (target_distance < sense_thresh & v[0] >= 0) {
-		    v[0] = v[0] + (float) 1 * sense_thresh / target_distance;
+		    v[0] = v[0] + (float) 0.1 * sense_thresh / target_distance;
 		 }
 
 		// loop thru neurons
