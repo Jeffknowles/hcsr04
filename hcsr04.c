@@ -11,7 +11,7 @@
 #include <sys/time.h>  
 
 const double minIPI = 0.1; // minimum interping interval in miliseconds
-const float sense_thresh_i = 300; // threshold where responses turn on
+const double sense_thresh_i = 300; // threshold where responses turn on
 // const int pingPin = 11; // trigger for sonar pulses
 // const int echoPin = 12; // return for sonar pulses
 // const int phonePin1 = 9; //
@@ -26,8 +26,8 @@ const bool printout = false;
 const bool pong_only_in_range = true;
 	
 
-const float thresh = 10;
-const float k = 1; // magnitude of the leak
+const double thresh = 10;
+const double k = 1; // magnitude of the leak
 
 
 // connection settings - declare connections between neurons
@@ -45,17 +45,17 @@ uint64_t GetTimeStamp() {
 }
 
 
-float doPing(unsigned int *pruData) {
+double doPing(unsigned int *pruData) {
 	// Wait for the PRU interrupt
 	prussdrv_pru_wait_event (PRU_EVTOUT_0);
 	prussdrv_pru_clear_event(PRU_EVTOUT_0, PRU0_ARM_INTERRUPT);
 
-	return (float) pruData[0];
+	return (double) pruData[0];
 }
 
 
-float dur2cm(float dur) {
-	return (float) dur / 58.44;
+double dur2cm(double dur) {
+	return (double) dur / 58.44;
 }
 
 // main function 
@@ -75,13 +75,13 @@ int main(void) {
     gettimeofday(&new_time, NULL);
     // gettimeofdat($last_ping, NULL);
 	// uint64_t last_time = GetTimeStamp(NULL);
-	float duration = 0; 
-	float target_distance = 0;
-	float sense_thresh = sense_thresh_i;
+	double duration = 0; 
+	double target_distance = 0;
+	double sense_thresh = sense_thresh_i;
 	bool button_pressed = false;
 	int mode = 0;
 	double currentIPI = minIPI;
-	float v[nch] =  {0,   0,   0,   0,   0,  0,   0,   0,   0,   0};
+	double v[nch] =  {0,   0,   0,   0,   0,  0,   0,   0,   0,   0};
 	long spike_len[nch] =     {1,  20,  35,  20,  10, 27,  31,  50,  70, 300};
 
 	int connections[nch][maxCon] = {  // row i indicates (densly) the connections emmenating from the ith element
@@ -163,14 +163,14 @@ int main(void) {
 		
 		  // set v[0] based on sonar
 		 if (target_distance < sense_thresh & v[0] >= 0) {
-		    v[0] = v[0] + (float) 1 * sense_thresh / target_distance;
+		    v[0] = v[0] + (double) 1 * sense_thresh / target_distance;
 		 }
 
 		// loop thru neurons
 		for (ch = 0; ch < nch; ch++) {
-		if (v[ch] >= 0) { // if neuron is in integrate mode
-		    v[ch] = v[ch]  - k * v[ch] * (float) dt; // decay v to 0
-		    v[ch] = fmax(v[ch], 0);
+			if (v[ch] >= 0) { // if neuron is in integrate mode
+		    	v[ch] = v[ch]  - k * v[ch] * (double) dt; // decay v to 0
+		    	v[ch] = fmax(v[ch], 0);
 		    // if the neuron crosses threshold, fire and increment outputs
 		    if (v[ch] > thresh) {
 		        // if (ledPins[ch] > 0) {
@@ -194,7 +194,7 @@ int main(void) {
 		        // }
 		      }
 		      else {
-		        v[ch] = v[ch] - (float) dt / 1000; // otherwise decrment v by dt to record time
+		        v[ch] = v[ch] - (double) dt / 1000; // otherwise decrment v by dt to record time
 		      }
 		    }
 		  }
