@@ -74,7 +74,7 @@ int main(void) {
     double time_since_last_ping = 0;
     gettimeofday(&last_time, NULL);
     gettimeofday(&new_time, NULL);
-    gettimeofdat($last_ping, NULL);
+    // gettimeofdat($last_ping, NULL);
 	// uint64_t last_time = GetTimeStamp(NULL);
 	float duration = 0; 
 	float target_distance = 0;
