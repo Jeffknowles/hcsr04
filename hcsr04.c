@@ -82,7 +82,7 @@ int main(void) {
 	double v[nch] =  {0,   0,   0,   0,   0,  0,   0,   0,   0,   0};
 	double spike_len[nch] =     {10,  20,  35,  20,  10, 27,  31,  50,  70, 300};
 
-	int connections[nch][maxCon] 
+	int connections[nch][maxCon];
 	// = {  // row i indicates (densly) the connections emmenating from the ith element
 	//   // -1 is a placeholder for no connection.  each row needs macCon entries
 	//   {1, 2, 3, -1, -1  },  // 0's outputs
