@@ -57,9 +57,9 @@ float dur2cm(float dur) {
 int main(void) {
 
 	// initialize variables
-	int ch 
-	int i
-	int syn
+	int ch;
+	int i;
+	int syn;
 
 	time_t last_time = time(NULL);
 	float duration = 0; 
