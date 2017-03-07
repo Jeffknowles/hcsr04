@@ -149,7 +149,7 @@ int main(void) {
         gettimeofday(&new_time, NULL);
 
 		dt = (float) GetTimeStamp(NULL) - last_time;
-		last_time = GetTimeStamp(NULL);
+		last_time = new_time;
 		printf("%f  ", dt);
 		printf("%d ",last_time);
 		  // set v[0] based on sonar
