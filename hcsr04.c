@@ -140,7 +140,7 @@ int main(void) {
 
 
 		// measure distance
-		if (
+		if last_ping = 0;
 		duration = doPing(pruData);
 		target_distance = dur2cm(duration);
 
