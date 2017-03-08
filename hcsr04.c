@@ -89,7 +89,7 @@ int main(void) {
 	// generate connections among neurons
 	for ( ii=0; ii<(nch-10); ii++){
 		connections[ii][0] = ii + 1; 
-		weights[ii][0] = 2;
+		weights[ii][0] = 5;
 
 		for (iii=1; iii<maxCon; iii++){
 			connections[ii][iii]=rand() % nch;
