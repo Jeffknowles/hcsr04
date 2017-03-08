@@ -21,7 +21,7 @@ hcsr04: hcsr04.c
 # hcsr04dev: hcsr04.c
 # 	@echo "\n>> Compiling HC-SR04 example dev"
 # 	$(CC) $(CFLAGS) -Irdev/ -c -o  hcsr04.o hcsr04.c
-# 	$(CC) -lpthread -lprussdrv -o hcsr04 hcsr04.o 
+# 	$(CC) -lpthread -o hcsr04dev hcsr04.o  -lm
 
 clean:
 	rm -rf hcsr04 hcsr04.o hcsr04.bin hcsr04-00A0.dtbo 
