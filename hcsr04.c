@@ -1,14 +1,15 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdbool.h>
-#include <prussdrv.h> 
-#include <pruss_intc_mapping.h>
 #include <time.h>
 #include <math.h>
 #include <stdlib.h> 
 #include <tgmath.h> 
 #include <inttypes.h>
 #include <sys/time.h>  
+
+#include <prussdrv.h> 
+#include <pruss_intc_mapping.h>
 
 const double minIPI = 0.1; // minimum interping interval in miliseconds
 const double sense_thresh_i = 100; // threshold where responses turn on
@@ -24,13 +25,13 @@ const bool printout = false;
 const bool pong_only_in_range = true;
 	
 
-const double thresh = 10;
+const double thresh = 15;
 const double k = 1; // magnitude of the leak
 
 
 // connection settings - declare connections between neurons
 #define maxCon 40
-#define nch 1000 // number of neurons
+#define nch 300 // number of neurons
 
 
 
@@ -41,6 +42,15 @@ double doPing(unsigned int *pruData) {
 	prussdrv_pru_clear_event(PRU_EVTOUT_0, PRU0_ARM_INTERRUPT);
 
 	return (double) pruData[0];
+}
+
+float random_float(const float min, const float max)
+{
+    if (max == min) return min;
+    else if (min < max) return (max - min) * ((float)rand() / RAND_MAX) + min;
+
+    // return 0 if min > max
+    return 0;
 }
 
 
@@ -75,12 +85,14 @@ int main(void) {
 	double v[nch] =  {0};
 	double spike_len[nch] =   {10};
 	int connections[nch][maxCon];
-
+	float weights[nch][maxCon];
 	// generate connections among neurons
 	for ( ii=0; ii<(nch-10); ii++){
 		connections[ii][0] = ii + 1; 
+		weights[ii][0] = 2;
 		for (iii=1; iii<maxCon; iii++){
 			connections[ii][iii]=rand() % nch;
+			weights[ii][iii] = random_float((float) -10, (float) 10);
 		}
 	}
 
@@ -124,13 +136,14 @@ int main(void) {
 		if (time_since_last_ping > currentIPI) {
 				duration = doPing(pruData);
 				target_distance = dur2cm(duration);
+			    // target_distance = 90; 
 				time_since_last_ping = 0; 
 		}
 		else {
 			time_since_last_ping = time_since_last_ping + dt; 
 		}
 
-		// printf("%05.5f  %05.5f  ", dt, time_since_last_ping);
+		// printf("%05.5f  %05.5f  \n", dt, time_since_last_ping);
 		// printf("%d: Distance = %04.1f cm   ", i, target_distance);
 		// for (ii=0;ii<20;++ii) {
  	// 		 printf("% 04.1f ", v[ii]);
@@ -157,7 +170,8 @@ int main(void) {
 		        for (syn = 0; syn < maxCon; syn++) { // loop thru synaptic outputs
 		          	// if connection is real and postsyn element is not in firing, incriment its v
 		          	if (connections[ch][syn] >= 0 & v[connections[ch][syn]] >= 0) {
-		            	v[connections[ch][syn]] += 1;
+		            	v[connections[ch][syn]] += weights[ch][syn];
+		            	v[connections[ch][syn]] = fmax(v[connections[ch][syn]],0);
 		            }
 		        }
 		      }
