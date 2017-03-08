@@ -90,8 +90,10 @@ int main(void) {
 	for ( ii=0; ii<(nch-10); ii++){
 		connections[ii][0] = ii + 1; 
 		weights[ii][0] = 5;
+		connections[ii][1] = ii + 2; 
+		weights[ii][1] = 5;
 
-		for (iii=1; iii<maxCon; iii++){
+		for (iii=2; iii<maxCon; iii++){
 			connections[ii][iii]=rand() % nch;
 			weights[ii][iii] = random_float((float) -10, (float) 10);
 		}
