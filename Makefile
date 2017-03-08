@@ -1,4 +1,4 @@
-CC = gcc 
+CC = gcc-4.6
 CFLAGS = -w -lm
 PRU_ASM = pasm
 DTC = dtc
