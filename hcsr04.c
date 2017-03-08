@@ -25,7 +25,7 @@ const bool printout = false;
 const bool pong_only_in_range = true;
 	
 
-const double thresh = 15;
+const double thresh = 20;
 const double k = 1; // magnitude of the leak
 
 
@@ -145,10 +145,10 @@ int main(void) {
 
 		printf("%05.5f  %05.5f  \n", dt, time_since_last_ping);
 		printf("%d: Distance = %04.1f cm   ", i, target_distance);
-		// for (ii=0;ii<20;++ii) {
- 	// 		 printf("% 04.1f ", v[ii]);
-		//  }
-  //       printf("\n");
+		for (ii=0;ii<20;++ii) {
+ 			 printf("% 04.1f ", v[ii]);
+		 }
+        printf("\n");
 		
 		  // set v[0] based on sonar
 		 if (target_distance < sense_thresh & v[0] >= 0) {
