@@ -93,7 +93,7 @@ int main(void) {
 
 		for (iii=1; iii<maxCon; iii++){
 			connections[ii][iii]=rand() % nch;
-			weights[ii][iii] = random_float((float) -10, (float) 5);
+			weights[ii][iii] = random_float((float) -10, (float) 10);
 		}
 	}
 
