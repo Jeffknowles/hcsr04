@@ -182,13 +182,14 @@ int main(void) {
 		//  }
         printf("\n");
 		
+
+
+		const unsigned frame_num = i++ % 2;
+    	ledscape_frame_t *const frame = ledscape_frame(leds, frame_num);
 		  // set v[0] based on sonar
 		 if (target_distance < sense_thresh & v[0] >= 0) {
 		    v[0] = v[0] + (double) 0.1 * sense_thresh / target_distance;
 		 }
-
-		const unsigned frame_num = i++ % 2;
-    	ledscape_frame_t *const frame = ledscape_frame(leds, frame_num);
 		// loop thru neurons
 		for (ch = 0; ch < nch; ch++) {
 			if (v[ch] >= 0) { // if neuron is in integrate mode
