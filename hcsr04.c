@@ -121,7 +121,7 @@ int main(void) {
 		connections[ii][0] = ii + 1; 
 		weights[ii][0] = 5;
 		connections[ii][1] = ii + 2; 
-		weights[ii][1] = 1;
+		weights[ii][1] = 2;
 
 		for (iii=2; iii<maxCon; iii++){
 			connections[ii][iii]=rand() % nch;
