@@ -11,9 +11,11 @@ CFLAGS += \
 	-mtune=cortex-a8 \
 	-march=armv7-a \
 	-lm \
-	
+
 LDLIBS += \
 	-lpthread \
+
+LEDSCAPE_OBJS = ledscape.o util.o
 
 PRU_ASM = pasm
 DTC = dtc
