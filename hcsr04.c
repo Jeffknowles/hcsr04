@@ -69,7 +69,7 @@ const double k = 1; // magnitude of the leak
 double doPing(unsigned int *pruData) {
 	// Wait for the PRU interrupt
 	prussdrv_pru_wait_event (PRU_EVTOUT_0);
-	prussdrv_pru_clear_event(PRU_EVTOUT_0, PRU0_ARM_INTERRUPT);
+	prussdrv_pru_clear_event(PRU_EVTOUT_0, PRU1_ARM_INTERRUPT);
 
 	return (double) pruData[0];
 }
