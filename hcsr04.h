@@ -15,7 +15,7 @@
 #include <string.h>
 #include <inttypes.h>
 #include <errno.h>
-#include "ledscape.h"
+#include "PixelBone/ledscape.h"
 #include <prussdrv.h> 
 #include <pruss_intc_mapping.h>
 #define prunum 1
@@ -47,7 +47,7 @@ const double k = 1; // magnitude of the leak
 
 
 
-
+double doPing(unsigned int *pruData);
 
 
 #endif
