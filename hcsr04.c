@@ -139,7 +139,7 @@ int main(void) {
   		rgb_spike[ii][2] = (uint8_t) rand() % 255;
   		rgb_spike[ii][3] = (uint8_t) rand() % 255;
   	}
-  	
+
   	uint8_t rgb_off[3] = {0,0,0};
   	const unsigned frame_num = i++ % 2;
   	ledscape_frame_t *const frame = ledscape_frame(leds, frame_num);
@@ -219,7 +219,7 @@ int main(void) {
 		        // if (ledPins[ch] > 0) {
 		        //   digitalWrite(ledPins[ch], HIGH);
 		        // }
-		        ledscape_set_color(frame, 0, ch, rgb_spike[0], rgb_spike[1], rgb_spike[2]);
+		        ledscape_set_color(frame, 0, ch, rgb_spike[ch][0], rgb_spike[ch][1], rgb_spike[ch][2]);
 		        printf("ch%d spike \n", ch);
 		        v[ch] = -1; // v<0 stores that the neuron is in firing state
 		        for (syn = 0; syn < maxCon; syn++) { // loop thru synaptic outputs
