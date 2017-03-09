@@ -119,7 +119,7 @@ int main(void) {
 	// generate connections among neurons
 	for ( ii=0; ii<(nch-10); ii++){
 		connections[ii][0] = ii + 1; 
-		weights[ii][0] = 5;
+		weights[ii][0] = 8;
 		connections[ii][1] = ii + 2; 
 		weights[ii][1] = 2;
 
