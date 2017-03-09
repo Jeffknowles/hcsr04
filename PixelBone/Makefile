@@ -2,12 +2,12 @@
 #
 # The top level targets link in the two .o files for now.
 #
-TARGETS += hcsr04
-# TARGETS += rgb-test
-# TARGETS += fade-test
-# TARGETS += fire
-# TARGETS += udp-rx
-# TARGETS += opc-rx
+# TARGETS += hcsr04
+TARGETS += rgb-test
+TARGETS += fade-test
+TARGETS += fire
+TARGETS += udp-rx
+TARGETS += opc-rx
 
 LEDSCAPE_OBJS = ledscape.o util.o
 LEDSCAPE_LIB := libledscape.a
