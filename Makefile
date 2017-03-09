@@ -2,7 +2,7 @@
 #
 # The top level targets link in the two .o files for now.
 #
-TARGETS += hcsr04
+# TARGETS += hcsr04
 TARGETS += rgb-test
 TARGETS += fade-test
 TARGETS += fire
