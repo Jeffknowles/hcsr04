@@ -56,7 +56,7 @@ const bool pong_only_in_range = true;
 	
 
 const double thresh = 15;
-const double k = 1; // magnitude of the leak
+const double k = 0.2; // magnitude of the leak
 
 
 // connection settings - declare connections between neurons
