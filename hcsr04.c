@@ -138,8 +138,8 @@ int main(void) {
   		rgb_spike[ii][1] = (uint8_t) 100+ rand() % 154;
   		rgb_spike[ii][2] = (uint8_t) rand() % 255;
   		rgb_spike[ii][3] = (uint8_t) rand() % 255;
-  		
   	}
+  	
   	uint8_t rgb_off[3] = {0,0,0};
   	const unsigned frame_num = i++ % 2;
   	ledscape_frame_t *const frame = ledscape_frame(leds, frame_num);
