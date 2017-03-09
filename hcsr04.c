@@ -15,7 +15,7 @@
 #include <pruss_intc_mapping.h>
 #define prunum 1
 
-#include "PixelBone/ledscape.h"
+#include "ledscape.h"
 // Gamma Correction Curve
 const uint8_t dim_curve[] = {
   0,   1,   1,   2,   2,   2,   2,   2,   2,   3,   3,   3,   3,   3,   3,
