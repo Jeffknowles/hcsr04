@@ -7,7 +7,10 @@
 #include <tgmath.h> 
 #include <inttypes.h>
 #include <sys/time.h>  
-
+#include <stdint.h>
+#include <string.h>
+#include <inttypes.h>
+#include <errno.h>
 #include <prussdrv.h> 
 #include <pruss_intc_mapping.h>
 #define prunum 1
@@ -128,7 +131,7 @@ int main(void) {
 
 
  	/* Initialize the PRU for LEDS */
-  	ledscape_t const leds = ledscape_init(num_pixels);
+  	ledscape_t *const leds = ledscape_init(num_pixels);
   	uint8_t rgb_spike[3] = {255,255,255};
   	uint8_t rgb_off[3] = {0,0,0};
   	const unsigned frame_num = i++ % 2;
