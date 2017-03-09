@@ -30,6 +30,10 @@ hcsr04: hcsr04.c
 	$(CC) $(CFLAGS) -c -o hcsr04.o hcsr04.c -lm
 	$(CC) -lpthread -lprussdrv -o hcsr04 hcsr04.o -lm
 
+rgb-test: rgb-test.c
+	@echo "\n>> Compiling RGB example"
+	$(CC) $(CFLAGS) -c -o rgb-test.o rgb-test.c -lm
+	$(CC) -lpthread -lprussdrv -o rgb-test rgb-test.o -lm
 # hcsr04dev: hcsr04.c
 # 	@echo "\n>> Compiling HC-SR04 example dev"
 # 	$(CC) $(CFLAGS) -Irdev/ -c -o  hcsr04.o hcsr04.c
