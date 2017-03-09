@@ -10,6 +10,8 @@
 
 #include <prussdrv.h> 
 #include <pruss_intc_mapping.h>
+#define prunum 1
+
 
 const double minIPI = 0.1; // minimum interping interval in miliseconds
 const double sense_thresh_i = 100; // threshold where responses turn on
@@ -32,7 +34,7 @@ const double k = 1; // magnitude of the leak
 // connection settings - declare connections between neurons
 #define maxCon 40
 #define nch 1000 // number of neurons
-#define prunum 1
+
 
 
 
