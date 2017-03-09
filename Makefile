@@ -40,6 +40,7 @@ CFLAGS += \
 	-O2 \
 	-mtune=cortex-a8 \
 	-march=armv7-a \
+	-lm \
 
 LDFLAGS += \
 
