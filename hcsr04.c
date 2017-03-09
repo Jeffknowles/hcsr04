@@ -90,7 +90,7 @@ int main(void) {
 
 	// initialize variables
 	int ch;
-	int i;
+	unsigned i;
 	int ii;
 	int iii;
 	int syn;
