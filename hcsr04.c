@@ -11,11 +11,11 @@
 #include <string.h>
 #include <inttypes.h>
 #include <errno.h>
+#include "ledscape.h"
 #include <prussdrv.h> 
 #include <pruss_intc_mapping.h>
 #define prunum 1
 
-#include "ledscape.h"
 // Gamma Correction Curve
 const uint8_t dim_curve[] = {
   0,   1,   1,   2,   2,   2,   2,   2,   2,   3,   3,   3,   3,   3,   3,
