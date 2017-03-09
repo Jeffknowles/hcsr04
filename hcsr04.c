@@ -228,7 +228,8 @@ int main(void) {
 	/* Disable PRU and close memory mapping*/
 	prussdrv_pru_disable(prunum);
 	prussdrv_exit();
-	printf(">> PRU Disabled.\r\n");
+	printf(">> Sonar PRU Disabled.\r\n");
+	ledscape_close(leds);
 	
 	return (0);
 
