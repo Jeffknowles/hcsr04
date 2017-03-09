@@ -55,7 +55,7 @@ const bool printout = false;
 const bool pong_only_in_range = true;
 	
 
-const double thresh = 10;
+const double thresh = 15;
 const double k = 1; // magnitude of the leak
 
 
