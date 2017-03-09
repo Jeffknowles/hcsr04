@@ -125,7 +125,7 @@ int main(void) {
 
 		for (iii=2; iii<maxCon; iii++){
 			connections[ii][iii]=rand() % nch;
-			weights[ii][iii] = random_float((float) -2, (float) 2);
+			weights[ii][iii] = random_float((float) -2, (float) 3);
 		}
 	}
 
