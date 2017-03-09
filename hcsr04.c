@@ -197,7 +197,7 @@ int main(void) {
 	}
 
 	/* Disable PRU and close memory mapping*/
-	prussdrv_pru_disable(0);
+	prussdrv_pru_disable(prunum);
 	prussdrv_exit();
 	printf(">> PRU Disabled.\r\n");
 	
