@@ -11,7 +11,7 @@
 #include <string.h>
 #include <inttypes.h>
 #include <errno.h>
-#include "ledscapej.h"
+#include "ledscape.h"
 #include <prussdrv.h> 
 #include <pruss_intc_mapping.h>
 #define prunum 1
