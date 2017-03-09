@@ -32,7 +32,7 @@ const double k = 1; // magnitude of the leak
 // connection settings - declare connections between neurons
 #define maxCon 40
 #define nch 1000 // number of neurons
-
+#define prunum 0
 
 
 
@@ -119,7 +119,7 @@ int main(void) {
     unsigned int pruData = (unsigned int *) pruDataMem;
 	/* Execute code on PRU */
 	printf(">> Executing HCSR-04 code\n");
-	prussdrv_exec_program(1, "hcsr04.bin");
+	prussdrv_exec_program(0, "hcsr04.bin");
 
 
 
