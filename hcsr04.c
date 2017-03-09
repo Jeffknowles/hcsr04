@@ -38,10 +38,6 @@ const uint8_t dim_curve[] = {
 
 
 
-
-
-
-
 const double minIPI = 0.1; // minimum interping interval in miliseconds
 const double sense_thresh_i = 100; // threshold where responses turn on
 // const int pingPin = 11; // trigger for sonar pulses
@@ -63,7 +59,7 @@ const double k = 1; // magnitude of the leak
 // connection settings - declare connections between neurons
 #define maxCon 40
 #define nch 1000 // number of neurons
-
+#define num_pixels = 128;
 
 
 
