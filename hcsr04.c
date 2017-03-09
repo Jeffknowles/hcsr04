@@ -133,7 +133,10 @@ int main(void) {
 
  	/* Initialize the PRU for LEDS */
   	ledscape_t *const leds = ledscape_init(num_pixels);
-  	uint8_t rgb_spike[3][num_pixels] = {255,255,0};
+  	uint8_t rgb_spike[num_pixels][3];
+  	for (ii=0; ii<num_pixels; ii++){
+  		rgb_spike
+  	} = {255,255,0};
   	uint8_t rgb_off[3] = {0,0,0};
   	const unsigned frame_num = i++ % 2;
   	ledscape_frame_t *const frame = ledscape_frame(leds, frame_num);
