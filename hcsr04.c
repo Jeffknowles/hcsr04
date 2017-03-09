@@ -132,7 +132,7 @@ int main(void) {
   	uint8_t rgb_spike[3] = {255,255,255};
   	uint8_t rgb_off[3] = {0,0,0};
   	const unsigned frame_num = i++ % 2;
-  	ledscape_frame_t *const frame = ledscape_frame(leds, frame_num);
+  	ledscape_frame_t const frame = ledscape_frame(leds, frame_num);
   	for (ii=0; ii<num_pixels; ii++){
   		ledscape_set_color(frame, 0, ii, rgb_off[0], rgb_off[1], rgb_off[2]);
   	}
