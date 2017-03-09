@@ -9,7 +9,7 @@
 #include <inttypes.h>
 #include <errno.h>
 #include <unistd.h>
-#include "Pix4lBone/ledscape.h"
+#include "PixelBone/ledscape.h"
 
 // Gamma Correction Curve
 const uint8_t dim_curve[] = {
