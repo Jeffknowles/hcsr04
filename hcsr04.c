@@ -161,7 +161,7 @@ int main(void) {
 	/* Main Loop */
 	i = 0;
 	while (1) {
-		i = i + 1;
+		// i = i + 1;
 
 		gettimeofday(&new_time, NULL);
 		dt = 0;//(double) (new_time.tv_sec - last_time.tv_sec);      // sec 
