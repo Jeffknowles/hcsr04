@@ -12,6 +12,7 @@
 #include <pruss_intc_mapping.h>
 #define prunum 1
 
+#include "PixelBone/ledscape.h"
 
 const double minIPI = 0.1; // minimum interping interval in miliseconds
 const double sense_thresh_i = 100; // threshold where responses turn on
