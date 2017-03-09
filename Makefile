@@ -35,7 +35,6 @@ hcsr04: hcsr04.c
 	$(CC) $(CFLAGS) -c -o hcsr04.o hcsr04.c
 	$(CC) -lpthread -lprussdrv -o hcsr04 hcsr04.o ledscape.o -lm
 
-     gcc  -o hcsr04 hcsr04.o ledscape.o util.o -lpthread  
 rgb-test: rgb-test.c
 	@echo "\n>> Compiling RGB example"
 	$(CC) $(CFLAGS) -c -o rgb-test.o ledscape.o rgb-test.c
