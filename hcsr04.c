@@ -130,6 +130,7 @@ int main(void) {
 	}
 
 
+
  	/* Initialize the PRU for LEDS */
   	ledscape_t *const leds = ledscape_init(num_pixels);
   	uint8_t rgb_spike[3] = {255,0,0};
