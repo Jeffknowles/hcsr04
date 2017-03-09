@@ -138,7 +138,7 @@ int main(void) {
   		rgb_spike[ii][0] = (uint8_t) 100+ rand() % 154;
   		rgb_spike[ii][1] = (uint8_t) rand() % 255;
   		rgb_spike[ii][2] = (uint8_t) rand() % 255;
-  		printf("%d %d %d",rgb_spike[ii][0],rgb_spike[ii][1],rgb_spike[ii][2]);
+  		printf("%d %d %d\n",rgb_spike[ii][0],rgb_spike[ii][1],rgb_spike[ii][2]);
   	}
 
   	uint8_t rgb_off[3] = {0,0,0};
