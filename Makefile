@@ -32,7 +32,7 @@ hcsr04.bin: hcsr04.p
 
 hcsr04: hcsr04.c
 	@echo "\n>> Compiling HC-SR04 example"
-	$(CC) $(CFLAGS) -c -o hcsr04.o hcsr04.c 
+	$(CC) $(CFLAGS) -c -o hcsr04.o hcsr04.c ledscape.o
 	$(CC) -lpthread -lprussdrv -ledscape -o hcsr04 hcsr04.o -lm
 
 rgb-test: rgb-test.c
