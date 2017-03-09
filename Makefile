@@ -2,7 +2,7 @@ CC = gcc-4.6
 CFLAGS += \
 	-std=c99 \
 	-W \
-	-wall \
+	-Wall \
 	-D_BSD_SOURCE \
 	-Wp,-MMD,$(dir $@).$(notdir $@).d \
 	-Wp,-MT,$@ \
