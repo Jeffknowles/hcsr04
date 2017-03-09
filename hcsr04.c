@@ -230,7 +230,7 @@ int main(void) {
 	prussdrv_exit();
 	printf(">> Sonar PRU Disabled.\r\n");
 	ledscape_close(leds);
-	
+	printf(">> LED PRU Disabled.\r\n");
 	return (0);
 
 }
