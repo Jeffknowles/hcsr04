@@ -1,4 +1,4 @@
-CC = gcc-4.6
+CC = gcc
 CFLAGS += \
 	-std=c99 \
 	-W \
