@@ -48,6 +48,7 @@ const double k = 1; // magnitude of the leak
 
 
 double doPing(unsigned int *pruData);
+float random_float(const float min, const float max)
 
 
 #endif
