@@ -200,7 +200,7 @@ int main(void) {
 		        // if (ledPins[ch] > 0) {
 		        //   digitalWrite(ledPins[ch], HIGH);
 		        // }
-		        ledscape_set_color(frame, 0, p, rgb[0], rgb[1], rgb[2]);
+		        ledscape_set_color(frame, 0, c, rgb[0], rgb[1], rgb[2]);
 		        printf("ch%d spike \n", ch);
 		        v[ch] = -1; // v<0 stores that the neuron is in firing state
 		        for (syn = 0; syn < maxCon; syn++) { // loop thru synaptic outputs
