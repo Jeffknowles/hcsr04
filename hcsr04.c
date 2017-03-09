@@ -113,7 +113,7 @@ int main(void) {
 
 	// initialize neurons 
 	double v[nch] =  {0};
-	double spike_len[nch] =   {10};
+	double spike_len[nch] =   {20};
 	int connections[nch][maxCon];
 	float weights[nch][maxCon];
 	// generate connections among neurons
