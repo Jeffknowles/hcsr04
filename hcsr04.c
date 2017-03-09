@@ -135,7 +135,10 @@ int main(void) {
   	ledscape_t *const leds = ledscape_init(num_pixels);
   	uint8_t rgb_spike[num_pixels][3];
   	for (ii=0; ii<num_pixels; ii++){
-  		rgb_spike
+  		rgb_spike[ii][1] = (uint8_t) 100+ rand() % 154;
+  		rgb_spike[ii][2] = (uint8_t) rand() % 255;
+  		rgb_spike[ii][3] = (uint8_t) rand() % 255;
+  		
   	} = {255,255,0};
   	uint8_t rgb_off[3] = {0,0,0};
   	const unsigned frame_num = i++ % 2;
