@@ -136,6 +136,7 @@ int main(void) {
   	for (ii=0; ii<num_pixels; ii++){
   		ledscape_set_color(frame, 0, ii, rgb_off[0], rgb_off[1], rgb_off[2]);
   	}
+  	ledscape_draw(leds, frame_num);
 
 
 	/* Initialize the PRU for sonar*/
