@@ -2,7 +2,7 @@ CC = gcc-4.6
 CFLAGS += \
 	-std=c99 \
 	-W \
-	-Wall \
+	-wall \
 	-D_BSD_SOURCE \
 	-Wp,-MMD,$(dir $@).$(notdir $@).d \
 	-Wp,-MT,$@ \
@@ -10,8 +10,8 @@ CFLAGS += \
 	-O2 \
 	-mtune=cortex-a8 \
 	-march=armv7-a \
+	-lm \
 
-CFLAGS = -w -lm
 PRU_ASM = pasm
 DTC = dtc
 
