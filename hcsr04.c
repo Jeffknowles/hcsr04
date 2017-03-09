@@ -131,8 +131,10 @@ int main(void) {
 	}
 
 
+ 	/* Initialize the PRU for LEDS */
+  	ledscape_t *const leds = ledscape_init(num_pixels);
 
-	/* Initialize the PRU */
+	/* Initialize the PRU for sonar*/
 	printf(">> Initializing PRU\n");
 	tpruss_intc_initdata pruss_intc_initdata = PRUSS_INTC_INITDATA;
 	prussdrv_init();
