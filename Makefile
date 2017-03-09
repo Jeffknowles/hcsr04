@@ -11,6 +11,9 @@ CFLAGS += \
 	-mtune=cortex-a8 \
 	-march=armv7-a \
 	-lm \
+	
+LDLIBS += \
+	-lpthread \
 
 PRU_ASM = pasm
 DTC = dtc
