@@ -249,7 +249,6 @@ int main(void) {
 		    }
 		  }
 		  ledscape_draw(leds, frame_num);
-		// sleep(0.01);
 
 
 	}
