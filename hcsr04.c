@@ -234,9 +234,8 @@ int main(void) {
 			        for (syn = 0; syn < maxCon; syn++) { // loop thru synaptic outputs
 			          	// if connection is real and postsyn element is not in firing, incriment its v
 			          	if (connections[ch][syn] >= 0 & v[connections[ch][syn]] >= 0) {
-			            	v[connections[ch][syn]] += weights[ch][syn];
-			            	v[connections[ch][syn]] = fmax(v[connections[ch][syn]],0);
-			            	v[connections[ch][syn]] = fmin(v[connections[ch][syn]],thresh+1);
+			            	dv[connections[ch][syn]] += weights[ch][syn];
+
 			            }
 			        }
 			      }
