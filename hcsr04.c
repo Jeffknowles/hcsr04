@@ -114,6 +114,9 @@ int main(void) {
 	// initialize neurons 
 	double v[nch] =  {0};
 	double spike_len[nch] =   {20};
+	for (ii=1; ii<nch; ii++){
+		spike_len[nch] = (double) random_float(10,50);
+	}
 	int connections[nch][maxCon];
 	float weights[nch][maxCon];
 	// generate connections among neurons
