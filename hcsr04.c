@@ -121,7 +121,8 @@ int main(void) {
 		connections[ii][0] = ii + 1; 
 		weights[ii][0] = 8;
 		connections[ii][1] = ii + 2; 
-		weights[ii][1] = 2;
+		weights[ii][1] = 3;
+		connections[ii][2] = ii + 3;
 		weights[ii][3] = 2;
 
 		for (iii=2; iii<maxCon; iii++){
