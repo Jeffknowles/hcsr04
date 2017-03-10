@@ -230,6 +230,7 @@ int main(void) {
 		          	if (connections[ch][syn] >= 0 & v[connections[ch][syn]] >= 0) {
 		            	v[connections[ch][syn]] += weights[ch][syn];
 		            	v[connections[ch][syn]] = fmax(v[connections[ch][syn]],0);
+		            	v[connections[ch][syn]] = fmin(v[connections[ch][syn]],thresh+1);
 		            }
 		        }
 		      }
