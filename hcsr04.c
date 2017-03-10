@@ -219,10 +219,10 @@ int main(void) {
 		// loop thru neurons
 		for (ch = 0; ch < nch; ch++) {
 			if (v[ch] >= 0) { // if neuron is in integrate mode
-		    	v[ch] = v[ch]  + dv[ch]- k * v[ch] * (double) dt; // decay v to 0
+		    	v[ch] = v[ch]  + dv[ch] - k * v[ch] * (double) dt; // decay v to 0
 		    	dv[ch] = 0;
 		    	v[ch] = fmax(v[ch], 0);
-		    	v[ch] = fmin(v[ch], thresh);
+		    	v[ch] = fmin(v[ch], thresh+1);
 			    // if the neuron crosses threshold, fire and increment outputs
 			    if (v[ch] > thresh) {
 			        // if (ledPins[ch] > 0) {
