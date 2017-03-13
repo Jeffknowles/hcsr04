@@ -197,6 +197,7 @@ int main(void) {
 				target_distance = dur2cm(duration);
 			    // target_distance = 90; 
 				time_since_last_ping = 0; 
+				printf("%d: Distance = %04.1f cm   ", i, target_distance);
 		}
 		else {
 			time_since_last_ping = time_since_last_ping + dt; 
