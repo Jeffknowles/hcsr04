@@ -41,7 +41,7 @@ const uint8_t dim_curve[] = {
 
 
 
-const double minIPI = 0.05; // minimum interping interval in miliseconds
+const double minIPI = 0.5; // minimum interping interval in miliseconds
 const double sense_thresh_i = 60; // threshold where responses turn on
 // const int pingPin = 11; // trigger for sonar pulses
 // const int echoPin = 12; // return for sonar pulses
