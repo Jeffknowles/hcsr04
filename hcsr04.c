@@ -231,7 +231,7 @@ int main(void) {
 			        //   digitalWrite(ledPins[ch], HIGH);
 			        // }
 			        ledscape_set_color(frame, 0, ch, rgb_spike[ch][0], rgb_spike[ch][1], rgb_spike[ch][2]);
-			        printf("ch%d spike ", ch);
+			        // printf("ch%d spike ", ch);
 			        v[ch] = -1; // v<0 stores that the neuron is in firing state
 			        for (syn = 0; syn < maxCon; syn++) { // loop thru synaptic outputs
 			          	// if connection is real and postsyn element is not in firing, incriment its v
