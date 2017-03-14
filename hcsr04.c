@@ -122,16 +122,21 @@ int main(void) {
 	float weights[nch][maxCon];
 	// generate connections among neurons
 	for ( ii=0; ii<(nch-5); ii++){
+
 		connections[ii][0] = ii + 1; 
 		weights[ii][0] = 8;
 		connections[ii][1] = ii + 2; 
 		weights[ii][1] = 3;
 		connections[ii][2] = ii + 3;
 		weights[ii][3] = 2;
-
 		for (iii=3; iii<maxCon; iii++){
 			connections[ii][iii]=rand() % nch;
 			weights[ii][iii] = random_float((float) -5, (float) 6);
+		}
+
+		if (ii > 2){
+			connections[ii][3] = ii-1; 
+			weights[ii][3] = -10;
 		}
 	}
 
