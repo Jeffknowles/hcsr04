@@ -97,6 +97,7 @@ int main(void) {
 	int ii;
 	int iii;
 	int syn;
+	int loop_spikes; 
 
 	// setup timers
 	struct timeval new_time, last_time;
@@ -186,6 +187,7 @@ int main(void) {
 
 	/* Main Loop */
 	i = 0;
+	loop_spikes = 0;
 	while (1) {
 		// i = i + 1;
 
@@ -221,9 +223,12 @@ int main(void) {
 
 		  // set v[0] based on sonar
 		 if (target_distance < sense_thresh & v[0] >= 0) {
-		    v[0] = v[0] + (double) 0.1 * sense_thresh / target_distance;
+		 	if (loop_spikes < 100){
+		    	v[0] = v[0] + (double) 0.1 * sense_thresh / target_distance;
+			}
 		 }
 		// loop thru neurons
+		 loop_spikes = 0; 
 		for (ch = 0; ch < nch; ch++) {
 			if (v[ch] >= 0) { // if neuron is in integrate mode
 		    	v[ch] = v[ch]  + dv[ch] - k * v[ch] * (double) dt; // decay v to 0
@@ -232,9 +237,7 @@ int main(void) {
 		    	v[ch] = fmin(v[ch], thresh+1);
 			    // if the neuron crosses threshold, fire and increment outputs
 			    if (v[ch] > thresh) {
-			        // if (ledPins[ch] > 0) {
-			        //   digitalWrite(ledPins[ch], HIGH);
-			        // }
+			        loop_spikes = loop_spikes+1;
 			        ledscape_set_color(frame, 0, ch, rgb_spike[ch][0], rgb_spike[ch][1], rgb_spike[ch][2]);
 			        // printf("ch%d spike ", ch);
 			        v[ch] = -1; // v<0 stores that the neuron is in firing state
