@@ -1,4 +1,4 @@
-Spikeing Led Network
+//Spikeing Led Network
 Jeff Knowles
 jeff.knowles@gmail.com	
 
@@ -27,26 +27,15 @@ Hardware configuration:
 	Make sure there is a 1KOhm resistor between ECHO pin and your beaglebone
 	as input pins are 3.3V while sensor emits 5V
 
-### Schematic:
-	
-![Schematic](hc-sr04.png?raw=true)
-
-### To download the complete package to your Beaglebone Black:
-
-	wget --no-check-certificate https://github.com/luigif/hcsr04/archive/master.tar.gz -O - | tar xz
-
 ### To build:
- 	
- 	cd hcsr04-master
-	make
-	
+make
 ### To install driver:
 
-	make install
-	
-	It will copy device tree driver to /lib/firmware and add it to the cape manager
+	make install_spikinglednetwork.sh
+	It will copy device tree driver to /lib/firmware and add it to the cape manager. Currently works for Pixelbone and 	HCSR04 communication. 
 	
 ### To run:
+Under construction: 
 
 	
 
