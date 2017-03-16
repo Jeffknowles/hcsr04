@@ -55,7 +55,7 @@ const bool printout = false;
 const bool pong_only_in_range = true;
 	
 
-const double thresh = 10;
+const double thresh = 20;
 const double k = 0.5; // magnitude of the leak
 
 
@@ -126,14 +126,14 @@ int main(void) {
 	for ( ii=0; ii<(nch-5); ii++){
 
 		connections[ii][0] = ii + 1; 
-		weights[ii][0] = 15;
+		weights[ii][0] = 8;
 		connections[ii][1] = ii + 2; 
-		weights[ii][1] = 12;
+		weights[ii][1] = 8;
 		connections[ii][2] = ii + 3;
-		weights[ii][3] = 10;
+		weights[ii][3] = 8;
 		for (iii=3; iii<maxCon; iii++){
 			connections[ii][iii]=rand() % nch;
-			weights[ii][iii] = random_float((float) -4, (float) 20);
+			weights[ii][iii] = random_float((float) -3, (float) 7.2);
 		}
 
 		if (ii > 2){
