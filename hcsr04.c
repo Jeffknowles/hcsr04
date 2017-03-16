@@ -238,7 +238,7 @@ int main(void) {
 			    // if the neuron crosses threshold, fire and increment outputs
 			    if (v[ch] > thresh) {
 			        loop_spikes = loop_spikes+1;
-			        if (loop_spikes < 30){
+			        if (loop_spikes < 20){
 			        	ledscape_set_color(frame, 0, ch, rgb_spike[ch][0], rgb_spike[ch][1], rgb_spike[ch][2]);
 			        }
 			        // printf("ch%d spike ", ch);
