@@ -223,7 +223,7 @@ int main(void) {
 
 		  // set v[0] based on sonar
 		 if (target_distance < sense_thresh & v[0] >= 0) {
-		 	if (loop_spikes < 100){
+		 	if (loop_spikes < 20){
 		    	v[0] = v[0] + (double) 0.1 * sense_thresh / target_distance;
 			}
 		 }
