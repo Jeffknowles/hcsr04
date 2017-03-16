@@ -189,6 +189,7 @@ int main(void) {
 	/* Main Loop */
 	i = 0;
 	loop_spikes = 0;
+	rep_spikes;
 	while (1) {
 		// i = i + 1;
 
