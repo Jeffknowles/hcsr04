@@ -1,4 +1,5 @@
-//Spikeing Led Network
+####Spikeing Led Network
+
 Jeff Knowles
 jeff.knowles@gmail.com	
 
@@ -10,12 +11,6 @@ This code runs a spiking neural network in C that interpretes input from envirom
 ===
 
 
-Prerequisites:
-
-	* Beaglebone Black with debian 3.8.13 bone47
-	* HC-SR04 sensor
-	* Dev tools (gcc, pasm, dtc, etc.) that are already included in BBB latest images.
-	  (If you miss them, please upgrade from http://beagleboard.org/latest-images/)
 
 Hardware configuration:
 
