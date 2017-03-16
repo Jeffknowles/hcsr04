@@ -98,6 +98,7 @@ int main(void) {
 	int iii;
 	int syn;
 	int loop_spikes; 
+	int rep_spikes;
 
 	// setup timers
 	struct timeval new_time, last_time;
