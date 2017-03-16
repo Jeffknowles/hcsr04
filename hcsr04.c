@@ -238,7 +238,7 @@ int main(void) {
 			        loop_spikes = loop_spikes+1;
 			        if (loop_spikes < 5){
 			        	ledscape_set_color(frame, 0, ch, rgb_spike[ch][0], rgb_spike[ch][1], rgb_spike[ch][2]);
-			        {
+			        }
 			        // printf("ch%d spike ", ch);
 			        v[ch] = -1; // v<0 stores that the neuron is in firing state
 			        for (syn = 0; syn < maxCon; syn++) { // loop thru synaptic outputs
