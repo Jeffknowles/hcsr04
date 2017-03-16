@@ -207,7 +207,7 @@ int main(void) {
 			    // target_distance = 90; 
 				time_since_last_ping = 0; 
 				printf("%d: Distance = %04.1f cm    loop_spikes = %d   rep_spikes = %d \n", i, target_distance,loop_spikes, rep_spikes);
-
+				rep_spikes = 0; 
 		}
 		else {
 			time_since_last_ping = time_since_last_ping + dt; 
