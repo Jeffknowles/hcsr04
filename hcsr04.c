@@ -223,9 +223,7 @@ int main(void) {
 
 		  // set v[0] based on sonar
 		 if (target_distance < sense_thresh & v[0] >= 0) {
-		 	if (loop_spikes < 5){
-		    	v[0] = v[0] + (double) 0.1 * sense_thresh / target_distance;
-			}
+		    v[0] = v[0] + (double) 0.1 * sense_thresh / target_distance;
 		 }
 		// loop thru neurons
 		 loop_spikes = 0; 
@@ -238,7 +236,8 @@ int main(void) {
 			    // if the neuron crosses threshold, fire and increment outputs
 			    if (v[ch] > thresh) {
 			        loop_spikes = loop_spikes+1;
-			        ledscape_set_color(frame, 0, ch, rgb_spike[ch][0], rgb_spike[ch][1], rgb_spike[ch][2]);
+			        if (loop_spikes < 5){
+			        	ledscape_set_color(frame, 0, ch, rgb_spike[ch][0], rgb_spike[ch][1], rgb_spike[ch][2]);
 			        // printf("ch%d spike ", ch);
 			        v[ch] = -1; // v<0 stores that the neuron is in firing state
 			        for (syn = 0; syn < maxCon; syn++) { // loop thru synaptic outputs
