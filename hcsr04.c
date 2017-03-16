@@ -205,7 +205,7 @@ int main(void) {
 				duration = doPing(pruData);
 				target_distance = dur2cm(duration);
 			    // target_distance = 90; 
-			    printf("%d: Distance = %04.1f cm    loop_spikes = %d   rep_spikes = %d \n", i, target_distance,loop_spikes, rep_spikes);
+			    printf("%d: Distance = %04.1f cm    loop_spikes = %d   rep_spikes = %d \n", i, target_distance,loop_spikes, (double) rep_spikes / (double) time_since_last_ping;
 				time_since_last_ping = 0; 
 				rep_spikes = 0; 
 		}
