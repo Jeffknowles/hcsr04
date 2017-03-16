@@ -128,9 +128,9 @@ int main(void) {
 		connections[ii][0] = ii + 1; 
 		weights[ii][0] = 8;
 		connections[ii][1] = ii + 2; 
-		weights[ii][1] = 3;
+		weights[ii][1] = 5;
 		connections[ii][2] = ii + 3;
-		weights[ii][3] = 2;
+		weights[ii][3] = 8;
 		for (iii=3; iii<maxCon; iii++){
 			connections[ii][iii]=rand() % nch;
 			weights[ii][iii] = random_float((float) -3, (float) 7.2);
