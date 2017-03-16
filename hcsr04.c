@@ -198,7 +198,7 @@ int main(void) {
         dt += (double) (new_time.tv_usec - last_time.tv_usec)/1000000;   // us to s
 		last_time = new_time;
 		dt = fmax(dt,0);
-
+		rep_spikes = rep_spikes+loop_spikes; 
 
 		// measure distance
 		if (time_since_last_ping > currentIPI) {
