@@ -132,13 +132,13 @@ int main(void) {
 		connections[ii][2] = ii + 3;
 		weights[ii][3] = 2;
 		for (iii=3; iii<maxCon; iii++){
-			connections[ii][iii]=rand() % nch;
-			weights[ii][iii] = random_float((float) -5, (float) 7.4);
+			connections[ii][iii]=1+rand() % nch-1;
+			weights[ii][iii] = random_float((float) -3, (float) 7);
 		}
 
 		if (ii > 2){
 			connections[ii][3] = ii-1; 
-			weights[ii][3] = -10;
+			weights[ii][3] = -12;
 		}
 	}
 
