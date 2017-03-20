@@ -60,7 +60,7 @@ const double k = 0.5; // magnitude of the leak
 
 
 // connection settings - declare connections between neurons
-#define maxCon 5
+#define maxCon 10
 #define nch 20050 // number of neurons
 #define num_pixels 150
 
