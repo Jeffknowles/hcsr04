@@ -239,7 +239,10 @@ int main(void) {
 			    if (v[ch] > thresh) {
 			        loop_spikes = loop_spikes+1;
 			        if (loop_spikes < 20){
-			        	ledscape_set_color(frame, 0, ch, rgb_spike[ch][0], rgb_spike[ch][1], rgb_spike[ch][2]);
+			        	if (ch < num_pixels){
+
+			        		ledscape_set_color(frame, 0, ch, rgb_spike[ch][0], rgb_spike[ch][1], rgb_spike[ch][2]);
+			        	}
 			        }
 			        // printf("ch%d spike ", ch);
 			        v[ch] = -1; // v<0 stores that the neuron is in firing state
