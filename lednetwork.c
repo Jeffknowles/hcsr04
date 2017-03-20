@@ -254,7 +254,7 @@ int main(void) {
 			            	dv[connections[ch][syn]] += weights[ch][syn];
 			            }
 			        }
-			      }
+			   
 			    }
 		    else { // otherwise if neuron is in spike mode
 		      if (v[ch] < (double) -1 * spike_len[ch]) { // if the time since spike onset is up, end spike
@@ -270,9 +270,9 @@ int main(void) {
 		    }
 		  }
 		  ledscape_draw(leds, frame_num);
+        }
 
-
-	}
+	
 
 	/* Disable PRU and close memory mapping*/
 	prussdrv_pru_disable(prunum);
@@ -282,7 +282,7 @@ int main(void) {
 	printf(">> LED PRU Disabled.\r\n");
 	return (0);
 
-
+}
 
 
 
