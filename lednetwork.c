@@ -241,7 +241,6 @@ int main(void) {
 			    // if the neuron crosses threshold, fire and increment outputs
 			    if (v[ch] > thresh) {
 			        loop_spikes = loop_spikes+1;
-			        if (loop_spikes < 1000){
 			        	if (ch < num_pixels){
 			        		ledscape_set_color(frame, 0, ch, rgb_spike[ch][0], rgb_spike[ch][1], rgb_spike[ch][2]);
 			        	}
@@ -252,7 +251,6 @@ int main(void) {
 			          	// if connection is real and postsyn element is not in firing, incriment its v
 			          	if (connections[ch][syn] >= 0 & v[connections[ch][syn]] >= 0) {
 			            	dv[connections[ch][syn]] += weights[ch][syn];
-
 			            }
 			        }
 			      }
