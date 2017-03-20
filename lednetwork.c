@@ -259,6 +259,7 @@ int main(void) {
 		      if (v[ch] < (double) -1 * spike_len[ch]) { // if the time since spike onset is up, end spike
 		        v[ch] = 0; // set voltage to 0
 		        ledscape_set_color(frame, 0, ch, rgb_off[0], rgb_off[1], rgb_off[2]);
+		        printf("\n %f", v[ch])
 		      }
 		      else {
 		        v[ch] = v[ch] - dt*1000; // otherwise decrment v by dt to record time
