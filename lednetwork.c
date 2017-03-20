@@ -202,7 +202,6 @@ int main(void) {
 
 		// measure distance
 		if (time_since_last_ping > currentIPI) {
-				printf("%d: Distance = %05.1f cm    loop_spikes = %02d   spike rate = %05.1f Hz \n", i, target_distance,loop_spikes, (double) rep_spikes / (double) time_since_last_ping);
 				duration = doPing(pruData);
 				target_distance = dur2cm(duration);
 				printf("%d: Distance = %05.1f cm    loop_spikes = %02d   spike rate = %05.1f Hz \n", i, target_distance,loop_spikes, (double) rep_spikes / (double) time_since_last_ping);
