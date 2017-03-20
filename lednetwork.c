@@ -233,6 +233,7 @@ int main(void) {
 		// loop thru neurons
 		 loop_spikes = 0; 
 		for (ch = 0; ch < nch; ch++) {
+			printf("\n %f", v[ch])
 			if (v[ch] >= 0) { // if neuron is in integrate mode
 		    	v[ch] = v[ch]  + dv[ch] - k * v[ch] * (double) dt; // decay v to 0
 		    	dv[ch] = 0;
