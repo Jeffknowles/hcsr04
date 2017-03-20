@@ -256,7 +256,7 @@ int main(void) {
 			      }
 			    }
 		    else { // otherwise if neuron is in spike mode
-		      if (v[ch] < (float) -1 * spike_len[ch]) { // if the time since spike onset is up, end spike
+		      if (v[ch] < (double) -1 * spike_len[ch]) { // if the time since spike onset is up, end spike
 		        v[ch] = 0; // set voltage to 0
 		        ledscape_set_color(frame, 0, ch, rgb_off[0], rgb_off[1], rgb_off[2]);
 		      }
