@@ -36,7 +36,7 @@ hcsr04: hcsr04.c
 	$(CC) -lpthread -lprussdrv -o hcsr04 hcsr04.o PixelBone/ledscape.o PixelBone/pru.o -lm
 
 hcsr04: lednetwork.c
-	@echo "\n>> Compiling HC-SR04 example"
+	@echo "\n>> spiking lednetwork example"
 	$(CC) $(CFLAGS) -c -o hcsr04.o lednetwork.c
 	$(CC) -lpthread -lprussdrv -o lednetwork lednetwork.o PixelBone/ledscape.o PixelBone/pru.o -lm
 
