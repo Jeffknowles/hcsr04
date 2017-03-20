@@ -118,7 +118,7 @@ int main(void) {
 	double v[nch] =  {0};
 	double dv[nch] = {0};
 	double spike_len[nch] =   {20};
-	for (ii=1; ii<nch; ii++){
+	for (ii=5; ii<nch; ii++){
 		spike_len[ii] = (double) random_float((float) 50, (float) 150);
 	}
 	int connections[nch][maxCon];
