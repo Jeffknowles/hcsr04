@@ -138,7 +138,7 @@ int main(void) {
 
 		if (ii > 2){
 			connections[ii][3] = ii-1; 
-			weights[ii][3] = -12;
+			weights[ii][3] = -1;
 		}
 	}
 
