@@ -119,7 +119,7 @@ int main(void) {
 	double dv[nch] = {0};
 	double spike_len[nch] =   {20};
 	for (ii=1; ii<nch; ii++){
-		spike_len[nch] = (double) random_float((float) 400, (float) 500);
+		spike_len[ii] = (double) random_float((float) 400, (float) 500);
 	}
 	int connections[nch][maxCon];
 	float weights[nch][maxCon];
@@ -264,7 +264,7 @@ int main(void) {
 		        
 		      }
 		      else {
-		        v[ch] = v[ch] - dt*100; // otherwise decrment v by dt to record time
+		        v[ch] = v[ch] - dt*1000; // otherwise decrment v by dt to record time
 		        printf("\n %f", v[ch]);
 		      }
 		    }
