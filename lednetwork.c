@@ -119,7 +119,7 @@ int main(void) {
 	double dv[nch] = {0};
 	double spike_len[nch] =   {20};
 	for (ii=1; ii<nch; ii++){
-		spike_len[nch] = (double) random_float((float) 10, (float) 500);
+		spike_len[nch] = (double) random_float((float) 400, (float) 500);
 	}
 	int connections[nch][maxCon];
 	float weights[nch][maxCon];
