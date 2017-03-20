@@ -103,6 +103,7 @@ int main(void) {
 	// setup timers
 	struct timeval new_time, last_time;
     double dt;
+    double max_td;
     double time_since_last_ping = 0;
     gettimeofday(&last_time, NULL);
     gettimeofday(&new_time, NULL);
