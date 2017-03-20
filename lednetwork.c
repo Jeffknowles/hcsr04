@@ -262,6 +262,7 @@ int main(void) {
 		      }
 		      else {
 		        v[ch] = v[ch] - dt*1000; // otherwise decrment v by dt to record time
+		        printf("\n %f", v[ch])
 		      }
 		    }
 		  }
