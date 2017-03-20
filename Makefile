@@ -37,7 +37,7 @@ hcsr04.bin: hcsr04.p
 
 hcsr04: lednetwork.c
 	@echo "\n>> spiking lednetwork example"
-	$(CC) $(CFLAGS) -c -o hcsr04.o lednetwork.c
+	$(CC) $(CFLAGS) -c -o lednetwork.o lednetwork.c
 	$(CC) -lpthread -lprussdrv -o lednetwork lednetwork.o PixelBone/ledscape.o PixelBone/pru.o -lm
 
 
