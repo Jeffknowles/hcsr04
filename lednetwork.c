@@ -210,6 +210,7 @@ int main(void) {
 			    // target_distance = 90; 
 			    time_since_last_ping = 0; 
 				rep_spikes = 0; 
+				max_dt = 0; 
 		}
 		else {
 			time_since_last_ping = time_since_last_ping + dt; 
