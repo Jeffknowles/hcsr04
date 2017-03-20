@@ -191,7 +191,7 @@ int main(void) {
 	loop_spikes = 0;
 	rep_spikes;
 	while (1) {
-		// i = i + 1;
+		i = i + 1;
 
 		gettimeofday(&new_time, NULL);
 		dt = 0;//(double) (new_time.tv_sec - last_time.tv_sec);      // sec 
