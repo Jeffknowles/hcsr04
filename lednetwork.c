@@ -135,7 +135,7 @@ int main(void) {
 		weights[ii][3] = 9;
 		for (iii=3; iii<maxCon; iii++){
 			connections[ii][iii]=1+rand() % nch-1;
-			weights[ii][iii] = random_float((float) -3.5, (float) 4);
+			weights[ii][iii] = random_float((float) -4, (float) 4);
 		}
 
 		if (ii > 2){
