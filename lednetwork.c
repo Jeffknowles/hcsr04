@@ -42,7 +42,7 @@ const uint8_t dim_curve[] = {
 
 
 const double minIPI = 0.1; // minimum interping interval in miliseconds
-const double sense_thresh_i = 150; // threshold where responses turn on
+const double sense_thresh_i = 300; // threshold where responses turn on
 // const int pingPin = 11; // trigger for sonar pulses
 // const int echoPin = 12; // return for sonar pulses
 // const int phonePin1 = 9; //
@@ -118,9 +118,9 @@ int main(void) {
 	double v[nch] =  {0};
 	double dv[nch] = {0};
 	double spike_len[nch] =   {20};
-	// for (ii=5; ii<nch; ii++){
-	// 	spike_len[ii] = (double) random_float((float) 20, (float) 50);
-	// }
+	for (ii=1; ii<nch; ii++){
+		spike_len[nch] = (double) random_float((float) 400, (float) 500);
+	}
 	int connections[nch][maxCon];
 	float weights[nch][maxCon];
 	// generate connections among neurons
@@ -134,7 +134,7 @@ int main(void) {
 		weights[ii][3] = 2;
 		for (iii=3; iii<maxCon; iii++){
 			connections[ii][iii]=1+rand() % nch-1;
-			weights[ii][iii] = random_float((float) -8, (float) 8);
+			weights[ii][iii] = random_float((float) -4, (float) 8);
 		}
 
 		if (ii > 2){
@@ -265,7 +265,7 @@ int main(void) {
 		      }
 		      else {
 		        v[ch] = v[ch] - dt*1000; // otherwise decrment v by dt to record time
-		        // printf("\n %f", v[ch]);
+		        printf("\n %f", v[ch]);
 		      }
 		    }
 		  }
@@ -283,7 +283,6 @@ int main(void) {
 	return (0);
 
 }
-
 
 
 
