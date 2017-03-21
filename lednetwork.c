@@ -59,8 +59,8 @@ const double k = 10; // magnitude of the leak
 const double sensory_factor = 0.05;
 
 // connection settings - declare connections between neurons
-#define maxCon 40
-#define nch 15000 // number of neurons
+#define maxCon 20
+#define nch 1000 // number of neurons
 #define num_pixels 150
 
 
