@@ -239,8 +239,9 @@ int main(void) {
 		    	dv[ch] = 0;
 		    	v[ch] = fmax(v[ch], 0);
 		    	v[ch] = fmin(v[ch], thresh+1);
-		    	ledscape_set_color(frame, 0, ch, (uint8_t) 0, (uint8_t) 0,(uint8_t) (255* v[ch] / (thresh*1.5))); 
-			    
+		    	if ( ch < num_pixels ){
+		    		ledscape_set_color(frame, 0, ch, (uint8_t) 0, (uint8_t) 0,(uint8_t) (255* v[ch] / (thresh*1.5))); 
+			    }
 		        // if the neuron crosses threshold, fire and increment outputs
 			    if (v[ch] > thresh) {
 			        loop_spikes = loop_spikes+1;
