@@ -128,7 +128,7 @@ int main(void) {
 	for ( ii=0; ii<(nch-5); ii++){
 
 		connections[ii][0] = ii + 1; 
-		weights[ii][0] = 14;
+		weights[ii][0] = 18;
 		connections[ii][1] = ii + 2; 
 		weights[ii][1] = 8;
 		connections[ii][2] = ii + 3;
