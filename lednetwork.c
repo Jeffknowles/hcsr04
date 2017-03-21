@@ -248,19 +248,19 @@ int main(void) {
 			        }
 			        // printf("ch%d spike ", ch);
 			        v[ch] = -1; // v<0 stores that the neuron is in firing state
-			        for (syn = 0; syn < maxCon; syn++) { // loop thru synaptic outputs
-			          	// if connection is real and postsyn element is not in firing, incriment its v
-			          	if (connections[ch][syn] >= 0 & v[connections[ch][syn]] >= 0) {
-			            	dv[connections[ch][syn]] += weights[ch][syn];
-
-			            }
-			        }
 			      }
 			    }
 		    else { // otherwise if neuron is in spike mode
 		      if (v[ch] < -1 * spike_len[ch]) { // if the time since spike onset is up, end spike
 		        v[ch] = 0; // set voltage to 0
 		        ledscape_set_color(frame, 0, ch, rgb_off[0], rgb_off[1], rgb_off[2]);
+		        for (syn = 0; syn < maxCon; syn++) { // loop thru synaptic outputs
+			          	// if connection is real and postsyn element is not in firing, incriment its v
+			          	if (connections[ch][syn] >= 0 & v[connections[ch][syn]] >= 0) {
+			            	dv[connections[ch][syn]] += weights[ch][syn];
+
+			            }
+			        }
 		      }
 		      else {
 		        v[ch] = v[ch] - dt*1000; // otherwise decrment v by dt to record time
