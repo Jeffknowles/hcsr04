@@ -139,7 +139,7 @@ int main(void) {
 
 		if (ii > 2){
 			connections[ii][3] = ii-1; 
-			weights[ii][3] = 0;
+			weights[ii][3] = -5;
 		}
 	}
 
