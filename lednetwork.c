@@ -129,7 +129,7 @@ int main(void) {
 		connections[ii][0] = ii + 1; 
 		weights[ii][0] = 15;
 		connections[ii][1] = ii + 2; 
-		weights[ii][1] = 10;
+		weights[ii][1] = 8;
 		connections[ii][2] = ii + 3;
 		weights[ii][3] = 9;
 		for (iii=3; iii<maxCon; iii++){
