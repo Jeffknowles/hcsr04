@@ -42,7 +42,7 @@ const uint8_t dim_curve[] = {
 
 
 const double minIPI = 0.1; // minimum interping interval in miliseconds
-const double sense_thresh_i = 150; // threshold where responses turn on
+const double sense_thresh_i = 300; // threshold where responses turn on
 // const int pingPin = 11; // trigger for sonar pulses
 // const int echoPin = 12; // return for sonar pulses
 // const int phonePin1 = 9; //
@@ -119,7 +119,7 @@ int main(void) {
 	double dv[nch] = {0};
 	double spike_len[nch] =   {20};
 	for (ii=1; ii<nch; ii++){
-		spike_len[nch] = (double) random_float((float) 400, (float) 500);
+		spike_len[nch] = (double) random_float((float) 10, (float) 500);
 	}
 	int connections[nch][maxCon];
 	float weights[nch][maxCon];
@@ -134,7 +134,7 @@ int main(void) {
 		weights[ii][3] = 2;
 		for (iii=3; iii<maxCon; iii++){
 			connections[ii][iii]=1+rand() % nch-1;
-			weights[ii][iii] = random_float((float) -8, (float) 8);
+			weights[ii][iii] = random_float((float) -2, (float) 8);
 		}
 
 		if (ii > 2){
@@ -232,7 +232,6 @@ int main(void) {
 		 }
 		// loop thru neurons
 		 loop_spikes = 0; 
-
 		for (ch = 0; ch < nch; ch++) {
 			if (v[ch] >= 0) { // if neuron is in integrate mode
 		    	v[ch] = v[ch]  + dv[ch] - k * v[ch] * (double) dt; // decay v to 0
@@ -242,6 +241,7 @@ int main(void) {
 			    // if the neuron crosses threshold, fire and increment outputs
 			    if (v[ch] > thresh) {
 			        loop_spikes = loop_spikes+1;
+			        if (loop_spikes < 1000){
 			        	if (ch < num_pixels){
 			        		ledscape_set_color(frame, 0, ch, rgb_spike[ch][0], rgb_spike[ch][1], rgb_spike[ch][2]);
 			        	}
@@ -252,27 +252,25 @@ int main(void) {
 			          	// if connection is real and postsyn element is not in firing, incriment its v
 			          	if (connections[ch][syn] >= 0 & v[connections[ch][syn]] >= 0) {
 			            	dv[connections[ch][syn]] += weights[ch][syn];
+
 			            }
 			        }
-			   
+			      }
 			    }
 		    else { // otherwise if neuron is in spike mode
-		      if (v[ch] < (double) -1 * spike_len[ch]) { // if the time since spike onset is up, end spike
-		        // printf("\n %f", v[ch]);
+		      if (v[ch] < -1 * spike_len[ch]) { // if the time since spike onset is up, end spike
 		        v[ch] = 0; // set voltage to 0
 		        ledscape_set_color(frame, 0, ch, rgb_off[0], rgb_off[1], rgb_off[2]);
-		        
 		      }
 		      else {
 		        v[ch] = v[ch] - dt*1000; // otherwise decrment v by dt to record time
-		        // printf("\n %f", v[ch]);
 		      }
 		    }
 		  }
 		  ledscape_draw(leds, frame_num);
-        }
 
-	
+
+	}
 
 	/* Disable PRU and close memory mapping*/
 	prussdrv_pru_disable(prunum);
