@@ -228,7 +228,7 @@ int main(void) {
 		ao_values = readao(a0);
 		sense_thresh = (((double) ao_values) / ao_max)*sense_thresh;
 		currentIPI = (double)(100 * sense_thresh * 2 * 29)/1000; //set ipi based on a0
-
+		printf("%f ", currentIPI)
 
 		// measure distance
 		if (time_since_last_ping > currentIPI) {
