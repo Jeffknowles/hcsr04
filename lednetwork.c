@@ -112,6 +112,7 @@ int main(void) {
 	int syn;
 	int loop_spikes; 
 	int rep_spikes;
+	long int ao_values; 
 
 	// open analog channel files
 	FILE* a0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
