@@ -58,7 +58,7 @@ const bool pong_only_in_range = true;
 const double thresh = 20;
 const double k = 10; // magnitude of the leak
 const double sensory_factor = 0.05;
-
+const double ao_max = 4096;
 // connection settings - declare connections between neurons
 #define maxCon 20
 #define nch 1000 // number of neurons
@@ -226,8 +226,10 @@ int main(void) {
 
 		// read and interperate input 
 		ao_values = readao(a0);
+		sensory_thresh = (double) ao_values / ao_max
+		current IPI = minIPI + //set ipi based on a0
 
-		
+
 		// measure distance
 		if (time_since_last_ping > currentIPI) {
 				duration = doPing(pruData);
