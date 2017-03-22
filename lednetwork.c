@@ -77,7 +77,7 @@ int readao( FILE* f0 ) {
             value_int = strtol(value_str,NULL,0);
             // fflush(stdout);
             rewind(f0);
-            return (long int) value_int;
+            return value_int;
     }
 
 double doPing(unsigned int *pruData) {
