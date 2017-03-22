@@ -299,6 +299,9 @@ int main(void) {
 	printf(">> Sonar PRU Disabled.\r\n");
 	ledscape_close(leds);
 	printf(">> LED PRU Disabled.\r\n");
+
+	// close files for AI
+	fclose(a0);
 	return (0);
 
 }
