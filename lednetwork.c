@@ -114,7 +114,7 @@ int main(void) {
 	int rep_spikes;
 
 	// open analog channel files
-	FILE a0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
+	FILE *a0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
 
 
 	// setup timers
