@@ -224,7 +224,7 @@ int main(void) {
 		max_dt = fmax(dt,max_dt);
 		rep_spikes = rep_spikes+loop_spikes; 
 
-		ao_values = raedao(a0);
+		ao_values = readao(a0);
 		// measure distance
 		if (time_since_last_ping > currentIPI) {
 				duration = doPing(pruData);
