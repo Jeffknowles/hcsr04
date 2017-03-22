@@ -207,13 +207,15 @@ int main(void) {
 
 		// measure distance
 		if (time_since_last_ping > currentIPI) {
-				duration = doPing(pruData);
-				target_distance = dur2cm(duration);
+			duration = doPing(pruData);
+			target_distance = dur2cm(duration);
+			if ( printout ) {
 				printf("%d: Distance = %05.1f cm    loop_spikes = %03d   spike rate = %06.1f Hz   dt= %08f  max_dt=%08f ipi=%08f , ao=%d \n", i, target_distance,loop_spikes, (double) rep_spikes / (double) time_since_last_ping, dt, max_dt, time_since_last_ping, ao_values);
-			    // target_distance = 90; 
-			    time_since_last_ping = 0; 
-				rep_spikes = 0; 
-				max_dt = 0; 
+			 }  
+		    // target_distance = 90; 
+		    time_since_last_ping = 0; 
+			rep_spikes = 0; 
+			max_dt = 0; 
 		}
 		else {
 			time_since_last_ping = time_since_last_ping + dt; 
