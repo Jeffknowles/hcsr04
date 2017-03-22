@@ -226,7 +226,7 @@ int main(void) {
 
 		// read and interperate input 
 		ao_values = readao(a0);
-		sense_thresh = (((double) ao_values) / ao_max)*sense_thresh;
+		sense_thresh = (((double) ao_values) / ao_max)*sense_thresh_i;
 		currentIPI = (double)(100 * sense_thresh * 2 * 29)/1000; //set ipi based on a0
 		printf("%f ", currentIPI);
 
