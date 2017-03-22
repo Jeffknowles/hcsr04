@@ -74,7 +74,7 @@ int readao( FILE* f0 ) {
 
     // FILE* f0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
             fread(&value_str, 6, 6, f0);
-            value_int = strtol(value_str,NULL,0);
+            // value_int = strtol(value_str,NULL,0);
             // fflush(stdout);
             // rewind(f0);
             return value_int;
