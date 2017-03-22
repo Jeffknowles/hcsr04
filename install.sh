@@ -3,5 +3,5 @@
 cd PixelBone
 make
 cd ..
-cp PixelBone/ws281.bin ./
+cp PixelBone/ws281x.bin ./
 make
