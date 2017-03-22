@@ -67,7 +67,7 @@ const double sensory_factor = 0.05;
 
 
 
-int readao( File f0 ) main(){
+int readao( FILE f0 ) main(){
     char value_str[7];
     long int value_int = 0;
 
@@ -114,7 +114,7 @@ int main(void) {
 	int rep_spikes;
 
 	// open analog channel files
-	FILE *a0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
+	FILE a0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
 
 
 	// setup timers
