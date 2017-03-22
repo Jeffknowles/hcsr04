@@ -226,7 +226,7 @@ int main(void) {
 
 		// read and interperate input 
 		ao_values = readao(a0);
-		sensory_thresh = (((double) ao_values) / ao_max)*sense_thresh;
+		sense_thresh = (((double) ao_values) / ao_max)*sense_thresh;
 		current IPI = minIPI + //set ipi based on a0
 
 
