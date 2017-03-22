@@ -65,6 +65,20 @@ const double sensory_factor = 0.05;
 
 
 
+
+
+int readao( File f0 ) main(){
+    char value_str[7];
+    long int value_int = 0;
+
+    // FILE* f0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
+            fread(&value_str, 6, 6, f0);
+            value_int = strtol(value_str,NULL,0);
+            fflush(stdout);
+            rewind(f0);
+            return value_int;
+    }
+
 double doPing(unsigned int *pruData) {
 	// Wait for the PRU interrupt
 	prussdrv_pru_wait_event (PRU_EVTOUT_0);
@@ -98,6 +112,10 @@ int main(void) {
 	int syn;
 	int loop_spikes; 
 	int rep_spikes;
+
+	// open analog channel files
+	FILE* a0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
+
 
 	// setup timers
 	struct timeval new_time, last_time;
