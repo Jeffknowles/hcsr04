@@ -67,7 +67,7 @@ const double sensory_factor = 0.05;
 
 
 
-int readao( FILE f0 ) main(){
+int readao( FILE f0 ) {}
     char value_str[7];
     long int value_int = 0;
 
