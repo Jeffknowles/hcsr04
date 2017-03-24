@@ -117,9 +117,13 @@ int main(void) {
 	for (ii=1; ii<nch; ii++){
 		spike_len[ii] = (double) random_float((float) 40, (float) 60);
 	}
+
+
+
+	// generate connections among neurons
 	int connections[nch][maxCon];
 	float weights[nch][maxCon];
-	// generate connections among neurons
+	int linear_network_length = 66;
 	for ( ii=0; ii<(66); ii++){
 
 		connections[ii][0] = ii + 1; 
