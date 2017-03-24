@@ -123,11 +123,11 @@ int main(void) {
 	for ( ii=0; ii<(nch-5); ii++){
 
 		connections[ii][0] = ii + 1; 
-		weights[ii][0] = 18;
+		weights[ii][0] = 15;
 		connections[ii][1] = ii + 2; 
-		weights[ii][1] = 14;
+		weights[ii][1] = 5;
 		connections[ii][2] = ii + 3;
-		weights[ii][3] = 9;
+		weights[ii][3] = 5;
 		for (iii=3; iii<maxCon; iii++){
 			connections[ii][iii]=1+rand() % nch-1;
 			weights[ii][iii] = random_float((float) -8, (float) 8);
