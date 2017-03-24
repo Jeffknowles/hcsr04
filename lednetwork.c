@@ -135,10 +135,10 @@ int main(void) {
 			weights[ii][iii] = random_float((float) -10, (float) 12);
 		}
 
-		if (ii > 2){
-			connections[ii][3] = ii-1; 
-			weights[ii][3] = -5;
-		}
+		// if (ii > 2){
+		// 	connections[ii][3] = ii-1; 
+		// 	weights[ii][3] = -5;
+		// }
 	}
 
 
