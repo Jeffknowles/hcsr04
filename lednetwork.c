@@ -130,7 +130,7 @@ int main(void) {
 		weights[ii][3] = 8;
 	}
 
-	for (ii=0; ii<(66); ii++){
+	for (ii=0; ii<(nch); ii++){
 		for (iii=3; iii<maxCon; iii++){
 			connections[ii][iii]=66+rand() % nch-66;
 			weights[ii][iii] = random_float((float) -11, (float) 12);
