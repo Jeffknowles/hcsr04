@@ -137,7 +137,7 @@ int main(void) {
 	for (ii=0; ii<(nch); ii++){
 		for (iii=3; iii<maxCon; iii++){
 			connections[ii][iii]=linear_layer_length+rand() % (nch-linear_layer_length);
-			weights[ii][iii] = random_float((float) -11, (float) 12);
+			weights[ii][iii] = random_float((float) -12.5, (float) 12);
 		}
 
 		// if (ii > 2){
