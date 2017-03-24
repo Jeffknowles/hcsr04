@@ -123,7 +123,7 @@ int main(void) {
 	// generate connections among neurons
 	int connections[nch][maxCon];
 	float weights[nch][maxCon];
-	int linear_network_length = 66;
+	int linear_layer_length = 66;
 	for ( ii=0; ii<(66); ii++){
 
 		connections[ii][0] = ii + 1; 
