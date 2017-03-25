@@ -19,7 +19,7 @@
 
 const double minIPI = 0.04; // minimum interping interval in miliseconds
 const double maxIPI = 2;
-const double sense_thresh_i = 100; // threshold where responses turn on
+const double sense_thresh_i = 400; // threshold where responses turn on
 // const int pingPin = 11; // trigger for sonar pulses
 // const int echoPin = 12; // return for sonar pulses
 // const int phonePin1 = 9; //
