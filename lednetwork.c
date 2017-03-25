@@ -135,7 +135,7 @@ int main(void) {
 		weights[ii][3] = 8;
 
 	}
-	for (ii=0; ii<(linear_layer_length); ii++){
+	for (ii=0; ii<(linear_layer_length); ii++){ // random synapses onto second layer
 		for (iii=3; iii<maxCon; iii++){
 			connections[ii][iii]=linear_layer_length+rand() % (nch-linear_layer_length);
 			weights[ii][iii] = random_float((float) -12.5, (float) 12);
