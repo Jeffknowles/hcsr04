@@ -124,7 +124,7 @@ int main(void) {
 	int connections[nch][maxCon];
 	float weights[nch][maxCon];
 	// generate linear layer
-	int linear_layer_length = 15;
+	int linear_layer_length = 44;
 	for ( ii=0; ii<(linear_layer_length); ii++){
 
 		connections[ii][0] = ii + 1; 
