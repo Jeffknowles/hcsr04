@@ -144,7 +144,7 @@ int main(void) {
 	for (ii=linear_layer_length; ii<(nch); ii++){ // random synapses onto second layer
 		for (iii=3; iii<maxCon; iii++){
 			connections[ii][iii]=linear_layer_length+rand() % (nch-linear_layer_length);
-			weights[ii][iii] = random_float((float) -12.5, (float) 12);
+			weights[ii][iii] = random_float((float) -20, (float) 12);
 		}
 	}
 
