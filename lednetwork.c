@@ -123,6 +123,7 @@ int main(void) {
 	// generate connections among neurons
 	int connections[nch][maxCon];
 	float weights[nch][maxCon];
+	// generate linear layer
 	int linear_layer_length = 66;
 	for ( ii=0; ii<(linear_layer_length); ii++){
 
@@ -132,18 +133,13 @@ int main(void) {
 		weights[ii][1] = 10;
 		connections[ii][2] = ii + 3;
 		weights[ii][3] = 8;
-	}
 
+	}
 	for (ii=0; ii<(linear_layer_length); ii++){
 		for (iii=3; iii<maxCon; iii++){
 			connections[ii][iii]=linear_layer_length+rand() % (nch-linear_layer_length);
 			weights[ii][iii] = random_float((float) -12.5, (float) 12);
 		}
-
-		// if (ii > 2){
-		// 	connections[ii][3] = ii-1; 
-		// 	weights[ii][3] = -5;
-		// }
 	}
 
 
