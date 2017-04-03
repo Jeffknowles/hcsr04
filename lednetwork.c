@@ -148,7 +148,7 @@ int main(void) {
 				weights[ii][iii] = random_float((float) -2, (float) 0.);
 			}
 			else {
-				weights[ii][iii] = random_float((float) 0, (float) 4.);
+				weights[ii][iii] = random_float((float) 0, (float) 1.);
 		}
 		}
 	}
