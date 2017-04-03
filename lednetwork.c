@@ -144,7 +144,7 @@ int main(void) {
 	for (ii=linear_layer_length; ii<(nch); ii++){ // random synapses onto second layer
 		for (iii=3; iii<maxCon; iii++){
 			connections[ii][iii]=linear_layer_length+rand() % (nch-linear_layer_length);
-			weights[ii][iii] = random_float((float) -10, (float) 10);
+			weights[ii][iii] = random_float((float) -0, (float) 10);
 		}
 	}
 
@@ -249,7 +249,7 @@ int main(void) {
 		for (ch = 0; ch < nch; ch++) {
 			if (v[ch] >= 0) { // if neuron is in integrate mode
 		    	v[ch] = v[ch]  + dv[ch] - k * v[ch] * (double) dt; // decay v to 0
-		    	dv[ch] = 0;
+		    	dv[ch] = 0; 
 		    	v[ch] = fmax(v[ch], 0);
 		    	v[ch] = fmin(v[ch], thresh+1);
 		    	if (ch < num_pixels){
