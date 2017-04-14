@@ -162,7 +162,7 @@ int main(void) {
 	for (ii=0; ii<(linear_layer_length); ii++){ // random synapses onto second layer
 		for (iii=3; iii<maxCon; iii++){
 			connections[ii][iii]=linear_layer_length + (uint8_t) myrandint( (uint32_t) nch-linear_layer_length);
-			printf("%d", connections[ii][iii]);
+			printf("%d \n", connections[ii][iii]);
 			weights[ii][iii] = random_float((float) 0, (float) 14);
 		}
 	}
