@@ -48,7 +48,7 @@ extern ledscape_frame_t *ledscape_frame(ledscape_t *const leds, unsigned frame);
 extern void ledscape_draw(ledscape_t *const leds, unsigned frame);
 
 extern void ledscape_set_color(ledscape_frame_t *const frame, uint8_t strip,
-                               uint8_t pixel, uint8_t r, uint8_t g, uint8_t b);
+                               uint32_t pixel, uint8_t r, uint8_t g, uint8_t b);
 
 extern uint32_t ledscape_wait(ledscape_t *const leds);
 
