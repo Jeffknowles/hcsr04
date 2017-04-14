@@ -82,13 +82,13 @@ double dur2cm(double dur) {
 int main(void) {
 
 	// initialize variables
-	int ch;
-	unsigned i;
-	int ii;
-	int iii;
-	int syn;
-	int loop_spikes; 
-	int rep_spikes;
+	long int ch;
+	long int i;
+	long int ii;
+	long int iii;
+	long int syn;
+	long int loop_spikes; 
+	long int rep_spikes;
 	long int ao_values;
 
 	// open analog channel files
@@ -121,10 +121,10 @@ int main(void) {
 
 
 	// generate connections among neurons
-	int connections[nch][maxCon];
+	long int connections[nch][maxCon];
 	float weights[nch][maxCon];
 	// generate linear layer
-	int linear_layer_length = 250;
+	long int linear_layer_length = 250;
 	for ( ii=0; ii<(linear_layer_length); ii++){
 
 		connections[ii][0] = ii + 1; 
@@ -158,7 +158,7 @@ int main(void) {
 
  	/* Initialize the PRU for LEDS */
   	ledscape_t *const leds = ledscape_init(num_pixels);
-  	uint8_t rgb_spike[num_pixels][3];
+  	ulong int8_t rgb_spike[num_pixels][3];
   	for (ii=0; ii<num_pixels; ii++){
   		rgb_spike[ii][0] = (uint8_t) rand() % 154;
   		rgb_spike[ii][1] = (uint8_t) rand() % 154;
