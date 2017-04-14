@@ -38,7 +38,7 @@ const double ao_max = 4096;
 // connection settings - declare connections between neurons
 #define maxCon 20
 #define nch 300 // number of neurons
-#define num_pixels 250
+#define num_pixels 300
 
 
 
