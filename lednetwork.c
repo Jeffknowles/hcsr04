@@ -80,7 +80,7 @@ static uint16_t highest_bit(uint64_t v) {
     return out;
 }
 
-uint32_t myrandint( uint64_t LIMIT ) {
+uint32_t myrandint( uint32_t LIMIT ) {
     static bool init = 0;
     static uint16_t n;
     static uint16_t shift;
