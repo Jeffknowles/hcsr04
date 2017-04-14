@@ -161,14 +161,14 @@ int main(void) {
 	}
 	for (ii=0; ii<(linear_layer_length); ii++){ // random synapses onto second layer
 		for (iii=3; iii<maxCon; iii++){
-			connections[ii][iii]=linear_layer_length + (uint8_t) myrandint( (uint32_t) nch-linear_layer_length);
+			connections[ii][iii]=linear_layer_length + (uint8_t) myrandint( (uint32_t) (nch-linear_layer_length));
 			printf("%d \n", connections[ii][iii]);
 			weights[ii][iii] = random_float((float) 0, (float) 14);
 		}
 	}
 	for (ii=linear_layer_length; ii<(nch); ii++){ // random synapses onto second layer
 		for (iii=3; iii<maxCon; iii++){
-			connections[ii][iii]=linear_layer_length + (uint8_t) myrandint( (uint32_t) nch-linear_layer_length);
+			connections[ii][iii]=linear_layer_length + (uint8_t) myrandint( (uint32_t) (nch-linear_layer_length));
 			if (random_float((float) 0., (float) 1.) < 0.1) {
 				weights[ii][iii] = random_float((float) -2, (float) 0.);
 			}
