@@ -44,7 +44,7 @@ const double ao_max = 4096;
 
 int readao( FILE* f0 ) {
     char value_str[7];
-    long int value_int = 0;
+    uint8_t value_int = 0;
 
     // FILE* f0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
             fread(&value_str, 6, 6, f0);
@@ -80,7 +80,7 @@ static uint16_t highest_bit(uint64_t v) {
     return out;
 }
 
-uint32_t myrandint( long int LIMIT ) {
+uint32_t myrandint( uint8_t LIMIT ) {
     static bool init = 0;
     static uint16_t n;
     static uint16_t shift;
@@ -107,14 +107,14 @@ double dur2cm(double dur) {
 int main(void) {
 
 	// initialize variables
-	long int ch;
-	long int i;
-	long int ii;
-	long int iii;
-	long int syn;
-	long int loop_spikes; 
-	long int rep_spikes;
-	long int ao_values;
+	uint8_t ch;
+	uint8_t i;
+	uint8_t ii;
+	uint8_t iii;
+	uint8_t syn;
+	uint8_t loop_spikes; 
+	uint8_t rep_spikes;
+	uint8_t ao_values;
 
 	// open analog channel files
 	FILE* a0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
@@ -149,7 +149,7 @@ int main(void) {
 	uint8_t connections[nch][maxCon];
 	float weights[nch][maxCon];
 	// generate linear layer
-	long int linear_layer_length = 100;
+	uint8_t linear_layer_length = 100;
 	for ( ii=0; ii<(linear_layer_length); ii++){
 
 		connections[ii][0] = ii + 1; 
@@ -162,13 +162,13 @@ int main(void) {
 	}
 	for (ii=0; ii<(linear_layer_length); ii++){ // random synapses onto second layer
 		for (iii=3; iii<maxCon; iii++){
-			connections[ii][iii]=linear_layer_length + (long int) myrandint(nch-linear_layer_length);
+			connections[ii][iii]=linear_layer_length + (uint8_t) myrandint(nch-linear_layer_length);
 			weights[ii][iii] = random_float((float) 0, (float) 14);
 		}
 	}
 	for (ii=linear_layer_length; ii<(nch); ii++){ // random synapses onto second layer
 		for (iii=3; iii<maxCon; iii++){
-			connections[ii][iii]=linear_layer_length + (long int) myrandint(nch-linear_layer_length);
+			connections[ii][iii]=linear_layer_length + (uint8_t) myrandint(nch-linear_layer_length);
 			if (random_float((float) 0., (float) 1.) < 0.1) {
 				weights[ii][iii] = random_float((float) -2, (float) 0.);
 			}
@@ -185,9 +185,9 @@ int main(void) {
   	ledscape_t *const leds = ledscape_init(num_pixels);
   	uint8_t rgb_spike[num_pixels][3];
   	for (ii=0; ii<num_pixels; ii++){
-  		rgb_spike[ii][0] = (uint8_t) myrandint( (long int) 5);
-  		rgb_spike[ii][1] = (uint8_t) myrandint( (long int) 5);
-  		rgb_spike[ii][2] = (uint8_t) myrandint( (long int) 5);
+  		rgb_spike[ii][0] = (uint8_t) myrandint( (uint8_t) 5);
+  		rgb_spike[ii][1] = (uint8_t) myrandint( (uint8_t) 5);
+  		rgb_spike[ii][2] = (uint8_t) myrandint( (uint8_t) 5);
   		printf("%d %d %d\n",rgb_spike[ii][0],rgb_spike[ii][1],rgb_spike[ii][2]);
   	}
 
