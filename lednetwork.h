@@ -31,7 +31,7 @@ const double sense_thresh_i = 100; // threshold where responses turn on
 // const int dialPin = 5;  // analog pin for the dial
 //const int modePins[2] = {3, 4}; // pins for the 3way mode switch
 //const int buttonPin = 2;  // pin for the tigger button
-const int sensory_factor = 10;
+const long int sensory_factor = 10;
 const bool printout = false;
 const bool pong_only_in_range = true;
 	
