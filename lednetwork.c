@@ -146,7 +146,7 @@ int main(void) {
 
 
 	// generate connections among neurons
-	long int connections[nch][maxCon];
+	uint8_t connections[nch][maxCon];
 	float weights[nch][maxCon];
 	// generate linear layer
 	long int linear_layer_length = 100;
