@@ -5,29 +5,29 @@
 #include <math.h>
 #include <stdlib.h> 
 #include <tgmath.h> 
-#include <longtypes.h>
+#include <inttypes.h>
 #include <sys/time.h>  
-#include <stdlong.h>
+#include <stdint.h>
 #include <string.h>
-#include <longtypes.h>
+#include <inttypes.h>
 #include <errno.h>
 #include "PixelBone/ledscape.h"
 #include <prussdrv.h> 
-#include <pruss_longc_mapping.h>
+#include <pruss_intc_mapping.h>
 #define prunum 1
 
 
-const double minIPI = 0.04; // minimum longerping longerval in miliseconds
+const double minIPI = 0.04; // minimum interping interval in miliseconds
 const double maxIPI = 2;
 const double sense_thresh_i = 400; // threshold where responses turn on
-// const long pingPin = 11; // trigger for sonar pulses
-// const long echoPin = 12; // return for sonar pulses
-// const long phonePin1 = 9; //
-// const long phonePin2 = 10;
-// const long dialPin = 5;  // analog pin for the dial
-//const long modePins[2] = {3, 4}; // pins for the 3way mode switch
-//const long buttonPin = 2;  // pin for the tigger button
-const bool prlongout = false;
+// const int pingPin = 11; // trigger for sonar pulses
+// const int echoPin = 12; // return for sonar pulses
+// const int phonePin1 = 9; //
+// const int phonePin2 = 10;
+// const int dialPin = 5;  // analog pin for the dial
+//const int modePins[2] = {3, 4}; // pins for the 3way mode switch
+//const int buttonPin = 2;  // pin for the tigger button
+const bool printout = false;
 const bool pong_only_in_range = true;
 	
 
@@ -44,22 +44,22 @@ const double ao_max = 4096;
 
 
 
-long readao( FILE* f0 ) {
+int readao( FILE* f0 ) {
     char value_str[7];
-    long long value_long = 0;
+    long int value_int = 0;
 
     // FILE* f0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
             fread(&value_str, 6, 6, f0);
-            value_long = strtol(value_str,NULL,0);
+            value_int = strtol(value_str,NULL,0);
             fflush(stdout);
             rewind(f0);
-            return value_long;
+            return value_int;
     }
 
-double doPing(unsigned long *pruData) {
-	// Wait for the PRU longerrupt
+double doPing(unsigned int *pruData) {
+	// Wait for the PRU interrupt
 	prussdrv_pru_wait_event (PRU_EVTOUT_0);
-	prussdrv_pru_clear_event(PRU_EVTOUT_0, PRU1_ARM_longERRUPT);
+	prussdrv_pru_clear_event(PRU_EVTOUT_0, PRU1_ARM_INTERRUPT);
 
 	return (double) pruData[0];
 }
@@ -79,17 +79,17 @@ double dur2cm(double dur) {
 }
 
 // main function 
-long main(void) {
+int main(void) {
 
 	// initialize variables
-	long ch;
+	int ch;
 	unsigned i;
-	long ii;
-	long iii;
-	long syn;
-	long loop_spikes; 
-	long rep_spikes;
-	long long ao_values;
+	int ii;
+	int iii;
+	int syn;
+	int loop_spikes; 
+	int rep_spikes;
+	long int ao_values;
 
 	// open analog channel files
 	FILE* a0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
@@ -121,10 +121,10 @@ long main(void) {
 
 
 	// generate connections among neurons
-	long connections[nch][maxCon];
+	int connections[nch][maxCon];
 	float weights[nch][maxCon];
 	// generate linear layer
-	float linear_layer_length = 250;
+	int linear_layer_length = 250;
 	for ( ii=0; ii<(linear_layer_length); ii++){
 
 		connections[ii][0] = ii + 1; 
@@ -158,15 +158,15 @@ long main(void) {
 
  	/* Initialize the PRU for LEDS */
   	ledscape_t *const leds = ledscape_init(num_pixels);
-  	ulong8_t rgb_spike[num_pixels][3];
+  	uint8_t rgb_spike[num_pixels][3];
   	for (ii=0; ii<num_pixels; ii++){
-  		rgb_spike[ii][0] = (ulong8_t) rand() % 154;
-  		rgb_spike[ii][1] = (ulong8_t) rand() % 154;
-  		rgb_spike[ii][2] = (ulong8_t) rand() % 154;
-  		prlongf("%d %d %d\n",rgb_spike[ii][0],rgb_spike[ii][1],rgb_spike[ii][2]);
+  		rgb_spike[ii][0] = (uint8_t) rand() % 154;
+  		rgb_spike[ii][1] = (uint8_t) rand() % 154;
+  		rgb_spike[ii][2] = (uint8_t) rand() % 154;
+  		printf("%d %d %d\n",rgb_spike[ii][0],rgb_spike[ii][1],rgb_spike[ii][2]);
   	}
 
-  	ulong8_t rgb_off[3] = {0,0,0};
+  	uint8_t rgb_off[3] = {0,0,0};
   	const unsigned frame_num = i++ % 2;
   	ledscape_frame_t *const frame = ledscape_frame(leds, frame_num);
   	for (ii=0; ii<num_pixels; ii++){
@@ -177,23 +177,23 @@ long main(void) {
 
 
 	/* Initialize the PRU for sonar*/
-	prlongf(">> Initializing PRU\n");
-	tpruss_longc_initdata pruss_longc_initdata = PRUSS_longC_INITDATA;
+	printf(">> Initializing PRU\n");
+	tpruss_intc_initdata pruss_intc_initdata = PRUSS_INTC_INITDATA;
 	prussdrv_init();
-	/* Open PRU longerrupt */
+	/* Open PRU Interrupt */
 	if (prussdrv_open (PRU_EVTOUT_0)) {
 		// Handle failure
-		fprlongf(stderr, ">> PRU open failed\n");
+		fprintf(stderr, ">> PRU open failed\n");
 		return 1;
 	}
-	/* Get the longerrupt initialized */
-	prussdrv_prulongc_init(&pruss_longc_initdata);
-	/* Get polongers to PRU local memory */
+	/* Get the interrupt initialized */
+	prussdrv_pruintc_init(&pruss_intc_initdata);
+	/* Get pointers to PRU local memory */
 	void *pruDataMem;
 	prussdrv_map_prumem(PRUSS0_PRU1_DATARAM, &pruDataMem);
-    unsigned long pruData = (unsigned long *) pruDataMem;
+    unsigned int pruData = (unsigned int *) pruDataMem;
 	/* Execute code on PRU */
-	prlongf(">> Executing HCSR-04 code\n");
+	printf(">> Executing HCSR-04 code\n");
 	prussdrv_exec_program(prunum, "hcsr04.bin");
 
 
@@ -215,7 +215,7 @@ long main(void) {
 		max_dt = fmax(dt,max_dt);
 		rep_spikes = rep_spikes+loop_spikes; 
 
-		// read and longerperate input 
+		// read and interperate input 
 		ao_values = readao(a0);
 		sense_thresh = (((double) ao_values) / ao_max)*sense_thresh_i;
 		currentIPI = (double)(01 * sense_thresh * 2 * 29)/1000000; //set ipi based on a0
@@ -224,8 +224,8 @@ long main(void) {
 		if (time_since_last_ping > currentIPI) {
 			duration = doPing(pruData);
 			target_distance = dur2cm(duration);
-			if ( prlongout ) {
-				prlongf("%d: Distance = %05.1f cm    loop_spikes = %03d   spike rate = %06.1f Hz   dt= %08f  max_dt=%08f ipi=%08f , ao=%d \n", i, target_distance,loop_spikes, (double) rep_spikes / (double) time_since_last_ping, dt, max_dt, time_since_last_ping, ao_values);
+			if ( printout ) {
+				printf("%d: Distance = %05.1f cm    loop_spikes = %03d   spike rate = %06.1f Hz   dt= %08f  max_dt=%08f ipi=%08f , ao=%d \n", i, target_distance,loop_spikes, (double) rep_spikes / (double) time_since_last_ping, dt, max_dt, time_since_last_ping, ao_values);
 			 }  
 		    // target_distance = 90; 
 		    time_since_last_ping = 0; 
@@ -237,12 +237,12 @@ long main(void) {
 		}
 
 
-		// prlongf("%05.5f  %05.5f  \n", dt, time_since_last_ping);
-		// // prlongf("%d: Distance = %04.1f cm   ", i, target_distance);
+		// printf("%05.5f  %05.5f  \n", dt, time_since_last_ping);
+		// // printf("%d: Distance = %04.1f cm   ", i, target_distance);
 		// // for (ii=0;ii<20;++ii) {
- 	// // 		 prlongf("% 04.1f ", v[ii]);
+ 	// // 		 printf("% 04.1f ", v[ii]);
 		// //  }
-  //       prlongf("\n");
+  //       printf("\n");
 		
 
 
@@ -253,13 +253,13 @@ long main(void) {
 		// loop thru neurons
 		 loop_spikes = 0; 
 		for (ch = 0; ch < nch; ch++) {
-			if (v[ch] >= 0) { // if neuron is in longegrate mode
+			if (v[ch] >= 0) { // if neuron is in integrate mode
 		    	v[ch] = v[ch]  + dv[ch] - k * v[ch] * (double) dt; // decay v to 0
 		    	dv[ch] = 0; 
 		    	v[ch] = fmax(v[ch], 0);
 		    	v[ch] = fmin(v[ch], thresh+1);
 		    	if (ch < num_pixels){
-		    		ledscape_set_color(frame, 0, ch, (ulong8_t) 0, (ulong8_t) 0,(ulong8_t) round(50* v[ch] / (thresh*1.5))); 
+		    		ledscape_set_color(frame, 0, ch, (uint8_t) 0, (uint8_t) 0,(uint8_t) round(50* v[ch] / (thresh*1.5))); 
 			    }
 		        // if the neuron crosses threshold, fire and increment outputs
 			    if (v[ch] > thresh) {
@@ -269,7 +269,7 @@ long main(void) {
 			        		ledscape_set_color(frame, 0, ch, rgb_spike[ch][0], rgb_spike[ch][1], rgb_spike[ch][2]);
 			        	}
 			        }
-			        // prlongf("ch%d spike ", ch);
+			        // printf("ch%d spike ", ch);
 			        v[ch] = -1; // v<0 stores that the neuron is in firing state
 			      }
 			    }
@@ -298,9 +298,9 @@ long main(void) {
 	/* Disable PRU and close memory mapping*/
 	prussdrv_pru_disable(prunum);
 	prussdrv_exit();
-	prlongf(">> Sonar PRU Disabled.\r\n");
+	printf(">> Sonar PRU Disabled.\r\n");
 	ledscape_close(leds);
-	prlongf(">> LED PRU Disabled.\r\n");
+	printf(">> LED PRU Disabled.\r\n");
 
 	// close files for AI
 	fclose(a0);
