@@ -170,7 +170,7 @@ int main(void) {
 		for (iii=3; iii<maxCon; iii++){
 			connections[ii][iii]=linear_layer_length + (uint32_t) myrandint( (uint32_t) (nch-linear_layer_length));
 			if (random_float((float) 0., (float) 1.) < 0.1) {
-				weights[ii][iii] = random_float((float) -2, (float) 0.);
+				weights[ii][iii] = random_float((float) -5, (float) 0.);
 			}
 			else {
 				weights[ii][iii] = random_float((float) 0, (float) 5);
