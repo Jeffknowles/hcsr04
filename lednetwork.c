@@ -86,7 +86,7 @@ uint32_t myrandint() {
     for (uint16_t i=0; i<n; ++i) {
         out |= rand() << (i*shift);
     }
-    return out % LIMIT;
+    return out;
 }
 
 double dur2cm(double dur) {
