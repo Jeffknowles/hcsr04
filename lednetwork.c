@@ -44,7 +44,7 @@ const double ao_max = 4096;
 
 int readao( FILE* f0 ) {
     char value_str[7];
-    uint8_t value_int = 0;
+    uint64_t value_int = 0;
 
     // FILE* f0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
             fread(&value_str, 6, 6, f0);
