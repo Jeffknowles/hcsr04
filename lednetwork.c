@@ -37,7 +37,7 @@ const double sensory_factor = 0.1;
 const double ao_max = 4096;
 // connection settings - declare connections between neurons
 #define maxCon 20
-#define nch 250 // number of neurons
+#define nch 300 // number of neurons
 #define num_pixels 250
 
 
