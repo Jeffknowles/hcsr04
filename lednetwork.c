@@ -87,7 +87,7 @@ uint32_t myrandint( uint64_t LIMIT ) {
     printf("%d", LIMIT);
     if (!init) {
         uint16_t randbits = highest_bit(RAND_MAX + (uint64_t)1L);
-        uint16_t outbits = highest_bit(LIMIT);
+        uint16_t outbits = highest_bit( (uint64_t) LIMIT);
         n = (outbits + randbits - 1)/randbits;
         shift = randbits;
         init = 1;
