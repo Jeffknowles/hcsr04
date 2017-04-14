@@ -71,6 +71,23 @@ float random_float(const float min, const float max)
     return 0;
 }
 
+uint32_t myrandint() {
+    static bool init = 0;
+    static uint16_t n;
+    static uint16_t shift;
+    if (!init) {
+        uint16_t randbits = highest_bit(RAND_MAX + (uint64_t)1L);
+        uint16_t outbits = highest_bit(LIMIT);
+        n = (outbits + randbits - 1)/randbits;
+        shift = randbits;
+        init = 1;
+    }
+    uint32_t out = 0;
+    for (uint16_t i=0; i<n; ++i) {
+        out |= rand() << (i*shift);
+    }
+    return out % LIMIT;
+}
 
 double dur2cm(double dur) {
 	return (double) dur / 58.44;
@@ -135,7 +152,7 @@ int main(void) {
 	}
 	for (ii=0; ii<(linear_layer_length); ii++){ // random synapses onto second layer
 		for (iii=3; iii<maxCon; iii++){
-			connections[ii][iii]=linear_layer_length+rand() % (nch-linear_layer_length);
+			connections[ii][iii]=linear_layer_length + (long int) rand() % (nch-linear_layer_length);
 			weights[ii][iii] = random_float((float) 0, (float) 14);
 		}
 	}
