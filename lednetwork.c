@@ -39,8 +39,8 @@ const double ao_max = 4096;
 
 const long int maxCon 20
 const long int nch 300 // number of neurons
-const long int num_pixels 300
-
+// const long int num_pixels 300
+#define num_pixels 300
 
 
 
