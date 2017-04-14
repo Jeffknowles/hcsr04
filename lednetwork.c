@@ -110,7 +110,7 @@ int main(void) {
 	double sense_thresh = sense_thresh_i;
 	double currentIPI = minIPI;
 
-
+	printf("%d", thresh)
 	// initialize neurons 
 	double v[nch] =  {0};
 	double dv[nch] = {0};
