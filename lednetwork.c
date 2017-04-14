@@ -37,7 +37,7 @@ const double sensory_factor = 0.1;
 const double ao_max = 4096;
 // connection settings - declare connections between neurons
 #define maxCon 20
-#define nch 150 // number of neurons
+#define nch 250 // number of neurons
 #define num_pixels 150
 
 
@@ -124,7 +124,7 @@ int main(void) {
 	int connections[nch][maxCon];
 	float weights[nch][maxCon];
 	// generate linear layer
-	int linear_layer_length = 44;
+	int linear_layer_length = 200;
 	for ( ii=0; ii<(linear_layer_length); ii++){
 
 		connections[ii][0] = ii + 1; 
