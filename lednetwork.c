@@ -36,13 +36,10 @@ const double k = 10; // magnitude of the leak
 const double sensory_factor = 0.1;
 const double ao_max = 4096;
 // connection settings - declare connections between neurons
-
-static const long int maxCon=20;
-static const long int nch=300; // number of neurons
-static const long int num_pixels=300;
-
-
-
+// connection settings - declare connections between neurons
+#define maxCon 40
+#define nch 500 // number of neurons
+#define num_pixels 500
 
 
 int readao( FILE* f0 ) {
