@@ -185,9 +185,9 @@ int main(void) {
   	ledscape_t *const leds = ledscape_init(num_pixels);
   	uint8_t rgb_spike[num_pixels][3];
   	for (ii=0; ii<num_pixels; ii++){
-  		rgb_spike[ii][0] = (uint8_t) myrandint( (uint32_t) 5);
-  		rgb_spike[ii][1] = (uint8_t) myrandint( (uint32_t) 5);
-  		rgb_spike[ii][2] = (uint8_t) myrandint( (uint32_t) 5);
+  		rgb_spike[ii][0] = (uint8_t) myrandint( (uint32_t) 50);
+  		rgb_spike[ii][1] = (uint8_t) myrandint( (uint32_t) 50);
+  		rgb_spike[ii][2] = (uint8_t) myrandint( (uint32_t) 50);
   		printf("%d %d %d\n",rgb_spike[ii][0],rgb_spike[ii][1],rgb_spike[ii][2]);
   	}
 
