@@ -40,10 +40,7 @@ const double thresh = 30;
 const double k = 1; // magnitude of the leak
 
 
-// connection settings - declare connections between neurons
-#define maxCon 40
-#define nch 500 // number of neurons
-#define num_pixels 500
+
 
 
 
