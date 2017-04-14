@@ -71,7 +71,7 @@ float random_float(const float min, const float max)
     return 0;
 }
 
-uint32_t myrandint() {
+uint32_t myrandint( long int LIMIT ) {
     static bool init = 0;
     static uint16_t n;
     static uint16_t shift;
