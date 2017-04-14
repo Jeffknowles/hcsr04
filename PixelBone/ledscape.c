@@ -143,7 +143,7 @@ void ledscape_close(ledscape_t *const leds) {
 }
 
 void ledscape_set_color(ledscape_frame_t *const frame, uint8_t strip,
-                        uint8_t pixel, uint8_t r, uint8_t g, uint8_t b) {
+                        uint32_t pixel, uint8_t r, uint8_t g, uint8_t b) {
   ledscape_pixel_t *const p = &frame[pixel].strip[strip];
   p->r = r;
   p->g = g;
