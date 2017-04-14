@@ -71,6 +71,15 @@ float random_float(const float min, const float max)
     return 0;
 }
 
+static uint16_t highest_bit(uint64_t v) {
+    uint16_t out = 0;
+    while (v > 0) {
+        v >>= 1;
+        ++out;
+    }
+    return out;
+}
+
 uint32_t myrandint( long int LIMIT ) {
     static bool init = 0;
     static uint16_t n;
