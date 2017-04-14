@@ -38,8 +38,8 @@ const double ao_max = 4096;
 // connection settings - declare connections between neurons
 // connection settings - declare connections between neurons
 #define maxCon 40
-#define nch 200 // number of neurons
-#define num_pixels 200
+#define nch 300 // number of neurons
+#define num_pixels 300
 
 
 int readao( FILE* f0 ) {
@@ -148,7 +148,7 @@ int main(void) {
 	uint32_t connections[nch][maxCon];
 	float weights[nch][maxCon];
 	// generate linear layer
-	uint32_t linear_layer_length = 100;
+	uint32_t linear_layer_length = 200;
 	for ( ii=0; ii<(linear_layer_length); ii++){
 
 		connections[ii][0] = ii + 1; 
