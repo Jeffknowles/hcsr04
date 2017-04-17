@@ -225,7 +225,7 @@ int main(void) {
 
     struct timespec tim, tim2;
     tim.tv_sec = 0;
-    tim.tv_nsec = 10000000L;
+    tim.tv_nsec = 50000000L;
 
 
 	// flash lights
