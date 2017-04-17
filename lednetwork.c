@@ -226,7 +226,7 @@ int main(void) {
     time_t 0;        /* seconds */
     long   2000;       /* nanoseconds */
 	};
-	for (i=0; i<10,i++){
+	for (i=0; i<10,i++;){
 	// flash lights
 	for (ii=0; ii<num_pixels; ii++){
   		ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
