@@ -222,6 +222,10 @@ int main(void) {
 	prussdrv_exec_program(prunum, "hcsr04.bin");
 
 
+	struct timespec {
+    time_t 0;        /* seconds */
+    long   2000;       /* nanoseconds */
+	};
 	// flash lights
 	for (ii=0; ii<num_pixels; ii++){
   		ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
