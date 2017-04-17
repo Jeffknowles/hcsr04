@@ -226,7 +226,7 @@ int main(void) {
     struct timespec tim, tim2;
     tim.tv_sec = 1;
     tim.tv_nsec = 500;
-    nanosleep(&tim , &tim2);
+
 
 	// flash lights
 	for (i=0; i<10;i++){
@@ -234,11 +234,12 @@ int main(void) {
 	  		ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
 	  	}
 	  	ledscape_draw(leds, frame_num);
-	  	sleep(1);
+	  	nanosleep(&tim , &tim2);
 	  	for (ii=0; ii<num_pixels; ii++){
 	  		ledscape_set_color(frame, 0, ii, rgb_off[0], rgb_off[1], rgb_off[2]);
 	  	}
 	  	ledscape_draw(leds, frame_num);
+	  	nanosleep(&tim , &tim2);
   	}
 
 
