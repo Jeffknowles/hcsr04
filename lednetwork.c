@@ -227,7 +227,7 @@ int main(void) {
   		ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
   	}
   	ledscape_draw(leds, frame_num);
-  	sleep(3);
+  	sleep(0.5);
   	for (ii=0; ii<num_pixels; ii++){
   		ledscape_set_color(frame, 0, ii, rgb_off[0], rgb_off[1], rgb_off[2]);
   	}
