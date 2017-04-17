@@ -226,14 +226,7 @@ int main(void) {
     struct timespec tim, tim2;
     tim.tv_sec = 1;
     tim.tv_nsec = 500;
-
-   if(nanosleep(&tim , &tim2) < 0 )   
-   {
-
-	struct timespec {
-    time_t 0;        /* seconds */
-    long   2000;       /* nanoseconds */
-	};
+    nanosleep(&tim , &tim2)
 
 	// flash lights
 	for (i=0; i<10;i++){
