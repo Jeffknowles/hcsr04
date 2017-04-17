@@ -224,7 +224,7 @@ int main(void) {
 
 
     struct timespec tim, tim2;
-    tim.tv_sec = 1;
+    tim.tv_sec = 0;
     tim.tv_nsec = 500;
 
 
