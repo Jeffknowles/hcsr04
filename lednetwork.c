@@ -231,8 +231,8 @@ int main(void) {
 	// flash lights
 	for (i=0; i<10;i++){
 		for (ii=0; ii<num_pixels; ii++){
-	  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
-	  		ledscape_set_color(frame, 0, ii, (uint8_t) 254, (uint8_t) 254, (uint8_t) 254);
+	  		ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
+	  		// ledscape_set_color(frame, 0, ii, (uint8_t) 254, (uint8_t) 254, (uint8_t) 254);
 	  			
 	  	}
 	  	ledscape_draw(leds, frame_num);
