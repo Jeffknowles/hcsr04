@@ -222,6 +222,14 @@ int main(void) {
 	prussdrv_exec_program(prunum, "hcsr04.bin");
 
 
+
+    struct timespec tim, tim2;
+    tim.tv_sec = 1;
+    tim.tv_nsec = 500;
+
+   if(nanosleep(&tim , &tim2) < 0 )   
+   {
+
 	struct timespec {
     time_t 0;        /* seconds */
     long   2000;       /* nanoseconds */
