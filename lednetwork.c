@@ -63,7 +63,7 @@ double doPing(unsigned int *pruData) {
 }
 
 
-void doStartupLightDisplay(ledscape_t *leds, ledscape_frame_t *frame,  unsigned *frame_num, uint8_t *rgb_off, uint8_t *rgb_spike[][3])
+void doStartupLightDisplay(ledscape_t *leds, ledscape_frame_t *frame,  unsigned *frame_num, uint8_t *rgb_off, uint8_t *rgb_spike[num_pixels][3])
 {
 
 	uint32_t i;
