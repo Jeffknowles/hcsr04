@@ -82,7 +82,7 @@ void doStartupLightDisplay(ledscape_t *leds, ledscape_frame_t *frame,  unsigned 
 	for (i=0; i<10;i++){
 		for (ii=0; ii<np; ii++){
 	  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
-	  		ledscape_set_color(frame, 0, ii,( uint8_t) 50, (uint8_t) 50, (uint8_t) 50);
+	  		ledscape_set_color(frame, 0, ii,( uint8_t) 100, (uint8_t) 0, (uint8_t) 0);
 	  			
 	  	}
 	  	ledscape_draw(leds, frame_num);
