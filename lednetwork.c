@@ -274,7 +274,7 @@ int main(void) {
 
 
 
-
+	doStartupLightDisplay(leds, frame, frame_num, rgb_off, rgb_spike);
 	/* Main Loop */
 	i = 0;
 	loop_spikes = 0;
