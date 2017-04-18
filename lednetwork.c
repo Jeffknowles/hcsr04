@@ -65,11 +65,17 @@ double doPing(unsigned int *pruData) {
 
 double doStartupLightDisplay( ledscape_frame_t frame ,   unsigned frame_num)
 {
+
+	uint32_t i;
+	uint32_t ii;
+	uint32_t iii;
     struct timespec tim, tim2, tim3;
     tim.tv_sec = 0;
     tim.tv_nsec = 5000000L;
     tim3.tv_sec = 0;
     tim3.tv_nsec = 500000L;
+
+
 
 
 	// flash lights
