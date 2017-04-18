@@ -108,9 +108,6 @@ void doStartupLightDisplay(ledscape_t *leds, ledscape_frame_t *frame,  unsigned 
 	  		ledscape_set_color(frame, 0, ii, rgb_off[0], rgb_off[1], rgb_off[2]);
 	  		ledscape_draw(leds, frame_num);
 	  	}
-
-	  	printf("poop %d", np );
-	// return (int) 1;
 }
 
 
