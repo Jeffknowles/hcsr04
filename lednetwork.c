@@ -109,7 +109,7 @@ void doStartupLightDisplay(ledscape_t *leds, ledscape_frame_t *frame,  unsigned 
 	  		ledscape_draw(leds, frame_num);
 	  	}
 
-	  	printf("poop %d", num_pixels );
+	  	printf("poop %d", np );
 	// return (int) 1;
 }
 
