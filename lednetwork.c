@@ -62,6 +62,50 @@ double doPing(unsigned int *pruData) {
 	return (double) pruData[0];
 }
 
+
+double doStartupLightDisplay( ledscape_frame_t frame ,   unsigned frame_num)
+{
+    struct timespec tim, tim2, tim3;
+    tim.tv_sec = 0;
+    tim.tv_nsec = 5000000L;
+    tim3.tv_sec = 0;
+    tim3.tv_nsec = 500000L;
+
+
+	// flash lights
+	for (i=0; i<10;i++){
+		for (ii=0; ii<num_pixels; ii++){
+	  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
+	  		ledscape_set_color(frame, 0, ii, (uint8_t) 50, (uint8_t) 50, (uint8_t) 50);
+	  			
+	  	}
+	  	ledscape_draw(leds, frame_num);
+	  	nanosleep(&tim , &tim2);
+	  	for (ii=0; ii<num_pixels; ii++){
+	  		ledscape_set_color(frame, 0, ii, rgb_off[0], rgb_off[1], rgb_off[2]);
+	  	}
+	  	ledscape_draw(leds, frame_num);
+	  	nanosleep(&tim , &tim2);
+  	}
+  	for (ii=0; ii<num_pixels; ii++){
+	  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
+	  		ledscape_set_color(frame, 0, ii, (uint8_t) 50, (uint8_t) 50, (uint8_t) 50);
+	  	}
+	ledscape_draw(leds, frame_num);
+	nanosleep(&tim , &tim2);
+	for (ii=0; ii<num_pixels; ii++){
+	  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
+	  		ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
+	  		ledscape_draw(leds, frame_num);
+	  		// nanosleep(&tim , &tim2);
+	  		ledscape_set_color(frame, 0, ii, rgb_off[0], rgb_off[1], rgb_off[2]);
+	  		ledscape_draw(leds, frame_num);
+	  	}
+
+}
+
+
+
 float random_float(const float min, const float max)
 {
     if (max == min) return min;
@@ -181,6 +225,7 @@ int main(void) {
 
 
 
+
  	/* Initialize the PRU for LEDS */
   	ledscape_t *const leds = ledscape_init(num_pixels);
   	uint8_t rgb_spike[num_pixels][3];
@@ -222,43 +267,6 @@ int main(void) {
 	prussdrv_exec_program(prunum, "hcsr04.bin");
 
 
-
-    struct timespec tim, tim2, tim3;
-    tim.tv_sec = 0;
-    tim.tv_nsec = 5000000L;
-    tim3.tv_sec = 0;
-    tim3.tv_nsec = 500000L;
-
-
-	// flash lights
-	for (i=0; i<10;i++){
-		for (ii=0; ii<num_pixels; ii++){
-	  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
-	  		ledscape_set_color(frame, 0, ii, (uint8_t) 50, (uint8_t) 50, (uint8_t) 50);
-	  			
-	  	}
-	  	ledscape_draw(leds, frame_num);
-	  	nanosleep(&tim , &tim2);
-	  	for (ii=0; ii<num_pixels; ii++){
-	  		ledscape_set_color(frame, 0, ii, rgb_off[0], rgb_off[1], rgb_off[2]);
-	  	}
-	  	ledscape_draw(leds, frame_num);
-	  	nanosleep(&tim , &tim2);
-  	}
-  	for (ii=0; ii<num_pixels; ii++){
-	  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
-	  		ledscape_set_color(frame, 0, ii, (uint8_t) 50, (uint8_t) 50, (uint8_t) 50);
-	  	}
-	ledscape_draw(leds, frame_num);
-	nanosleep(&tim , &tim2);
-	for (ii=0; ii<num_pixels; ii++){
-	  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
-	  		ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
-	  		ledscape_draw(leds, frame_num);
-	  		// nanosleep(&tim , &tim2);
-	  		ledscape_set_color(frame, 0, ii, rgb_off[0], rgb_off[1], rgb_off[2]);
-	  		ledscape_draw(leds, frame_num);
-	  	}
 
 
 	/* Main Loop */
