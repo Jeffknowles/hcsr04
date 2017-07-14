@@ -20,6 +20,8 @@ Hardware configuration:
 	* VCC			P9_5 or P9_6	VDD_5V
 	* LED signal 0          P9_22 
 	* 
+	* Potentiometer power = P9_32; signal = P9_39; grd = P9_44; 
+
 	
 	Make sure there is a 1KOhm resistor between ECHO pin and your beaglebone
 	as input pins are 3.3V while sensor emits 5V
