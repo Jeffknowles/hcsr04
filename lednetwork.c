@@ -107,6 +107,14 @@ void doStartupLightDisplay(ledscape_t *leds, ledscape_frame_t *frame,  unsigned 
 	  	ledscape_draw(leds, frame_num);
 	  	nanosleep(&tim , &tim2);
   	}
+  	for (i=0; i<100; i++)
+  	{
+	  	for (ii=0; ii<np; ii++){
+		  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
+		  		ledscape_set_color(frame, 0, ii, (uint8_t) i, (uint8_t) i, (uint8_t) i);
+		  	}
+		  	ledscape_draw(leds, frame_num);
+	  }
   	for (ii=0; ii<np; ii++){
 	  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
 	  		ledscape_set_color(frame, 0, ii, (uint8_t) 50, (uint8_t) 50, (uint8_t) 50);
