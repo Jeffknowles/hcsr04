@@ -362,7 +362,7 @@ int main(void) {
 		for (ch = 0; ch < len(sonar_inputs); ch++){
 			  // set v[0] based on sonar
 			 if (target_distance < sense_thresh & v[sonar_inputs[ch]] >= 0) {
-			    v[0] = v[0] + (double) sensory_factor * sense_thresh / target_distance;
+			    v[sonar_inputs[ch]] = v[sonar_inputs[ch]] + (double) sensory_factor * sense_thresh / target_distance;
 			 }
 		}
 		// loop thru neurons
