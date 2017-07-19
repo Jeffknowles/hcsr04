@@ -220,7 +220,7 @@ int main(void) {
 	// setup input parameters
 	uint32_t sonar_inputs[2];
 	sonar_inputs[0] = (uint32_t) 0;
-	// sonar_inputs[0] = (uint32_t) 1;
+	sonar_input[1] = (uint32_t) 1;
 
 	printf("%f", thresh);
 	// initialize neurons 
