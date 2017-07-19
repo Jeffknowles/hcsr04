@@ -74,12 +74,12 @@ void doStartupLightDisplay(ledscape_t *leds, ledscape_frame_t *frame,  unsigned 
     tim.tv_nsec = 50000000L;
     tim3.tv_sec = 0;
     tim3.tv_nsec = 50000000L;
-    uint32_t np = num_pixels-10;
+    uint32_t np = num_pixels-50;
 
 
 
 	// flash lights
-	for (i=0; i<10;i++){
+	for (i=0; i<1;i++){
 		for (ii=0; ii<np; ii++){
 	  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
 	  		ledscape_set_color(frame, 0, ii,( uint8_t) 100, (uint8_t) 0, (uint8_t) 0);
