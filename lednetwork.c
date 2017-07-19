@@ -40,7 +40,7 @@ const double ao_max = 4096;
 #define maxCon 40
 #define nch 400 // number of neurons
 #define num_pixels 250
-#define num_sonar_inputs = 2 
+#define num_sonar_inputs 2 
 
 int readao( FILE* f0 ) {
     char value_str[7];
@@ -218,7 +218,7 @@ int main(void) {
 	double currentIPI = minIPI;
 
 	// setup input parameters
-	uint32_t sonar_inputs[num_sonar_inputs];
+	uint32_t sonar_inputs[2];
 	// sonar_inputs[0] = 0;
 	// sonar_inputs[1] = 1;
 
