@@ -200,6 +200,7 @@ int main(void) {
 	FILE* a0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
 	FILE* a1 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage1_raw", "r");
 	FILE* a2 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage2_raw", "r");
+	FILE* a3 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage2_raw", "r");
 
 
 	// setup timers
@@ -215,6 +216,9 @@ int main(void) {
 	double target_distance = 0;
 	double sense_thresh = sense_thresh_i;
 	double currentIPI = minIPI;
+
+	// setup input parameters
+	uint32_t sonar_inputs[2] = {0,100};
 
 	printf("%f", thresh);
 	// initialize neurons 
