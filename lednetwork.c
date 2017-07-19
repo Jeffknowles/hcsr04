@@ -218,7 +218,7 @@ int main(void) {
 	double currentIPI = minIPI;
 
 	// setup input parameters
-	uint32_t sonar_inputs[2] = {0,100};
+	uint32_t num_sonar_inputs[2] = {0,100};
 
 	printf("%f", thresh);
 	// initialize neurons 
