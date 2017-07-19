@@ -133,7 +133,7 @@ void doStartupLightDisplay(ledscape_t *leds, ledscape_frame_t *frame,  unsigned 
 	ledscape_draw(leds, frame_num);
 	nanosleep(&tim , &tim2);
 	for (ii=0; ii<np; ii++){
-	  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
+	  		// ledscape_set_co lor(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
 	  	    ledscape_draw(leds, frame_num);
 	  		// // nanosleep(&tim , &tim2);
 	  		// ledscape_set_color(frame, 0, ii, rgb_off[0], rgb_off[1], rgb_off[2]);
@@ -198,6 +198,8 @@ int main(void) {
 
 	// open analog channel files
 	FILE* a0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
+	FILE* a1 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage1_raw", "r");
+	FILE* a2 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage2_raw", "r");
 
 
 	// setup timers
@@ -352,8 +354,8 @@ int main(void) {
 		// //  }
   //       printf("\n");
 		
-
-
+		// set sonar input nodes based on sonar
+		//
 		  // set v[0] based on sonar
 		 if (target_distance < sense_thresh & v[0] >= 0) {
 		    v[0] = v[0] + (double) sensory_factor * sense_thresh / target_distance;
