@@ -359,11 +359,12 @@ int main(void) {
   //       printf("\n");
 		
 		// set sonar input nodes based on sonar
-		//
-		  // set v[0] based on sonar
-		 if (target_distance < sense_thresh & v[0] >= 0) {
-		    v[0] = v[0] + (double) sensory_factor * sense_thresh / target_distance;
-		 }
+		for (ch = 0; ch < len(sonar_inputs); ch++){
+			  // set v[0] based on sonar
+			 if (target_distance < sense_thresh & v[sonar_inputs[ch]] >= 0) {
+			    v[0] = v[0] + (double) sensory_factor * sense_thresh / target_distance;
+			 }
+		}
 		// loop thru neurons
 		 loop_spikes = 0; 
 		for (ch = 0; ch < nch; ch++) {
