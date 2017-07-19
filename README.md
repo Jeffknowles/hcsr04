@@ -4,7 +4,7 @@ Jeff Knowles
 jeff.knowles@gmail.com	
 
 
-This code runs a spiking neural network in C that interpretes input from enviromental sensors to drive visual and audio outputs. Runs on a Beaglebone Black, and executes PRU code to interact with sensors and drive LED light displays. Originally based on basic code for the HCS04 as well as a branch from PixelBone as it split off from LEDScape, making it easy to use one PRU for sensing and one to drive the lights.   
+This code runs a spiking neural network in C that interpretes input from enviromental sensors to drive visual and audio outputs. Runs on a Beaglebone Black, and executes PRU code to interact with sensors and drive LED light displays. Utilizes code from the HCS04 as well as a branch from PixelBone as it split off from LEDScape, making it easy to use one PRU for sensing and one to drive the lights.   
 
 
 
@@ -20,7 +20,11 @@ Hardware configuration:
 	* VCC			P9_5 or P9_6	VDD_5V
 	* LED signal 0          P9_22 
 	* 
-	* Potentiometer power = P9_32; signal = P9_39; grd = P9_44; 
+	* Potentiometer power = P9_32; signal = P9_39; grd = P9_44;
+	* 
+	* Analog input 0 ()
+	* Analog input 1 ()
+
 
 	
 	Make sure there is a 1KOhm resistor between ECHO pin and your beaglebone
