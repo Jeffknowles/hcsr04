@@ -116,7 +116,7 @@ void doStartupLightDisplay(ledscape_t *leds, ledscape_frame_t *frame,  unsigned 
 		  	}
 		  	ledscape_draw(leds, frame_num);
 	  }
-	for (iii=0; iii<5; iii++){
+	for (iii=0; iii<2; iii++){
 	  	for (i=0; i<50; i++)
 	  	{
 		  	for (ii=0; ii<np; ii++){
