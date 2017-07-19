@@ -39,7 +39,7 @@ const double ao_max = 4096;
 // connection settings - declare connections between neurons
 #define maxCon 40
 #define nch 400 // number of neurons
-#define num_pixels 400
+#define num_pixels 200
 
 
 int readao( FILE* f0 ) {
