@@ -76,7 +76,7 @@ void doStartupLightDisplay(ledscape_t *leds, ledscape_frame_t *frame,  unsigned 
     tim.tv_nsec = 50000000L;
     tim3.tv_sec = 0;
     tim3.tv_nsec = 50000000L;
-    uint32_t np = (uint32_t) num_pixels-50;
+    uint32_t np = (uint32_t) num_pixels-60;
 
 
 
