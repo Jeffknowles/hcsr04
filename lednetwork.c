@@ -367,6 +367,13 @@ int main(void) {
 			    v[sonar_inputs[ch]] = v[sonar_inputs[ch]] + (double) sensory_factor * sense_thresh / target_distance;
 			 }
 		}
+		// set audio input nodes based on a1
+		for (ch = 0; ch < num_sonar_inputs; ch++){
+			  // set v[0] based on sonar
+			 if (target_distance < sense_thresh & v[sonar_inputs[ch]] >= 0) {
+			    v[sonar_inputs[ch]] = v[sonar_inputs[ch]] + (double) sensory_factor * sense_thresh / target_distance;
+			 }
+		}
 		// loop thru neurons
 		 loop_spikes = 0; 
 		for (ch = 0; ch < nch; ch++) {
