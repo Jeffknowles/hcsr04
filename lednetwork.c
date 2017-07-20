@@ -380,12 +380,12 @@ int main(void) {
 			    v[sound_inputs[ch]] = v[sound_inputs[ch]] + (double) ao_values * 2 / ao_max;
 			 }
 		}
-		// set audio input nodes based on a1 (sensitivity) a2 (sound envelope; see spec) 
-		ao_values = readao(a2);
-		for (ch = 0; ch < num_sound_inputs; ch++){
+		// set touch input nodes based on a3 (sensitivity) a4 (touch resistance analog circuit; see spec) 
+		ao_values = readao(a4);
+		for (ch = 0; ch < num_touch_inputs; ch++){
 			  // set v[0] based on sonar
-			 if ((double) ao_values / ao_max >= 0.1 & v[sound_inputs[ch]] >= 0) {
-			    v[sound_inputs[ch]] = v[sound_inputs[ch]] + (double) ao_values * 2 / ao_max;
+			 if ((double) ao_values / ao_max >= 0.1 & v[touch_inputs[ch]] >= 0) {
+			    v[touch_inputs[ch]] = v[touch_inputs[ch]] + (double) ao_values * 2 / ao_max;
 			 }
 		}
 
