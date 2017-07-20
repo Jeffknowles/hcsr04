@@ -41,6 +41,7 @@ const double ao_max = 4096;
 #define nch 400 // number of neurons
 #define num_pixels 250
 #define num_sonar_inputs 2 
+#define num_sound_inputs 2
 
 int readao( FILE* f0 ) {
     char value_str[7];
@@ -224,7 +225,7 @@ int main(void) {
 	uint32_t sound_inputs[num_sound_inputs];
 	sound_inputs[0] = (uint32_t) 25;
 	sound_inputs[1] = (uint32_t) 75;
-	
+
 	printf("%f", thresh);
 	// initialize neurons 
 	double v[nch] =  {0};
