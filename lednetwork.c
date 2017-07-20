@@ -227,6 +227,9 @@ int main(void) {
 	uint32_t sound_inputs[num_sound_inputs];
 	sound_inputs[0] = (uint32_t) 25;
 	sound_inputs[1] = (uint32_t) 75;
+	uint32_t touch_inputs[num_sound_inputs];
+	touch_inputs[0] = (uint32_t) 100;
+	touch_inputs[1] = (uint32_t) 101;
 
 	printf("%f", thresh);
 	// initialize neurons 
