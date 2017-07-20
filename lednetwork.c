@@ -200,9 +200,9 @@ int main(void) {
 	// open analog channel files
 	FILE* a0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
 	FILE* a1 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage1_raw", "r");
-	FILE* a2 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage3_raw", "r");
-	FILE* a3 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage4_raw", "r");
-	FILE* a4 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage5_raw", "r");
+	FILE* a2 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage2_raw", "r");
+	FILE* a3 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage3_raw", "r");
+	FILE* a4 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage4_raw", "r");
 
 
 	// setup timers
