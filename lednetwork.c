@@ -202,6 +202,7 @@ int main(void) {
 	FILE* a1 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage1_raw", "r");
 	FILE* a2 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage2_raw", "r");
 	FILE* a3 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage2_raw", "r");
+	FILE* a4 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage2_raw", "r");
 
 
 	// setup timers
