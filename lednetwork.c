@@ -195,7 +195,7 @@ int main(void) {
 	uint32_t syn;
 	uint32_t loop_spikes; 
 	uint32_t rep_spikes;
-	uint32_t ao_values[2];
+	uint32_t ao_values[2]; // for ai reads lets go back and check whether its possible or faster to do it all in one
 
 	// open analog channel files
 	FILE* a0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
@@ -337,8 +337,8 @@ int main(void) {
 		rep_spikes = rep_spikes+loop_spikes; 
 
 		// read and interperate input 
-		ao_values = readao(a0);
-		sense_thresh = (((double) ao_values) / ao_max)*sense_thresh_i;
+		ao_values[0] = readao(a0);
+		sense_thresh = (((double) ao_values[0]) / ao_max)*sense_thresh_i;
 		currentIPI = (double)(01 * sense_thresh * 2 * 29)/1000000; //set ipi based on a0
 
 		// measure distance
@@ -346,7 +346,7 @@ int main(void) {
 			duration = doPing(pruData);
 			target_distance = dur2cm(duration);
 			if ( printout ) {
-				printf("%d: Distance = %05.1f cm    loop_spikes = %03d   spike rate = %06.1f Hz   dt= %08f  max_dt=%08f ipi=%08f , ao=%d \n", i, target_distance,loop_spikes, (double) rep_spikes / (double) time_since_last_ping, dt, max_dt, time_since_last_ping, ao_values);
+				printf("%d: Distance = %05.1f cm    loop_spikes = %03d   spike rate = %06.1f Hz   dt= %08f  max_dt=%08f ipi=%08f , ao=%d \n", i, target_distance,loop_spikes, (double) rep_spikes / (double) time_since_last_ping, dt, max_dt, time_since_last_ping, ao_values[0]);
 			 }  
 		    // target_distance = 90; 
 		    time_since_last_ping = 0; 
