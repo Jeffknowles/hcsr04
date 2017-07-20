@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS += \
 	-std=c99 \
-	-W \
+	-w \
 	-Wall \
 	-D_BSD_SOURCE \
 	-Wp,-MMD,$(dir $@).$(notdir $@).d \
@@ -30,10 +30,6 @@ hcsr04.bin: hcsr04.p
 	@echo "\n>> Generating PRU binary"
 	$(PRU_ASM) -b hcsr04.p
 
-# hcsr04: hcsr04.c
-# 	@echo "\n>> Compiling HC-SR04 example"
-# 	$(CC) $(CFLAGS) -c -o hcsr04.o hcsr04.c
-# 	$(CC) -lpthread -lprussdrv -o hcsr04 hcsr04.o PixelBone/ledscape.o PixelBone/pru.o -lm
 
 hcsr04: lednetwork.c
 	@echo "\n>> spiking lednetwork example"
