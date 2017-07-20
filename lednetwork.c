@@ -382,7 +382,7 @@ int main(void) {
 			 }
 		}
 		// set touch input nodes based on a3 (sensitivity) a4 (touch resistance analog circuit; see spec) 
-		ao_values[0]
+		ao_values[0] = readao(a3);
 		ao_values[1] = readao(a4);
 		for (ch = 0; ch < num_touch_inputs; ch++){
 			  // set v[0] based on sonar
