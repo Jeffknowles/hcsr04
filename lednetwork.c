@@ -391,7 +391,7 @@ int main(void) {
 		for (ch = 0; ch < num_touch_inputs; ch++){
 			  // set v[0] based on sonar
 			 if ((double) ao_values[1] / ao_max >= 0.1 & v[touch_inputs[ch]] >= 0) {
-			    v[touch_inputs[ch]] = v[touch_inputs[ch]] + ((double) 2*ao_values[0] / ao_max)*((double) ao_values[1] / ao_max);
+			    v[touch_inputs[ch]] = v[touch_inputs[ch]] + ((double) 2*ao_values[0] / ao_max)*(10*(double) ao_values[1] / ao_max);
 			 }
 		}
 
