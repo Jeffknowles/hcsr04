@@ -372,7 +372,15 @@ int main(void) {
 			    v[sonar_inputs[ch]] = v[sonar_inputs[ch]] + (double) sensory_factor * sense_thresh / target_distance;
 			 }
 		}
-		// set audio input nodes based on a1 (sensitivity) a2 (sound envelope) 
+		// set audio input nodes based on a1 (sensitivity) a2 (sound envelope; see spec) 
+		ao_values = readao(a2);
+		for (ch = 0; ch < num_sound_inputs; ch++){
+			  // set v[0] based on sonar
+			 if ((double) ao_values / ao_max >= 0.1 & v[sound_inputs[ch]] >= 0) {
+			    v[sound_inputs[ch]] = v[sound_inputs[ch]] + (double) ao_values * 2 / ao_max;
+			 }
+		}
+		// set audio input nodes based on a1 (sensitivity) a2 (sound envelope; see spec) 
 		ao_values = readao(a2);
 		for (ch = 0; ch < num_sound_inputs; ch++){
 			  // set v[0] based on sonar
