@@ -377,7 +377,7 @@ int main(void) {
 		ao_values[1] = readao(a2);
 		for (ch = 0; ch < num_sound_inputs; ch++){
 			  // set v[0] based on sonar
-			 if ((double) ao_values / ao_max >= 0.1 & v[sound_inputs[ch]] >= 0) {
+			 if ((double) ao_values[1] / ao_max >= 0.1 & v[sound_inputs[ch]] >= 0) {
 			    v[sound_inputs[ch]] = v[sound_inputs[ch]] + ((double) 2*ao_values[0] / ao_max)*((double) ao_values[1] / ao_max);
 			 }
 		}
