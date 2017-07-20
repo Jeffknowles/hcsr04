@@ -65,6 +65,48 @@ double doPing(unsigned int *pruData) {
 }
 
 
+
+float random_float(const float min, const float max)
+{
+    if (max == min) return min;
+    else if (min < max) return (max - min) * ((float)rand() / RAND_MAX) + min;
+
+    // return 0 if min > max
+    return 0;
+}
+
+static uint16_t highest_bit(uint64_t v) {
+    uint16_t out = 0;
+    while (v > 0) {
+        v >>= 1;
+        ++out;
+    }
+    return out;
+}
+
+uint32_t myrandint( uint32_t LIMIT ) {
+    static bool init = 0;
+    static uint16_t n;
+    static uint16_t shift;
+    if (!init) {
+        uint16_t randbits = highest_bit(RAND_MAX + (uint64_t)1L);
+        uint16_t outbits = highest_bit( (uint64_t) LIMIT);
+        n = (outbits + randbits - 1)/randbits;
+        shift = randbits;
+        init = 1;
+    }
+    uint32_t out = 0;
+    for (uint16_t i=0; i<n; ++i) {
+        out |= rand() << (i*shift);
+    }
+    return out % LIMIT;
+}
+
+double dur2cm(double dur) {
+	return (double) dur / 58.44;
+}
+
+
 void doStartupLightDisplay(ledscape_t *leds, ledscape_frame_t *frame,  unsigned *frame_num, uint8_t *rgb_off, uint8_t *rgb_spike[num_pixels][3])
 {
 
@@ -144,46 +186,6 @@ void doStartupLightDisplay(ledscape_t *leds, ledscape_frame_t *frame,  unsigned 
 }
 
 
-
-float random_float(const float min, const float max)
-{
-    if (max == min) return min;
-    else if (min < max) return (max - min) * ((float)rand() / RAND_MAX) + min;
-
-    // return 0 if min > max
-    return 0;
-}
-
-static uint16_t highest_bit(uint64_t v) {
-    uint16_t out = 0;
-    while (v > 0) {
-        v >>= 1;
-        ++out;
-    }
-    return out;
-}
-
-uint32_t myrandint( uint32_t LIMIT ) {
-    static bool init = 0;
-    static uint16_t n;
-    static uint16_t shift;
-    if (!init) {
-        uint16_t randbits = highest_bit(RAND_MAX + (uint64_t)1L);
-        uint16_t outbits = highest_bit( (uint64_t) LIMIT);
-        n = (outbits + randbits - 1)/randbits;
-        shift = randbits;
-        init = 1;
-    }
-    uint32_t out = 0;
-    for (uint16_t i=0; i<n; ++i) {
-        out |= rand() << (i*shift);
-    }
-    return out % LIMIT;
-}
-
-double dur2cm(double dur) {
-	return (double) dur / 58.44;
-}
 
 // main function 
 int main(void) {
