@@ -42,6 +42,7 @@ const double ao_max = 4096;
 #define num_pixels 250
 #define num_sonar_inputs 2 
 #define num_sound_inputs 2
+#define num_touch_inputs 2
 
 int readao( FILE* f0 ) {
     char value_str[7];
