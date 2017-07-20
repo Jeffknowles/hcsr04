@@ -223,8 +223,8 @@ int main(void) {
 	sonar_inputs[0] = (uint32_t) 0;
 	sonar_inputs[1] = (uint32_t) 50;
 	uint32_t sound_inputs[num_sound_inputs];
-	sound_inputs[0] = (uint32_t) 26;
-	sound_inputs[1] = (uint32_t) 76;
+	sound_inputs[0] = (uint32_t) 25;
+	sound_inputs[1] = (uint32_t) 75;
 
 	printf("%f", thresh);
 	// initialize neurons 
