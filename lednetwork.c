@@ -372,13 +372,13 @@ int main(void) {
 			 }
 		}
 		// set audio input nodes based on a1
-		ao_values = readao(a1);
-		for (ch = 0; ch < num_sound_inputs; ch++){
-			  // set v[0] based on sonar
-			 if ((double) ao_values / ao_max >= 0.1) {
-			    v[sound_inputs[ch]] = v[sound_inputs[ch]] + (double) ao_values / ao_max;
-			 }
-		}
+		// ao_values = readao(a1);
+		// for (ch = 0; ch < num_sound_inputs; ch++){
+		// 	  // set v[0] based on sonar
+		// 	 if ((double) ao_values / ao_max >= 0.1) {
+		// 	    v[sound_inputs[ch]] = v[sound_inputs[ch]] + (double) ao_values / ao_max;
+		// 	 }
+		// }
 		// loop thru neurons
 		 loop_spikes = 0; 
 		for (ch = 0; ch < nch; ch++) {
