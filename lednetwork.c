@@ -89,7 +89,7 @@ uint32_t myrandint( uint32_t LIMIT ) {
     static bool init = 0;
     static uint16_t n;
     static uint16_t shift;
-    srand(time(NULL));
+    srand(time);
     if (!init) {
         uint16_t randbits = highest_bit(RAND_MAX + (uint64_t)1L);
         uint16_t outbits = highest_bit( (uint64_t) LIMIT);
