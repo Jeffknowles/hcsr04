@@ -14,6 +14,7 @@
 #include "PixelBone/ledscape.h"
 #include <prussdrv.h> 
 #include <pruss_intc_mapping.h>
+#include <openssl/rand.h>
 #define prunum 1
 
 
