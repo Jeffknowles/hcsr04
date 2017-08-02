@@ -28,7 +28,7 @@ const double sense_thresh_i = 400; // threshold where responses turn on
 // const int dialPin = 5;  // analog pin for the dial
 //const int modePins[2] = {3, 4}; // pins for the 3way mode switch
 //const int buttonPin = 2;  // pin for the tigger button
-const bool printout = false;
+const bool printout = true;
 const bool pong_only_in_range = true;
 	
 
@@ -41,8 +41,8 @@ const double ao_max = 4096;
 #define maxCon 40
 #define nch 400 // number of neurons
 #define num_pixels 250
-#define num_sonar_inputs 2 
-#define num_sound_inputs 2
+#define num_sonar_inputs 1 
+#define num_sound_inputs 1
 #define num_touch_inputs 2
 
 int readao( FILE* f0 ) {
@@ -226,10 +226,10 @@ int main(void) {
 	// setup input parameters
 	uint32_t sonar_inputs[num_sonar_inputs];
 	sonar_inputs[0] = (uint32_t) 0;
-	sonar_inputs[1] = (uint32_t) 50;
+	// sonar_inputs[1] = (uint32_t) 50;
 	uint32_t sound_inputs[num_sound_inputs];
 	sound_inputs[0] = (uint32_t) 25;
-	sound_inputs[1] = (uint32_t) 75;
+	// sound_inputs[1] = (uint32_t) 75;
 	uint32_t touch_inputs[num_sound_inputs];
 	touch_inputs[0] = (uint32_t) 100;
 	touch_inputs[1] = (uint32_t) 101;
@@ -325,7 +325,8 @@ int main(void) {
 
 
 
-	doStartupLightDisplay(leds, frame, frame_num, rgb_off, rgb_spike);
+	//doStartupLightDisplay(leds, frame, frame_num, rgb_off, rgb_spike);
+	printf("starting main loop");
 	/* Main Loop */
 	i = 0;
 	loop_spikes = 0;
@@ -353,7 +354,19 @@ int main(void) {
 			duration = doPing(pruData);
 			target_distance = dur2cm(duration);
 			if ( printout ) {
-				printf("%d: Distance = %05.1f cm    loop_spikes = %03d   spike rate = %06.1f Hz   dt= %08f  max_dt=%08f ipi=%08f , ao=%d \n", i, target_distance,loop_spikes, (double) rep_spikes / (double) time_since_last_ping, dt, max_dt, time_since_last_ping, ao_values[0]);
+			   	printf("%d: Distance = %05.1f cm    loop_spikes = %03d   spike rate = %06.1f Hz   dt= %08f  max_dt=%08f ipi=%08f ", i, target_distance,loop_spikes, (double) rep_spikes / (double) time_since_last_ping, dt, max_dt, time_since_last_ping);
+                // ao_values[0] = readao(a0);
+                printf("a0 %d ", ao_values[0]);
+                ao_values[0] = readao(a1);
+                printf("a1 %d ", ao_values[0]);
+                ao_values[0] = readao(a2);
+                printf("a2 %d ", ao_values[0]);
+                ao_values[0] = readao(a3);
+                printf("a3 %d ", ao_values[0]);
+                ao_values[0] = readao(a4);
+                printf("a4 %d ", ao_values[0]);
+                printf("\n");
+
 			 }  
 		    // target_distance = 90; 
 		    time_since_last_ping = 0; 
@@ -384,8 +397,10 @@ int main(void) {
 		ao_values[1] = readao(a2);
 		for (ch = 0; ch < num_sound_inputs; ch++){
 			  // set v[0] based on sonar
-			 if ((double) ao_values[1] / ao_max >= 0.1 & v[sound_inputs[ch]] >= 0) {
-			    v[sound_inputs[ch]] = v[sound_inputs[ch]] + fabs((double) 1*ao_values[0] / ao_max)*(log((double) 20 * ao_values[1] / ao_max));  // this equation will be tweaked
+			 if ((double) ao_values[1] / ao_max >= 0.05 & v[sound_inputs[ch]] >= 0) {
+			  //  v[sound_inputs[ch]] = v[sound_inputs[ch]] + fabs((double) 1*ao_values[0] / ao_max)*(log((double) 20 * ao_values[1] / ao_max));  // this equation will be tweaked
+			 v[sound_inputs[ch]] = v[sound_inputs[ch]] + ((double) ao_values[1] / ao_max) / ((double) 10*ao_values[0] / ao_max);
+			 v[sound_inputs[ch]] = v[sound_inputs[ch]] + fmax( (double) 0.5 * log( (double) ao_values[1] / (double) ao_values[0]),0);
 			 }
 		}
 		// set touch input nodes based on a3 (sensitivity) a4 (touch resistance analog circuit; see spec) 
