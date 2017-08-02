@@ -392,26 +392,26 @@ int main(void) {
 			    v[sonar_inputs[ch]] = v[sonar_inputs[ch]] + (double) sensory_factor * sense_thresh / target_distance;
 			 }
 		}
-		// // set audio input nodes based on a1 (sensitivity) a2 (sound envelope; see spec) 
-		// ao_values[0] = readao(a1);
-		// ao_values[1] = readao(a2);
-		// for (ch = 0; ch < num_sound_inputs; ch++){
-		// 	  // set v[0] based on sonar
-		// 	 if ((double) ao_values[1] / ao_max >= 0.05 & v[sound_inputs[ch]] >= 0) {
-		// 	  //  v[sound_inputs[ch]] = v[sound_inputs[ch]] + fabs((double) 1*ao_values[0] / ao_max)*(log((double) 20 * ao_values[1] / ao_max));  // this equation will be tweaked
-		// 	 v[sound_inputs[ch]] = v[sound_inputs[ch]] + ((double) ao_values[1] / ao_max) / ((double) 10*ao_values[0] / ao_max);
-		// 	 v[sound_inputs[ch]] = v[sound_inputs[ch]] + fmax( (double) 0.5 * log( (double) ao_values[1] / (double) ao_values[0]),0);
-		// 	 }
-		// }
-		// // set touch input nodes based on a3 (sensitivity) a4 (touch resistance analog circuit; see spec) 
-		// ao_values[0] = readao(a3);
-		// ao_values[1] = readao(a4);
-		// for (ch = 0; ch < num_touch_inputs; ch++){
-		// 	  // set v[0] based on sonar
-		// 	 if ((double) ao_values[1] / ao_max >= 0.1 & v[touch_inputs[ch]] >= 0) {
-		// 	    v[touch_inputs[ch]] = v[touch_inputs[ch]] + ((double) 2*ao_values[0] / ao_max)*((double) ao_values[1] / ao_max);  // this equation will be tweaked
-		// 	 }
-		// }
+		// set audio input nodes based on a1 (sensitivity) a2 (sound envelope; see spec) 
+		ao_values[0] = readao(a1);
+		ao_values[1] = readao(a2);
+		for (ch = 0; ch < num_sound_inputs; ch++){
+			  // set v[0] based on sonar
+			 if ((double) ao_values[1] / ao_max >= 0.05 & v[sound_inputs[ch]] >= 0) {
+			  //  v[sound_inputs[ch]] = v[sound_inputs[ch]] + fabs((double) 1*ao_values[0] / ao_max)*(log((double) 20 * ao_values[1] / ao_max));  // this equation will be tweaked
+			 v[sound_inputs[ch]] = v[sound_inputs[ch]] + ((double) ao_values[1] / ao_max) / ((double) 10*ao_values[0] / ao_max);
+			 v[sound_inputs[ch]] = v[sound_inputs[ch]] + fmax( (double) 0.5 * log( (double) ao_values[1] / (double) ao_values[0]),0);
+			 }
+		}
+		// set touch input nodes based on a3 (sensitivity) a4 (touch resistance analog circuit; see spec) 
+		ao_values[0] = readao(a3);
+		ao_values[1] = readao(a4);
+		for (ch = 0; ch < num_touch_inputs; ch++){
+			  // set v[0] based on sonar
+			 if ((double) ao_values[1] / ao_max >= 0.1 & v[touch_inputs[ch]] >= 0) {
+			    v[touch_inputs[ch]] = v[touch_inputs[ch]] + ((double) 2*ao_values[0] / ao_max)*((double) ao_values[1] / ao_max);  // this equation will be tweaked
+			 }
+		}
 
 		// loop thru neurons
 		 loop_spikes = 0; 
