@@ -59,8 +59,8 @@ int readao( FILE* f0 ) {
 
 double doPing(unsigned int *pruData) {
 	// Wait for the PRU interrupt
-	prussdrv_pru_wait_event (PRU_EVTOUT_0);
-	prussdrv_pru_clear_event(PRU_EVTOUT_0, PRU1_ARM_INTERRUPT);
+	// prussdrv_pru_wait_event (PRU_EVTOUT_0);
+	// prussdrv_pru_clear_event(PRU_EVTOUT_0, PRU1_ARM_INTERRUPT);
 
 	return (double) pruData[0];
 }
