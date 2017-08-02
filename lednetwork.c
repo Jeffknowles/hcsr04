@@ -39,8 +39,8 @@ const double ao_max = 4096;
 // connection settings - declare connections between neurons
 // connection settings - declare connections between neurons
 #define maxCon 40
-#define nch 800 // number of neurons
-#define num_pixels 600
+#define nch 400 // number of neurons
+#define num_pixels 250
 #define num_sonar_inputs 1 
 #define num_sound_inputs 1
 #define num_touch_inputs 2
@@ -397,9 +397,9 @@ int main(void) {
 		ao_values[1] = readao(a2);
 		for (ch = 0; ch < num_sound_inputs; ch++){
 			  // set v[0] based on sonar
-			 if ((v[sound_inputs[ch]] >= 0) {
+			 if (v[sound_inputs[ch]] >= 0) {
 			  //  v[sound_inputs[ch]] = v[sound_inputs[ch]] + fabs((double) 1*ao_values[0] / ao_max)*(log((double) 20 * ao_values[1] / ao_max));  // this equation will be tweaked
-			 // v[sound_inputs[ch]] = v[sound_inputs[ch]] + ((double) ao_values[1] / ao_max) / ((double) 10*ao_values[0] / ao_max);
+			 v[sound_inputs[ch]] = v[sound_inputs[ch]] + ((double) ao_values[1] / ao_max) / ((double) 10*ao_values[0] / ao_max);
 			 v[sound_inputs[ch]] = v[sound_inputs[ch]] + fmax( (double) 0.5 * log( (double) ao_values[1] / (double) ao_values[0]),0);
 			 }
 		}
