@@ -16,8 +16,9 @@
 #include <pruss_intc_mapping.h>
 #include <openssl/rand.h>
 #define prunum 1
+// #define NaN 10000
 
-
+const double NaN = 10000;
 const double minIPI = 0.04; // minimum interping interval in miliseconds
 const double maxIPI = 2;
 const double sense_thresh_i = 400; // threshold where responses turn on
@@ -28,7 +29,7 @@ const double sense_thresh_i = 400; // threshold where responses turn on
 // const int dialPin = 5;  // analog pin for the dial
 //const int modePins[2] = {3, 4}; // pins for the 3way mode switch
 //const int buttonPin = 2;  // pin for the tigger button
-const bool printout = true;
+const bool printout = false;
 const bool pong_only_in_range = true;
 	
 
@@ -38,12 +39,17 @@ const double sensory_factor = 0.1;
 const double ao_max = 4096;
 // connection settings - declare connections between neurons
 // connection settings - declare connections between neurons
-#define maxCon 40
+#define maxCon 10
 #define nch 600 // number of neurons
 #define num_pixels 600
 #define num_sonar_inputs 1 
-#define num_sound_inputs 1
-#define num_touch_inputs 2
+#define num_sound_inputs 10
+#define num_touch_inputs 1
+
+// matrix_definitions 
+#define m0 8
+#define n0 67
+
 
 int readao( FILE* f0 ) {
     char value_str[7];
@@ -190,12 +196,18 @@ void doStartupLightDisplay(ledscape_t *leds, ledscape_frame_t *frame,  unsigned 
 
 // main function 
 int main(void) {
+	// printf("poop0");
 	srand(time);
 	// initialize variables
 	uint32_t ch;
-	uint32_t i;
+	uint32_t i; // itteraters
 	uint32_t ii;
 	uint32_t iii;
+	uint32_t i4;
+	uint32_t i5;
+	uint32_t m;
+	uint32_t n; 
+	uint32_t k;
 	uint32_t syn;
 	uint32_t loop_spikes; 
 	uint32_t rep_spikes;
@@ -228,11 +240,12 @@ int main(void) {
 	sonar_inputs[0] = (uint32_t) 0;
 	// sonar_inputs[1] = (uint32_t) 50;
 	uint32_t sound_inputs[num_sound_inputs];
-	sound_inputs[0] = (uint32_t) 25;
-	// sound_inputs[1] = (uint32_t) 75;
+	for (ii = 0; ii<num_sound_inputs; ii++) {
+		sound_inputs[ii] = (uint32_t) 25+ii;
+	}
 	uint32_t touch_inputs[num_sound_inputs];
-	touch_inputs[0] = (uint32_t) 100;
-	touch_inputs[1] = (uint32_t) 101;
+	touch_inputs[0] = (uint32_t) 300;
+	// touch_inputs[1] = (uint32_t) 301;
 
 	printf("%f", thresh);
 	// initialize neurons 
@@ -243,41 +256,104 @@ int main(void) {
 		spike_len[ii] = (double) random_float((float) 40, (float) 60);
 	}
 
-
-
-	// generate connections among neurons
+	//
+    // 
+    // generate connections among neurons
 	uint32_t connections[nch][maxCon];
+	uint32_t matrix_map[n0][m0]; 
 	float weights[nch][maxCon];
-	// generate linear layer
-	uint32_t linear_layer_length = 150;
-	for ( ii=0; ii<(linear_layer_length); ii++){
+	uint32_t column_lengths[m0];
 
-		connections[ii][0] = ii + 1; 
-		weights[ii][0] = 18;
-		connections[ii][1] = ii + 2; 
-		weights[ii][1] = 10;
-		connections[ii][2] = ii + 3;
-		weights[ii][3] = 8;
+	// set matrix parameters 
+    m = m0; 
+    n = n0; 
+    column_lengths[0] = 67;
+    column_lengths[1] = 65;
+    column_lengths[2] = 67;
+    column_lengths[3] = 65;
+    column_lengths[4] = 67;
+    column_lengths[5] = 65;
+    column_lengths[6] = 67;
+    column_lengths[7] = 67;
 
-	}
-	for (ii=0; ii<(linear_layer_length); ii++){ // random synapses onto second layer
-		for (iii=3; iii<maxCon; iii++){
-			connections[ii][iii]=linear_layer_length + (uint32_t) myrandint( (uint32_t) (nch-linear_layer_length));
-			// printf("%d \n", connections[ii][iii]);
-			weights[ii][iii] = random_float((float) 0, (float) 14);
-		}
-	}
-	for (ii=linear_layer_length; ii<(nch); ii++){ // random synapses onto second layer
-		for (iii=3; iii<maxCon; iii++){
-			connections[ii][iii]=linear_layer_length + (uint32_t) myrandint( (uint32_t) (nch-linear_layer_length));
-			if (random_float((float) 0., (float) 1.) < 0.5) {
-				weights[ii][iii] = random_float((float) -5, (float) 0.);
+    // make matrix map
+    i5 = 0; 
+    for (ii = 0; ii < m; ii++){
+    	for (iii = 0; iii < n; iii++){
+			if (iii < column_lengths[ii]){
+				matrix_map[iii][ii]=i5;
+				i5++;
 			}
 			else {
-				weights[ii][iii] = random_float((float) 0, (float) 5);
-		}
+				matrix_map[iii][ii] = NaN;
+			}
+
 		}
 	}
+
+    i=0; // stepper for actual channel;  
+    for (ii = 0; ii < m; ii++){
+    	// printf("%d \n", column_lengths[ii]);
+    	for (iii = 1; iii < column_lengths[ii]; iii++){
+			i4=0; 
+			if ((iii+1)<column_lengths[ii]) { // same column, one up
+				connections[i][i4] = matrix_map[iii+1][ii];
+				weights[i][i4]=10;
+				i4 = i4+1; 
+			}
+			if ((iii-1)>0) { // same column, one down
+				connections[i][i4] = matrix_map[iii-1][ii];
+				weights[i][i4]=10;
+				i4 = i4+1; 
+			}
+			if ((ii+1)< m) { // same row, one over 
+				connections[i][i4] = matrix_map[iii][ii+1];
+				weights[i][i4]=10;
+				i4 = i4+1; 
+			}
+			if ((ii-1) >= 0) { // same column, minus one over
+				connections[i][i4] = matrix_map[iii][ii-1];
+				weights[i][i4]=10;
+				i4 = i4+1; 
+			}
+			for (i5=i4; i5<maxCon; i5++){
+				connections[i][i5]=NaN;
+				weights[i][i5]=0;
+			}
+			// printf("%d\n",connections[i][0]);
+			i++; 
+		}
+    }
+	// // generate linear layer
+	// uint32_t linear_layer_length = 450;
+	// for ( ii=0; ii<(linear_layer_length); ii++){
+
+	// 	connections[ii][0] = ii + 1; 
+	// 	weights[ii][0] = 18;
+	// 	connections[ii][1] = ii + 2; 
+	// 	weights[ii][1] = 10;
+	// 	connections[ii][2] = ii + 3;
+	// 	weights[ii][3] = 8;
+
+	// }
+	// for (ii=0; ii<(linear_layer_length); ii++){ // random synapses onto second layer
+	// 	for (iii=3; iii<maxCon; iii++){
+	// 		connections[ii][iii]=linear_layer_length + (uint32_t) myrandint( (uint32_t) (nch-linear_layer_length));
+	// 		// printf("%d \n", connections[ii][iii]);
+	// 		weights[ii][iii] = random_float((float) 0, (float) 14);
+	// 	}
+	// }
+	// for (ii=linear_layer_length; ii<(nch); ii++){ // random synapses onto second layer
+	// 	for (iii=3; iii<maxCon; iii++){
+	// 		connections[ii][iii]=linear_layer_length + (uint32_t) myrandint( (uint32_t) (nch-linear_layer_length));
+	// 		if (random_float((float) 0., (float) 1.) < 0.5) {
+	// 			weights[ii][iii] = random_float((float) -5, (float) 0.);
+	// 		}
+	// 		else {
+	// 			weights[ii][iii] = random_float((float) 0, (float) 5);
+	// 	}
+	// 	}
+	// }
 
 
 
@@ -287,10 +363,10 @@ int main(void) {
   	ledscape_t *const leds = ledscape_init(num_pixels);
   	uint8_t rgb_spike[num_pixels][3];
   	for (ii=0; ii<num_pixels; ii++){
-  		rgb_spike[ii][0] = (uint8_t) myrandint( (uint32_t) 100);
-  		rgb_spike[ii][1] = (uint8_t) myrandint( (uint32_t) 100);
-  		rgb_spike[ii][2] = (uint8_t) myrandint( (uint32_t) 100);
-  		printf("%d %d %d\n",rgb_spike[ii][0],rgb_spike[ii][1],rgb_spike[ii][2]);
+  		rgb_spike[ii][0] = (uint8_t) myrandint( (uint32_t) 255);
+  		rgb_spike[ii][1] = (uint8_t) myrandint( (uint32_t) 255);
+  		rgb_spike[ii][2] = (uint8_t) myrandint( (uint32_t) 255);
+  		// printf("%d %d %d\n",rgb_spike[ii][0],rgb_spike[ii][1],rgb_spike[ii][2]);
   	}
 
   	uint8_t rgb_off[3] = {0,0,0};
@@ -395,12 +471,13 @@ int main(void) {
 		// set audio input nodes based on a1 (sensitivity) a2 (sound envelope; see spec) 
 		ao_values[0] = readao(a1);
 		ao_values[1] = readao(a2);
+		// printf("%f \n", 0.1*(double) fmax( (double) log( (double) ao_values[1] / ((double) ao_values[0])/2),0));
 		for (ch = 0; ch < num_sound_inputs; ch++){
 			  // set v[0] based on sonar
 			 if (v[sound_inputs[ch]] >= 0) {
 			  //  v[sound_inputs[ch]] = v[sound_inputs[ch]] + fabs((double) 1*ao_values[0] / ao_max)*(log((double) 20 * ao_values[1] / ao_max));  // this equation will be tweaked
-			 v[sound_inputs[ch]] = v[sound_inputs[ch]] + ((double) ao_values[1] / ao_max) / ((double) 10*ao_values[0] / ao_max);
-			 v[sound_inputs[ch]] = v[sound_inputs[ch]] + fmax( (double) 0.5 * log( (double) ao_values[1] / (double) ao_values[0]),0);
+			 // v[sound_inputs[ch]] = v[sound_inputs[ch]] + ((double) ao_values[1] / ao_max) / ((double) 10*ao_values[0] / ao_max);
+			 v[sound_inputs[ch]] = v[sound_inputs[ch]] + 20*(double) fmax( (double) log( (double) ao_values[1] / (double)(1000 *((double) ao_values[0]/(double)ao_max))),0);
 			 }
 		}
 		// set touch input nodes based on a3 (sensitivity) a4 (touch resistance analog circuit; see spec) 
@@ -408,8 +485,8 @@ int main(void) {
 		ao_values[1] = readao(a4);
 		for (ch = 0; ch < num_touch_inputs; ch++){
 			  // set v[0] based on sonar
-			 if ((double) ao_values[1] / ao_max >= 0.1 & v[touch_inputs[ch]] >= 0) {
-			    v[touch_inputs[ch]] = v[touch_inputs[ch]] + ((double) 2*ao_values[0] / ao_max)*((double) ao_values[1] / ao_max);  // this equation will be tweaked
+			 if ((double) ao_values[1] / ao_max >= 0.05 & v[touch_inputs[ch]] >= 0) {
+			    v[touch_inputs[ch]] = v[touch_inputs[ch]] + ((double) 10*ao_values[0] / ao_max)*((double) ao_values[1] / ao_max);  // this equation will be tweaked
 			 }
 		}
 
@@ -441,11 +518,13 @@ int main(void) {
 		        v[ch] = 0; // set voltage to 0
 		        ledscape_set_color(frame, 0, ch, rgb_off[0], rgb_off[1], rgb_off[2]);
 		        for (syn = 0; syn < maxCon; syn++) { // loop thru synaptic outputs
+			   
 			          	// if connection is real and postsyn element is not in firing, incriment its v
-			          	if (connections[ch][syn] >= 0 & v[connections[ch][syn]] >= 0) {
-			            	dv[connections[ch][syn]] += weights[ch][syn];
-
-			            }
+			          	if (connections[ch][syn] != (uint32_t) NaN){
+			          		if (v[connections[ch][syn]] >= 0) {
+			           			dv[connections[ch][syn]] += weights[ch][syn];
+			            	}
+			        	}
 			        }
 		      }
 		      else {
