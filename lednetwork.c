@@ -29,7 +29,7 @@ const double sense_thresh_i = 400; // threshold where responses turn on
 // const int dialPin = 5;  // analog pin for the dial
 //const int modePins[2] = {3, 4}; // pins for the 3way mode switch
 //const int buttonPin = 2;  // pin for the tigger button
-const bool printout = false;
+const bool printout = true;
 const bool pong_only_in_range = true;
 	
 
@@ -39,16 +39,16 @@ const double sensory_factor = 0.1;
 const double ao_max = 4096;
 // connection settings - declare connections between neurons
 // connection settings - declare connections between neurons
-#define maxCon 10
+#define maxCon 50
 #define nch 600 // number of neurons
-#define num_pixels 600
+#define num_pixels 500
 #define num_sonar_inputs 1 
 #define num_sound_inputs 10
 #define num_touch_inputs 1
 
 // matrix_definitions 
-#define m0 8
-#define n0 67
+#define m0 12
+#define n0 22
 
 
 int readao( FILE* f0 ) {
@@ -207,7 +207,6 @@ int main(void) {
 	uint32_t i5;
 	uint32_t m;
 	uint32_t n; 
-	uint32_t k;
 	uint32_t syn;
 	uint32_t loop_spikes; 
 	uint32_t rep_spikes;
@@ -244,7 +243,7 @@ int main(void) {
 		sound_inputs[ii] = (uint32_t) 25+ii;
 	}
 	uint32_t touch_inputs[num_sound_inputs];
-	touch_inputs[0] = (uint32_t) 300;
+	touch_inputs[0] = (uint32_t) 100;
 	// touch_inputs[1] = (uint32_t) 301;
 
 	printf("%f", thresh);
@@ -258,72 +257,135 @@ int main(void) {
 
 	//
     // 
-    // generate connections among neurons
+    // set matrix parameters 
+    m = m0; 
+    n = n0; 
 	uint32_t connections[nch][maxCon];
 	uint32_t matrix_map[n0][m0]; 
 	float weights[nch][maxCon];
-	uint32_t column_lengths[m0];
+	uint32_t column_lengths[m0]={n,n,n,n,n,n,n,n};
 
-	// set matrix parameters 
-    m = m0; 
-    n = n0; 
-    column_lengths[0] = 67;
-    column_lengths[1] = 65;
-    column_lengths[2] = 67;
-    column_lengths[3] = 65;
-    column_lengths[4] = 67;
-    column_lengths[5] = 65;
-    column_lengths[6] = 67;
-    column_lengths[7] = 67;
+	
+    // column_lengths[0] = 67;
+    // column_lengths[1] = 66;
+    // column_lengths[2] = 64;
+    // column_lengths[3] = 63;
+    // column_lengths[4] = 63;
+    // column_lengths[5] = 64;
+    // column_lengths[6] = 66;
+    // column_lengths[7] = 67;
+
 
     // make matrix map
     i5 = 0; 
-    for (ii = 0; ii < m; ii++){
+    
+    for (ii = 0; ii < m; ii+=2){
+    	printf("\n%d ", i5);
     	for (iii = 0; iii < n; iii++){
 			if (iii < column_lengths[ii]){
 				matrix_map[iii][ii]=i5;
 				i5++;
 			}
 			else {
-				matrix_map[iii][ii] = NaN;
+				matrix_map[iii][ii] = (uint32_t) NaN;
+			}
+		}
+		printf(" %d ", i5);
+		for (iii = n;  iii-- > 0;){
+			if (iii <= column_lengths[ii+1]){
+				matrix_map[iii][ii+1]=i5;
+				i5++;
+			}
+			else {
+				matrix_map[iii][ii+1] = (uint32_t) NaN;
 			}
 
 		}
+		printf(" %d\n", i5);
 	}
-
+	printf("%d %d %d %d %d\n", matrix_map[0][0], matrix_map[0][1], matrix_map[0][2],matrix_map[0][3],matrix_map[0][4]);
+    printf("%d %d %d %d %d\n", matrix_map[1][0], matrix_map[1][1], matrix_map[1][2],matrix_map[1][3],matrix_map[1][4]);
+    
+    // generate connections among neurons
     i=0; // stepper for actual channel;  
     for (ii = 0; ii < m; ii++){
+
     	// printf("%d \n", column_lengths[ii]);
-    	for (iii = 1; iii < column_lengths[ii]; iii++){
+    	for (iii = 0; iii < column_lengths[ii]; iii++){
+    		i = matrix_map[iii][ii];
 			i4=0; 
 			if ((iii+1)<column_lengths[ii]) { // same column, one up
 				connections[i][i4] = matrix_map[iii+1][ii];
-				weights[i][i4]=10;
+				weights[i][i4]=15;
 				i4 = i4+1; 
 			}
-			if ((iii-1)>0) { // same column, one down
+			if ((iii+2)<column_lengths[ii]) { // same column, 2 up
+				connections[i][i4] = matrix_map[iii+2][ii];
+				weights[i][i4]=5;
+				i4 = i4+1; 
+			}			
+			if ((iii+3)<column_lengths[ii]) { // same column, 3 up
+				connections[i][i4] = matrix_map[iii+3][ii];
+				weights[i][i4]=-15;
+				i4 = i4+1; 
+			}
+			if (((float) iii-1)>=0) { // same column, one down
 				connections[i][i4] = matrix_map[iii-1][ii];
-				weights[i][i4]=10;
+				weights[i][i4]=15;
+				i4 = i4+1; 
+			}
+			if (((float) iii-2)>=0) { // same column, two down
+				connections[i][i4] = matrix_map[iii-2][ii];
+				weights[i][i4]=5;
+				i4 = i4+1; 
+			}
+			if (((float) iii-3)>=0) { // same column, 3 down
+				connections[i][i4] = matrix_map[iii-3][ii];
+				weights[i][i4]=-15;
 				i4 = i4+1; 
 			}
 			if ((ii+1)< m) { // same row, one over 
 				connections[i][i4] = matrix_map[iii][ii+1];
-				weights[i][i4]=10;
+				weights[i][i4]=15;
 				i4 = i4+1; 
 			}
-			if ((ii-1) >= 0) { // same column, minus one over
+		    if ((ii+2)< m) { // same row, two over 
+				connections[i][i4] = matrix_map[iii][ii+2];
+				weights[i][i4]=5;
+				i4 = i4+1; 
+			}
+			if ((ii+3)< m) { // same row, 3 over 
+				connections[i][i4] = matrix_map[iii][ii+3];
+				weights[i][i4]=-15;
+				i4 = i4+1; 
+			}
+			if (((float) ii-1) >= 0) { // same column, minus one over
 				connections[i][i4] = matrix_map[iii][ii-1];
-				weights[i][i4]=10;
+				weights[i][i4]=15;
 				i4 = i4+1; 
 			}
+			if (((float) ii-2) >= 0) { // same column, minus two over
+				connections[i][i4] = matrix_map[iii][ii-2];
+				weights[i][i4]=5;
+				i4 = i4+1; 
+			}
+			if (((float) ii-3) >= 0) { // same column, minus two over
+				connections[i][i4] = matrix_map[iii][ii-3];
+				weights[i][i4]=-15;
+				i4 = i4+1; 
+			}
+
 			for (i5=i4; i5<maxCon; i5++){
-				connections[i][i5]=NaN;
-				weights[i][i5]=0;
+				// connections[i][i5]= (uint32_t) NaN;
+				connections[i][i5]= (uint32_t) myrandint( (uint32_t) (nch));
+				weights[i][i5]= (float) -15;
 			}
 			// printf("%d\n",connections[i][0]);
-			i++; 
+			printf("connections %d (iii=%d,ii=%d): %d %d %d %d %d \n",i, iii, ii, connections[i][0], connections[i][1], connections[i][2], connections[i][3], connections[i][4]);
+			// i++; 
 		}
     }
+
 	// // generate linear layer
 	// uint32_t linear_layer_length = 450;
 	// for ( ii=0; ii<(linear_layer_length); ii++){
@@ -401,7 +463,7 @@ int main(void) {
 
 
 
-	//doStartupLightDisplay(leds, frame, frame_num, rgb_off, rgb_spike);
+	// doStartupLightDisplay(leds, frame, frame_num, rgb_off, rgb_spike);
 	printf("starting main loop");
 	/* Main Loop */
 	i = 0;
