@@ -15,6 +15,7 @@
 #include <prussdrv.h> 
 #include <pruss_intc_mapping.h>
 #include <openssl/rand.h>
+#include "BBBIOlib/BBBio_lib/BBBiolib.h"
 #define prunum 1
 // #define NaN 10000
 
@@ -49,6 +50,35 @@ const double ao_max = 4096;
 // matrix_definitions 
 #define m0 12
 #define n0 22
+
+
+
+/* -------------------------------------------------------------- */
+int doPWM(void)
+{
+	/* NOTICE :
+	 *	please load BBBIO-EHRPWM overlay first
+	 *	help : https://github.com/VegetableAvenger/BBBIOlib/tree/master/overlay
+	 **/
+	iolib_init();
+
+	const float PWM_HZ = 100.0f ;	/* 100 Hz */
+	const float duty_A = 20.0f ; 	/* 20% Duty cycle for PWM 0_A output */
+	const float duty_B = 50.0f ;	/* 50% Duty cycle for PWM 0_B output*/
+
+	printf("PWM Demo setting ....\n");
+	BBBIO_PWMSS_Setting(BBBIO_PWMSS0, PWM_HZ ,duty_A , duty_B);
+
+	printf("PWM %d enable for 10s ....\n", BBBIO_PWMSS0);
+	BBBIO_ehrPWM_Enable(BBBIO_PWMSS0);
+	sleep(10);
+
+	BBBIO_ehrPWM_Disable(BBBIO_PWMSS0);
+	printf("close\n");
+
+	iolib_free();
+	return 0;
+}
 
 
 int readao( FILE* f0 ) {
@@ -219,7 +249,7 @@ int main(void) {
 	FILE* a3 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage3_raw", "r");
 	FILE* a4 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage4_raw", "r");
 
-
+	doPWM();
 	// setup timers
 	struct timeval new_time, last_time;
     double dt;
