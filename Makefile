@@ -4,7 +4,7 @@ CFLAGS += \
 	-w \
 	-Wall \
 	-D_BSD_SOURCE \
-	# -Wp,-MMD,$(dir $@).$(notdir $@).d \
+	-Wp,-MMD,$(dir $@).$(notdir $@).d \
 	-Wp,-MT,$@ \
 	-I. \
 	-O2 \
@@ -38,7 +38,7 @@ hcsr04: lednetwork.c
 
 pwm_test: pwmtest.c
 	@echo "\n>> Compiling pwm example"
-	$(CC) $(CFLAGS) -c -o pwmtest.o pwmtest.c -L BBBIOlib/BBBio_lib/ -lBBBio 
+	$(CC) -c -o pwmtest.o pwmtest.c -L BBBIOlib/BBBio_lib/ -lBBBio 
 	$(CC) -o pwmtest pwmtest.o BBBIOlib/BBBio_lib/libBBBio.a -lm
 
 
