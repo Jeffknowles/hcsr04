@@ -36,6 +36,11 @@ hcsr04: lednetwork.c
 	$(CC) $(CFLAGS) -c -o lednetwork.o lednetwork.c
 	$(CC) -lpthread -lprussdrv -o lednetwork lednetwork.o PixelBone/ledscape.o PixelBone/pru.o -lm
 
+pwm_test: pwmtest.c
+	@echo "\n>> Compiling pwm example"
+	$(CC) $(CFLAGS) -c -o pwmtest.o pwmtest.c 
+	$(CC) -lpthread -lprussdrv -o rgb-test pwmtest.o  PixelBone/ledscape.o PixelBone/pru.o BBBIOlib/BBBio_lib/BBiolib_PWMSS.o -lm
+
 
 rgb-test: rgb-test.c
 	@echo "\n>> Compiling RGB example"
