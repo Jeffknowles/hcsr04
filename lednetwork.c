@@ -598,6 +598,7 @@ int main(void) {
 		max_dt = fmax(dt,max_dt);
 		rep_spikes = rep_spikes+loop_spikes; 
 
+
 		// read and interperate input 
 		ao_values[0] = buffer_AIN_0[0];
 		sense_thresh = (((double) ao_values[0]) / ao_max)*sense_thresh_i;
