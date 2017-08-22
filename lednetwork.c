@@ -531,7 +531,7 @@ int main(void) {
 	initMotor(); 
 	motor_going = 0; 
 
-	// doStartupLightDisplay(leds, frame, frame_num, rgb_off, rgb_spike);
+	doStartupLightDisplay(leds, frame, frame_num, rgb_off, rgb_spike);
 	printf("starting main loop");
 	/* Main Loop */
 	i = 0;
