@@ -605,7 +605,7 @@ int main(void) {
 		printf("%f   ", sense_thresh);
 		currentIPI = (double)(01 * sense_thresh * 2 * 29)/1000000; //set ipi based on a0
 		currentIPI = fmin(currentIPI, (double) 0.01f);		
-		printf(" %f\n", currentIPI);
+		printf(" %f,%f", currentIPI, time_since_last_ping);
 		// measure distance
 		if (time_since_last_ping > currentIPI) {
 			duration = doPing(pruData);
