@@ -4,7 +4,7 @@ CFLAGS += \
 	-w \
 	-Wall \
 	-D_BSD_SOURCE \
-	-Wp,-MMD,$(dir $@).$(notdir $@).d \
+	# -Wp,-MMD,$(dir $@).$(notdir $@).d \
 	-Wp,-MT,$@ \
 	-I. \
 	-O2 \
