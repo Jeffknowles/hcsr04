@@ -4,6 +4,14 @@
 /* -------------------------------------------------------------- */
 int main(void)
 {
+
+	/// pwm0 BBBIO_PWMSS0 p9_22
+	//  do0  
+	//  
+
+
+
+
 	/* NOTICE :
 	 *	please load BBBIO-EHRPWM overlay first
 	 *	help : https://github.com/VegetableAvenger/BBBIOlib/tree/master/overlay

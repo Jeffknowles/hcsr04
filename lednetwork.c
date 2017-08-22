@@ -30,9 +30,14 @@ const double sense_thresh_i = 400; // threshold where responses turn on
 // const int dialPin = 5;  // analog pin for the dial
 //const int modePins[2] = {3, 4}; // pins for the 3way mode switch
 //const int buttonPin = 2;  // pin for the tigger button
-const bool printout = true;
+const bool printout = false;
 const bool pong_only_in_range = true;
 	
+
+const float PWM_HZ = 2000.0f ;	/* 100 Hz */
+const float duty_A = 50.0f ; 	/* 20% Duty cycle for PWM 0_A output */
+const float duty_B = 50.0f ;	/* 50% Duty cycle for PWM 0_B output*/
+
 
 const double thresh = 20;
 const double k = 15; // magnitude of the leak
@@ -51,7 +56,40 @@ const double ao_max = 4096;
 #define m0 12
 #define n0 22
 
+int initMotor()
+{
+	BBBIO_PWMSS_Setting(BBBIO_PWMSS0, PWM_HZ ,duty_A , duty_B);
+	BBBIO_ehrPWM_Enable(BBBIO_PWMSS0);
 
+	BBBIO_sys_Enable_GPIO(BBBIO_GPIO2);
+	BBBIO_GPIO_set_dir(BBBIO_GPIO2 ,
+			   BBBIO_GPIO_PIN_10 |BBBIO_GPIO_PIN_11 | BBBIO_GPIO_PIN_12 |BBBIO_GPIO_PIN_13 ,	// Input
+			   BBBIO_GPIO_PIN_6 | BBBIO_GPIO_PIN_7 | BBBIO_GPIO_PIN_8 | BBBIO_GPIO_PIN_9);		// Output
+    BBBIO_GPIO_low(BBBIO_GPIO2 , BBBIO_GPIO_PIN_6 |  BBBIO_GPIO_PIN_7);
+    BBBIO_GPIO_high(BBBIO_GPIO2 , BBBIO_GPIO_PIN_8);
+}
+
+int startMotor()
+{
+
+	BBBIO_PWMSS_Setting(BBBIO_PWMSS0, PWM_HZ ,duty_A , duty_B);
+	BBBIO_ehrPWM_Enable(BBBIO_PWMSS0);
+	BBBIO_GPIO_high(BBBIO_GPIO2 , BBBIO_GPIO_PIN_6);
+}
+
+int stopMotor()
+{
+	BBBIO_ehrPWM_Disable(BBBIO_PWMSS0);
+	BBBIO_GPIO_low(BBBIO_GPIO2 , BBBIO_GPIO_PIN_6);
+}
+
+// int motorChange()
+// {
+// 	state0 = 
+	// state1 = 
+// 	BBBIO_GPIO_high(BBBIO_GPIO2 , BBBIO_GPIO_PIN_8);
+//     BBBIO_GPIO_low(BBBIO_GPIO2 , BBBIO_GPIO_PIN_9);
+// }
 
 /* -------------------------------------------------------------- */
 int doPWM(void)
@@ -66,58 +104,13 @@ int doPWM(void)
 	const float duty_A = 20.0f ; 	/* 20% Duty cycle for PWM 0_A output */
 	const float duty_B = 50.0f ;	/* 50% Duty cycle for PWM 0_B output*/
 
-	printf("PWM Demo setting ....\n");
-	BBBIO_PWMSS_Setting(BBBIO_PWMSS0, PWM_HZ ,duty_A , duty_B);
-
-	printf("PWM %d enable for 10s ....\n", BBBIO_PWMSS0);
-	BBBIO_ehrPWM_Enable(BBBIO_PWMSS0);
-	sleep(10);
-
+	
 	BBBIO_ehrPWM_Disable(BBBIO_PWMSS0);
 	printf("close\n");
 
 
 	BBBIO_sys_Enable_GPIO(BBBIO_GPIO2);
 
-	BBBIO_GPIO_set_dir(BBBIO_GPIO2 ,
-			   BBBIO_GPIO_PIN_10 |BBBIO_GPIO_PIN_11 | BBBIO_GPIO_PIN_12 |BBBIO_GPIO_PIN_13 ,	// Input
-			   BBBIO_GPIO_PIN_6 | BBBIO_GPIO_PIN_7 | BBBIO_GPIO_PIN_8 | BBBIO_GPIO_PIN_9);		// Output
-
-	int count =0;
-	int DIPvalue=0 ;		// finger switch value
-	int LEDvalue =0;
-	while(count < 100)
-	{
-	    // Read DIP value
-	    LEDvalue =0;
-	    DIPvalue = BBBIO_GPIO_get(BBBIO_GPIO2 ,BBBIO_GPIO_PIN_10 |BBBIO_GPIO_PIN_11 | BBBIO_GPIO_PIN_12 |BBBIO_GPIO_PIN_13 );
-
-	    // check value , and seting which LED must be glittered .
-	    if(DIPvalue & BBBIO_GPIO_PIN_11)
-		LEDvalue |=BBBIO_GPIO_PIN_7;
-
-	    if(DIPvalue & BBBIO_GPIO_PIN_10)
-		LEDvalue |=BBBIO_GPIO_PIN_6;
-
-	    if(DIPvalue & BBBIO_GPIO_PIN_13)
-		LEDvalue |=BBBIO_GPIO_PIN_9;
-
-	    if(DIPvalue & BBBIO_GPIO_PIN_12)
-		LEDvalue |=BBBIO_GPIO_PIN_8;
-
-	    // glitter LED
-	    BBBIO_GPIO_high(BBBIO_GPIO2 , LEDvalue);
-	    iolib_delay_ms(100);
-
-	    // close all
-            BBBIO_GPIO_low(BBBIO_GPIO2 , BBBIO_GPIO_PIN_6 | BBBIO_GPIO_PIN_7 | BBBIO_GPIO_PIN_8 | BBBIO_GPIO_PIN_9);
-	    iolib_delay_ms(100);
-	    count ++;
-	}
-
-
-	iolib_free();
-	return 0;
 }
 
 
@@ -281,7 +274,7 @@ int main(void) {
 	uint32_t loop_spikes; 
 	uint32_t rep_spikes;
 	uint32_t ao_values[2]; // for ai reads lets go back and check whether its possible or faster to do it all in one
-
+	uint8_t motor_going;
 	// open analog channel files
 	FILE* a0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
 	FILE* a1 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage1_raw", "r");
@@ -533,6 +526,11 @@ int main(void) {
 
 
 
+
+	// init motor
+	initMotor(); 
+	motor_going = 0; 
+
 	// doStartupLightDisplay(leds, frame, frame_num, rgb_off, rgb_spike);
 	printf("starting main loop");
 	/* Main Loop */
@@ -561,6 +559,22 @@ int main(void) {
 		if (time_since_last_ping > currentIPI) {
 			duration = doPing(pruData);
 			target_distance = dur2cm(duration);
+			if (target_distance < (float) 100){
+				if ( motor_going == 0 ) {
+					startMotor();
+					motor_going = 1; 
+				}
+			}
+			else {
+				if ( motor_going == 1){
+					stopMotor();
+					motor_going = 0; 
+				}
+				
+			}
+
+
+
 			if ( printout ) {
 			   	printf("%d: Distance = %05.1f cm    loop_spikes = %03d   spike rate = %06.1f Hz   dt= %08f  max_dt=%08f ipi=%08f ", i, target_distance,loop_spikes, (double) rep_spikes / (double) time_since_last_ping, dt, max_dt, time_since_last_ping);
                 // ao_values[0] = readao(a0);
@@ -675,6 +689,9 @@ int main(void) {
 	printf(">> Sonar PRU Disabled.\r\n");
 	ledscape_close(leds);
 	printf(">> LED PRU Disabled.\r\n");
+
+	// shutdown gpio (central)
+	iolib_free();
 
 	// close files for AI
 	fclose(a0);
