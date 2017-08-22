@@ -600,7 +600,7 @@ int main(void) {
 
 
 		// read and interperate input 
-		ao_values[0] = buffer_AIN_0[0];
+		ao_values[0] = (uint32_t) buffer_AIN_0[0];
 		sense_thresh = (((double) ao_values[0]) / ((double) ao_max))*sense_thresh_i;
 		printf("%f\n", sense_thresh);
 		currentIPI = (double)(01 * sense_thresh * 2 * 29)/1000000; //set ipi based on a0
