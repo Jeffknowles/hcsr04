@@ -34,7 +34,7 @@ const bool pong_only_in_range = true;
 	
 
 const double thresh = 20;
-const double k = 10; // magnitude of the leak
+const double k = 15; // magnitude of the leak
 const double sensory_factor = 0.1;
 const double ao_max = 4096;
 // connection settings - declare connections between neurons
@@ -243,8 +243,8 @@ int main(void) {
 		sound_inputs[ii] = (uint32_t) 25+ii;
 	}
 	uint32_t touch_inputs[num_sound_inputs];
-	touch_inputs[0] = (uint32_t) 100;
-	// touch_inputs[1] = (uint32_t) 301;
+	touch_inputs[0] = (uint32_t) 75;
+	touch_inputs[1] = (uint32_t) 76;
 
 	printf("%f", thresh);
 	// initialize neurons 
@@ -425,9 +425,9 @@ int main(void) {
   	ledscape_t *const leds = ledscape_init(num_pixels);
   	uint8_t rgb_spike[num_pixels][3];
   	for (ii=0; ii<num_pixels; ii++){
-  		rgb_spike[ii][0] = (uint8_t) myrandint( (uint32_t) 255);
-  		rgb_spike[ii][1] = (uint8_t) myrandint( (uint32_t) 255);
-  		rgb_spike[ii][2] = (uint8_t) myrandint( (uint32_t) 255);
+  		rgb_spike[ii][0] = (uint8_t) myrandint( (uint32_t) 100);
+  		rgb_spike[ii][1] = (uint8_t) myrandint( (uint32_t) 100);
+  		rgb_spike[ii][2] = (uint8_t) myrandint( (uint32_t) 100);
   		// printf("%d %d %d\n",rgb_spike[ii][0],rgb_spike[ii][1],rgb_spike[ii][2]);
   	}
 
@@ -543,12 +543,12 @@ int main(void) {
 			 }
 		}
 		// set touch input nodes based on a3 (sensitivity) a4 (touch resistance analog circuit; see spec) 
-		ao_values[0] = readao(a3);
+		ao_values[0] = (uint8_t) 4000; //readao(a3);
 		ao_values[1] = readao(a4);
 		for (ch = 0; ch < num_touch_inputs; ch++){
 			  // set v[0] based on sonar
-			 if ((double) ao_values[1] / ao_max >= 0.05 & v[touch_inputs[ch]] >= 0) {
-			    v[touch_inputs[ch]] = v[touch_inputs[ch]] + ((double) 10*ao_values[0] / ao_max)*((double) ao_values[1] / ao_max);  // this equation will be tweaked
+			 if ((double) ao_values[1] / ao_max >= 0.01 & v[touch_inputs[ch]] >= 0) {
+			    v[touch_inputs[ch]] = v[touch_inputs[ch]] + ((double) 200*ao_values[0] / ao_max)*((double) ao_values[1] / ao_max);  // this equation will be tweaked
 			 }
 		}
 
