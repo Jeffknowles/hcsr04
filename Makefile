@@ -38,14 +38,14 @@ hcsr04: lednetwork.c
 
 pwm_test: pwmtest.c
 	@echo "\n>> Compiling pwm example"
-	$(CC) $(CFLAGS) -c -o pwmtest.o pwmtest.c 
-	$(CC) -lpthread -lprussdrv -o  pwmtest pwmtest.o BBBIOlib/BBBio_lib/BBBiolib_PWMSS.o -lm
+	$(CC) $(CFLAGS) -c -o pwmtest.o pwmtest.c libBBBio.a
+	$(CC) -lpthread -lprussdrv -o  pwmtest pwmtest.o BBBIOlib/BBBio_lib/BBBiolib_PWMSS.o -lm -L BBBIOlib/BBBio_lib/ -lBBBio
 
 
 rgb-test: rgb-test.c
 	@echo "\n>> Compiling RGB example"
 	$(CC) $(CFLAGS) -c -o rgb-test.o ledscape.o rgb-test.c
-	$(CC) -lpthread -lprussdrv -o rgb-test rgb-test.o ledscape.o -lm
+	$(CC) -lpthread -lprussdrv -o rgb-test rgb-test.o ledscape.o -lm 
 # hcsr04dev: hcsr04.c
 # 	@echo "\n>> Compiling HC-SR04 example dev"
 # 	$(CC) $(CFLAGS) -Irdev/ -c -o  hcsr04.o hcsr04.c
