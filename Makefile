@@ -33,12 +33,12 @@ hcsr04.bin: hcsr04.p
 
 hcsr04: lednetwork.c
 	@echo "\n>> spiking lednetwork example"
-	$(CC) $(CFLAGS) -c -o lednetwork.o lednetwork.c 
+	$(CC)  -c -o lednetwork.o lednetwork.c 
 	$(CC) -lpthread -lprussdrv -o lednetwork lednetwork.o PixelBone/ledscape.o PixelBone/pru.o BBBIOlib/BBBio_lib/libBBBio.a -lm
 
 pwm_test: pwmtest.c
 	@echo "\n>> Compiling pwm example"
-	$(CC) -c -o pwmtest.o pwmtest.c -L BBBIOlib/BBBio_lib/ -lBBBio 
+	$(CC) $(CFLAGS)  -c -o pwmtest.o pwmtest.c -L BBBIOlib/BBBio_lib/ -lBBBio 
 	$(CC) -o pwmtest pwmtest.o BBBIOlib/BBBio_lib/libBBBio.a -lm
 
 
