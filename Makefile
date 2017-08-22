@@ -39,7 +39,7 @@ hcsr04: lednetwork.c
 pwm_test: pwmtest.c
 	@echo "\n>> Compiling pwm example"
 	$(CC) $(CFLAGS) -c -o pwmtest.o pwmtest.c -L BBBIOlib/BBBio_lib/ -lBBBio
-	$(CC) pwmtest pwmtest.o BBBIOlib/BBBio_lib/libBBBio.a -lm
+	$(CC) pwmtest pwmtest.o -lm BBIOlib/BBio_lib/libBBBio.a -L BBBIOlib/BBBio_lib/ -lBBBio
 
 
 rgb-test: rgb-test.c
