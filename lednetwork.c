@@ -17,8 +17,6 @@
 #include <openssl/rand.h>
 #include "BBBIOlib/BBBio_lib/BBBiolib.h"
 #define prunum 1
-#define BUFFER_SIZE 1
-#define SAMPLE_SIZE 1
 // #define NaN 10000
 
 const double NaN = 10000;
@@ -32,7 +30,7 @@ const double sense_thresh_i = 400; // threshold where responses turn on
 // const int dialPin = 5;  // analog pin for the dial
 //const int modePins[2] = {3, 4}; // pins for the 3way mode switch
 //const int buttonPin = 2;  // pin for the tigger button
-const bool printout = true;
+const bool printout = false;
 const bool pong_only_in_range = true;
 	
 
@@ -43,90 +41,90 @@ const float duty_B = 50.0f ;	/* 50% Duty cycle for PWM 0_B output*/
 
 const double thresh = 20;
 const double k = 15; // magnitude of the leak
-const double sensory_factor = 5;
+const double sensory_factor = 0.1;
 const double ao_max = 4096;
 // connection settings - declare connections between neurons
 // connection settings - declare connections between neurons
 #define maxCon 50
-#define nch 800 // number of neurons
-#define num_pixels 700
+#define nch 600 // number of neurons
+#define num_pixels 500
 #define num_sonar_inputs 1 
 #define num_sound_inputs 10
 #define num_touch_inputs 1
 
 // matrix_definitions 
-#define m0 9
-#define n0 70
+#define m0 12
+#define n0 22
 
 int initMotor()
 {
-	// BBBIO_PWMSS_Setting(BBBIO_PWMSS1, PWM_HZ ,duty_A , duty_B);    // motor pwm = P9_14
-	// BBBIO_ehrPWM_Enable(BBBIO_PWMSS1);
+	BBBIO_PWMSS_Setting(BBBIO_PWMSS0, PWM_HZ ,duty_A , duty_B);
+	BBBIO_ehrPWM_Enable(BBBIO_PWMSS0);
 
-	// BBBIO_sys_Enable_GPIO(BBBIO_GPIO2);
-	// BBBIO_GPIO_set_dir(BBBIO_GPIO2 ,
-	// 		   BBBIO_GPIO_PIN_10,	// Input
-	// 		   BBBIO_GPIO_PIN_6 | BBBIO_GPIO_PIN_7 | BBBIO_GPIO_PIN_8);		// Output GPIO2[6] = P8_45 GPIO2[7]=P8_46
- //    BBBIO_GPIO_low(BBBIO_GPIO2 , BBBIO_GPIO_PIN_6 |  BBBIO_GPIO_PIN_7);     // OUTPUT GPIO2[8] = P8_43
- //    BBBIO_GPIO_high(BBBIO_GPIO2 , BBBIO_GPIO_PIN_8);
+	BBBIO_sys_Enable_GPIO(BBBIO_GPIO2);
+	BBBIO_GPIO_set_dir(BBBIO_GPIO2 ,
+			   BBBIO_GPIO_PIN_10 |BBBIO_GPIO_PIN_11 | BBBIO_GPIO_PIN_12 |BBBIO_GPIO_PIN_13 ,	// Input
+			   BBBIO_GPIO_PIN_6 | BBBIO_GPIO_PIN_7 | BBBIO_GPIO_PIN_8 | BBBIO_GPIO_PIN_9);		// Output
+    BBBIO_GPIO_low(BBBIO_GPIO2 , BBBIO_GPIO_PIN_6 |  BBBIO_GPIO_PIN_7);
+    BBBIO_GPIO_high(BBBIO_GPIO2 , BBBIO_GPIO_PIN_8);
 }
 
 int startMotor()
 {
 
-	// BBBIO_PWMSS_Setting(BBBIO_PWMSS1, PWM_HZ ,duty_A , duty_B);
-	// BBBIO_ehrPWM_Enable(BBBIO_PWMSS1);
-	// BBBIO_GPIO_high(BBBIO_GPIO2 , BBBIO_GPIO_PIN_6);
+	BBBIO_PWMSS_Setting(BBBIO_PWMSS0, PWM_HZ ,duty_A , duty_B);
+	BBBIO_ehrPWM_Enable(BBBIO_PWMSS0);
+	BBBIO_GPIO_high(BBBIO_GPIO2 , BBBIO_GPIO_PIN_6);
 }
 
 int stopMotor()
 {
-	// BBBIO_ehrPWM_Disable(BBBIO_PWMSS1);
-	// BBBIO_GPIO_low(BBBIO_GPIO2 , BBBIO_GPIO_PIN_6);
+	BBBIO_ehrPWM_Disable(BBBIO_PWMSS0);
+	BBBIO_GPIO_low(BBBIO_GPIO2 , BBBIO_GPIO_PIN_6);
 }
 
 // int motorChange()
 // {
 // 	state0 = 
-// 	state1 = 
+	// state1 = 
 // 	BBBIO_GPIO_high(BBBIO_GPIO2 , BBBIO_GPIO_PIN_8);
 //     BBBIO_GPIO_low(BBBIO_GPIO2 , BBBIO_GPIO_PIN_9);
 // }
 
 /* -------------------------------------------------------------- */
-// int doPWM(void)
-// {
-// 	/* NOTICE :
-// 	 *	please load BBBIO-EHRPWM overlay first
-// 	 *	help : https://github.com/VegetableAvenger/BBBIOlib/tree/master/overlay
-// 	 **/
-// 	iolib_init();
+int doPWM(void)
+{
+	/* NOTICE :
+	 *	please load BBBIO-EHRPWM overlay first
+	 *	help : https://github.com/VegetableAvenger/BBBIOlib/tree/master/overlay
+	 **/
+	iolib_init();
 
-// 	const float PWM_HZ = 100.0f ;	/* 100 Hz */
-// 	const float duty_A = 20.0f ; 	/* 20% Duty cycle for PWM 0_A output */
-// 	const float duty_B = 50.0f ;	/* 50% Duty cycle for PWM 0_B output*/
+	const float PWM_HZ = 100.0f ;	/* 100 Hz */
+	const float duty_A = 20.0f ; 	/* 20% Duty cycle for PWM 0_A output */
+	const float duty_B = 50.0f ;	/* 50% Duty cycle for PWM 0_B output*/
 
 	
-// 	BBBIO_ehrPWM_Disable(BBBIO_PWMSS0);
-// 	printf("close\n");
+	BBBIO_ehrPWM_Disable(BBBIO_PWMSS0);
+	printf("close\n");
 
 
-// 	BBBIO_sys_Enable_GPIO(BBBIO_GPIO2);
+	BBBIO_sys_Enable_GPIO(BBBIO_GPIO2);
 
-// }
+}
 
 
-// int readao( FILE* f0 ) {
-//     char value_str[7];
-//     long int value_int = 0;
+int readao( FILE* f0 ) {
+    char value_str[7];
+    long int value_int = 0;
 
-//     // FILE* f0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
-//             fread(&value_str, 6, 6, f0);
-//             value_int = strtol(value_str,NULL,0);
-//             fflush(stdout);
-//             rewind(f0);
-//             return value_int;
-//     }
+    // FILE* f0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
+            fread(&value_str, 6, 6, f0);
+            value_int = strtol(value_str,NULL,0);
+            fflush(stdout);
+            rewind(f0);
+            return value_int;
+    }
 
 double doPing(unsigned int *pruData) {
 	// Wait for the PRU interrupt
@@ -195,8 +193,7 @@ void doStartupLightDisplay(ledscape_t *leds, ledscape_frame_t *frame,  unsigned 
 
 
 	// flash lights
-	for (i=0; i<5;i++){
-		printf("%d",i);
+	for (i=0; i<1;i++){
 		for (ii=0; ii<np; ii++){
 	  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
 	  		ledscape_set_color(frame, 0, ii,( uint8_t) 100, (uint8_t) 0, (uint8_t) 0);
@@ -225,37 +222,37 @@ void doStartupLightDisplay(ledscape_t *leds, ledscape_frame_t *frame,  unsigned 
 	  	nanosleep(&tim , &tim2);
   	}
 
- //  	for (i=0; i<10; i++)
- //  	{
-	//   	for (ii=0; ii<np; ii++){
-	// 	  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
-	// 	  		ledscape_set_color(frame, 0, ii, (uint8_t) i, (uint8_t) i, (uint8_t) i);
-	// 	  	}
-	// 	  	ledscape_draw(leds, frame_num);
-	//   }
-	// for (iii=0; iii<5; iii++){
-	//   	for (i=0; i<50; i++)
-	//   	{
-	// 	  	for (ii=0; ii<np; ii++){
-	// 		  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
-	// 		  		ledscape_set_color(frame, 0, ii, (uint8_t) 55-i, (uint8_t) 55-i, (uint8_t) 55-i);
-	// 		  	}
-	// 		  	ledscape_draw(leds, frame_num);
-	// 	  }
-	// }
- //  	for (ii=0; ii<np; ii++){
-	//   		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
-	//   		ledscape_set_color(frame, 0, ii, (uint8_t) 50, (uint8_t) 50, (uint8_t) 50);
-	//   	}
-	// ledscape_draw(leds, frame_num);
-	// nanosleep(&tim , &tim2);
-	// for (ii=0; ii<np; ii++){
-	//   		ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
-	//   	    ledscape_draw(leds, frame_num);
-	//   		nanosleep(&tim , &tim2);
-	//   		// ledscape_set_color(frame, 0, ii, rgb_off[0], rgb_off[1], rgb_off[2]);
-	//   		ledscape_draw(leds, frame_num);
-	//   	}
+  	for (i=0; i<50; i++)
+  	{
+	  	for (ii=0; ii<np; ii++){
+		  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
+		  		ledscape_set_color(frame, 0, ii, (uint8_t) i, (uint8_t) i, (uint8_t) i);
+		  	}
+		  	ledscape_draw(leds, frame_num);
+	  }
+	for (iii=0; iii<5; iii++){
+	  	for (i=0; i<50; i++)
+	  	{
+		  	for (ii=0; ii<np; ii++){
+			  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
+			  		ledscape_set_color(frame, 0, ii, (uint8_t) 55-i, (uint8_t) 55-i, (uint8_t) 55-i);
+			  	}
+			  	ledscape_draw(leds, frame_num);
+		  }
+	}
+  	for (ii=0; ii<np; ii++){
+	  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
+	  		ledscape_set_color(frame, 0, ii, (uint8_t) 50, (uint8_t) 50, (uint8_t) 50);
+	  	}
+	ledscape_draw(leds, frame_num);
+	nanosleep(&tim , &tim2);
+	for (ii=0; ii<np; ii++){
+	  		ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
+	  	    ledscape_draw(leds, frame_num);
+	  		nanosleep(&tim , &tim2);
+	  		// ledscape_set_color(frame, 0, ii, rgb_off[0], rgb_off[1], rgb_off[2]);
+	  		ledscape_draw(leds, frame_num);
+	  	}
 }
 
 
@@ -279,24 +276,13 @@ int main(void) {
 	uint32_t ao_values[2]; // for ai reads lets go back and check whether its possible or faster to do it all in one
 	uint8_t motor_going;
 	// open analog channel files
-	// FILE* a0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
-	// FILE* a1 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage1_raw", "r");
-	// FILE* a2 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage2_raw", "r");
-	// FILE* a3 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage3_raw", "r");
-	// FILE* a4 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage4_raw", "r");
-	const int clk_div = 160;
-	const int open_dly = 0;
-	const int sample_dly = 1;
-	unsigned int sample;
-	unsigned int buffer_AIN_0[BUFFER_SIZE] ={0};
-	unsigned int buffer_AIN_1[BUFFER_SIZE] ={0};
-	unsigned int buffer_AIN_2[BUFFER_SIZE] ={0};
-	unsigned int buffer_AIN_3[BUFFER_SIZE] ={0};
-	unsigned int buffer_AIN_4[BUFFER_SIZE] ={0};
-	/* BBBIOlib init*/
-	iolib_init();
+	FILE* a0 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage0_raw", "r");
+	FILE* a1 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage1_raw", "r");
+	FILE* a2 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage2_raw", "r");
+	FILE* a3 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage3_raw", "r");
+	FILE* a4 = fopen("/sys/bus/iio/devices/iio:device0/in_voltage4_raw", "r");
 
-	// doPWM();
+	doPWM();
 	// setup timers
 	struct timeval new_time, last_time;
     double dt;
@@ -313,15 +299,15 @@ int main(void) {
 
 	// setup input parameters
 	uint32_t sonar_inputs[num_sonar_inputs];
-	sonar_inputs[0] = (uint32_t) 480;
+	sonar_inputs[0] = (uint32_t) 0;
 	// sonar_inputs[1] = (uint32_t) 50;
 	uint32_t sound_inputs[num_sound_inputs];
 	for (ii = 0; ii<num_sound_inputs; ii++) {
-		sound_inputs[ii] = (uint32_t) 200+ii;
+		sound_inputs[ii] = (uint32_t) 25+ii;
 	}
 	uint32_t touch_inputs[num_sound_inputs];
-	touch_inputs[0] = (uint32_t) 300;
-	touch_inputs[1] = (uint32_t) 301;
+	touch_inputs[0] = (uint32_t) 75;
+	touch_inputs[1] = (uint32_t) 76;
 
 	printf("%f", thresh);
 	// initialize neurons 
@@ -340,31 +326,17 @@ int main(void) {
 	uint32_t connections[nch][maxCon];
 	uint32_t matrix_map[n0][m0]; 
 	float weights[nch][maxCon];
-	uint32_t column_lengths[m0];//{n,n,n,n,n,n,n,n};
+	uint32_t column_lengths[m0]={n,n,n,n,n,n,n,n};
 
-	// extra loop at beginning
-	// column_lengths[0] = 32;
- //    column_lengths[1] = 65;
- //    column_lengths[2] = 68;
- //    column_lengths[3] = 68;
- //    column_lengths[4] = 67;
- //    column_lengths[5] = 34;
- //    column_lengths[6] = 63;
- //    column_lengths[7] = 64;
- //    column_lengths[8] = 66;
- //    column_lengths[9] = 67;
-
-    	// extra loop at beginning
-	// column_lengths[0] = 32;
-    column_lengths[0] = 67;
-    column_lengths[1] = 68;
-    column_lengths[2] = 68;
-    column_lengths[3] = 67;
-    column_lengths[5] = 32;
-    column_lengths[6] = 67;
-    column_lengths[7] = 68;
-    column_lengths[8] = 68;
-    column_lengths[9] = 67;
+	
+    // column_lengths[0] = 67;
+    // column_lengths[1] = 66;
+    // column_lengths[2] = 64;
+    // column_lengths[3] = 63;
+    // column_lengths[4] = 63;
+    // column_lengths[5] = 64;
+    // column_lengths[6] = 66;
+    // column_lengths[7] = 67;
 
 
     // make matrix map
@@ -510,21 +482,7 @@ int main(void) {
 
 
 
-    // initialize adc
 
-	BBBIO_ADCTSC_module_ctrl(BBBIO_ADC_WORK_MODE_TIMER_INT, clk_div);
-	BBBIO_ADCTSC_channel_ctrl(BBBIO_ADC_AIN0, BBBIO_ADC_STEP_MODE_SW_CONTINUOUS, open_dly, sample_dly, \
-				BBBIO_ADC_STEP_AVG_1, buffer_AIN_0, BUFFER_SIZE);
-	BBBIO_ADCTSC_channel_ctrl(BBBIO_ADC_AIN1, BBBIO_ADC_STEP_MODE_SW_CONTINUOUS, open_dly, sample_dly, \
-				BBBIO_ADC_STEP_AVG_1, buffer_AIN_1, BUFFER_SIZE);
-	BBBIO_ADCTSC_channel_ctrl(BBBIO_ADC_AIN2, BBBIO_ADC_STEP_MODE_SW_CONTINUOUS, open_dly, sample_dly, \
-				BBBIO_ADC_STEP_AVG_1, buffer_AIN_2, BUFFER_SIZE);
-	BBBIO_ADCTSC_channel_ctrl(BBBIO_ADC_AIN3, BBBIO_ADC_STEP_MODE_SW_CONTINUOUS, open_dly, sample_dly, \
-				BBBIO_ADC_STEP_AVG_1, buffer_AIN_3, BUFFER_SIZE);
-	BBBIO_ADCTSC_channel_ctrl(BBBIO_ADC_AIN4, BBBIO_ADC_STEP_MODE_SW_CONTINUOUS, open_dly, sample_dly, \
-				BBBIO_ADC_STEP_AVG_1, buffer_AIN_4, BUFFER_SIZE);
-	
-	
 
  	/* Initialize the PRU for LEDS */
   	ledscape_t *const leds = ledscape_init(num_pixels);
@@ -569,7 +527,7 @@ int main(void) {
 
 
 
-	// // init motor
+	// init motor
 	initMotor(); 
 	motor_going = 0; 
 
@@ -580,16 +538,10 @@ int main(void) {
 	loop_spikes = 0;
 	rep_spikes;
 	while (1) {
-		// read analog values
-		BBBIO_ADCTSC_channel_enable(BBBIO_ADC_AIN0);
-		BBBIO_ADCTSC_channel_enable(BBBIO_ADC_AIN1);
-		BBBIO_ADCTSC_channel_enable(BBBIO_ADC_AIN2);
-		BBBIO_ADCTSC_channel_enable(BBBIO_ADC_AIN3);
-		BBBIO_ADCTSC_channel_enable(BBBIO_ADC_AIN4);
-		BBBIO_ADCTSC_work(SAMPLE_SIZE);		
+		
 
 		// stupid dt calc and loop observations 
-		// i = i + 1;
+		i = i + 1;
 		gettimeofday(&new_time, NULL);
 		dt = 0;//(double) (new_time.tv_sec - last_time.tv_sec);      // sec 
         dt += (double) (new_time.tv_usec - last_time.tv_usec)/1000000;   // us to s
@@ -599,7 +551,7 @@ int main(void) {
 		rep_spikes = rep_spikes+loop_spikes; 
 
 		// read and interperate input 
-		ao_values[0] = buffer_AIN_0[0];
+		ao_values[0] = readao(a0);
 		sense_thresh = (((double) ao_values[0]) / ao_max)*sense_thresh_i;
 		currentIPI = (double)(01 * sense_thresh * 2 * 29)/1000000; //set ipi based on a0
 
@@ -610,8 +562,6 @@ int main(void) {
 			if (target_distance < (float) 100){
 				if ( motor_going == 0 ) {
 					startMotor();
-					// doStartupLightDisplay(leds, frame, frame_num, rgb_off, rgb_spike);
-					// doStartupLightDisplay();
 					motor_going = 1; 
 				}
 			}
@@ -628,11 +578,15 @@ int main(void) {
 			if ( printout ) {
 			   	printf("%d: Distance = %05.1f cm    loop_spikes = %03d   spike rate = %06.1f Hz   dt= %08f  max_dt=%08f ipi=%08f ", i, target_distance,loop_spikes, (double) rep_spikes / (double) time_since_last_ping, dt, max_dt, time_since_last_ping);
                 // ao_values[0] = readao(a0);
-                printf("a0 %d ", buffer_AIN_0[0]);
-                printf("a1 %d ", buffer_AIN_1[0]);
-                printf("a2 %d ", buffer_AIN_2[0]);
-                printf("a3 %d ", buffer_AIN_3[0]);
-                printf("a4 %d ", buffer_AIN_4[0]);
+                printf("a0 %d ", ao_values[0]);
+                ao_values[0] = readao(a1);
+                printf("a1 %d ", ao_values[0]);
+                ao_values[0] = readao(a2);
+                printf("a2 %d ", ao_values[0]);
+                ao_values[0] = readao(a3);
+                printf("a3 %d ", ao_values[0]);
+                ao_values[0] = readao(a4);
+                printf("a4 %d ", ao_values[0]);
                 printf("\n");
 
 			 }  
@@ -652,7 +606,7 @@ int main(void) {
  	// // 		 printf("% 04.1f ", v[ii]);
 		// //  }
   //       printf("\n");
-
+		
 		// set sonar input nodes based on sonar
 		for (ch = 0; ch < num_sonar_inputs; ch++){
 			  // set v[0] based on sonar
@@ -661,31 +615,26 @@ int main(void) {
 			 }
 		}
 		// set audio input nodes based on a1 (sensitivity) a2 (sound envelope; see spec) 
-		ao_values[0] = (uint8_t) buffer_AIN_1[0];//readao(a1);
-		ao_values[1] = (uint8_t) buffer_AIN_2[0];//readao(a2);
+		ao_values[0] = readao(a1);
+		ao_values[1] = readao(a2);
 		// printf("%f \n", 0.1*(double) fmax( (double) log( (double) ao_values[1] / ((double) ao_values[0])/2),0));
 		for (ch = 0; ch < num_sound_inputs; ch++){
 			  // set v[0] based on sonar
 			 if (v[sound_inputs[ch]] >= 0) {
 			  //  v[sound_inputs[ch]] = v[sound_inputs[ch]] + fabs((double) 1*ao_values[0] / ao_max)*(log((double) 20 * ao_values[1] / ao_max));  // this equation will be tweaked
 			 // v[sound_inputs[ch]] = v[sound_inputs[ch]] + ((double) ao_values[1] / ao_max) / ((double) 10*ao_values[0] / ao_max);
-			 v[sound_inputs[ch]] = v[sound_inputs[ch]] + 10*(double) fmax( (double) log( (double) ao_values[1] / (double)(1000 *((double) ao_values[0]/(double)ao_max))),0);
+			 v[sound_inputs[ch]] = v[sound_inputs[ch]] + 20*(double) fmax( (double) log( (double) ao_values[1] / (double)(1000 *((double) ao_values[0]/(double)ao_max))),0);
 			 }
 		}
 		// set touch input nodes based on a3 (sensitivity) a4 (touch resistance analog circuit; see spec) 
 		ao_values[0] = (uint8_t) 4000; //readao(a3);
-		ao_values[1] = (uint8_t) buffer_AIN_4[0];
-		// printf("%d\n",ao_values[1]);
-		// if (ao_values[1] > (uint8_t) 3000){ 
-		// 		doStartupLightDisplay(leds, frame, frame_num, rgb_off, rgb_spike);
-		// };
-
-		// for (ch = 0; ch < num_touch_inputs; ch++){
-		// 	  // set v[0] based on sonar
-		// 	 if ((double) ao_values[1] / ao_max >= 0.01 & v[touch_inputs[ch]] >= 0) {
-		// 	    v[touch_inputs[ch]] = v[touch_inputs[ch]] + ((double) 200*ao_values[0] / ao_max)*((double) ao_values[1] / ao_max);  // this equation will be tweaked
-		// 	 }
-		// }
+		ao_values[1] = readao(a4);
+		for (ch = 0; ch < num_touch_inputs; ch++){
+			  // set v[0] based on sonar
+			 if ((double) ao_values[1] / ao_max >= 0.01 & v[touch_inputs[ch]] >= 0) {
+			    v[touch_inputs[ch]] = v[touch_inputs[ch]] + ((double) 200*ao_values[0] / ao_max)*((double) ao_values[1] / ao_max);  // this equation will be tweaked
+			 }
+		}
 
 		// loop thru neurons
 		 loop_spikes = 0; 
@@ -742,10 +691,10 @@ int main(void) {
 	printf(">> LED PRU Disabled.\r\n");
 
 	// shutdown gpio (central)
-	// iolib_free();
+	iolib_free();
 
 	// close files for AI
-	// fclose(a0);
+	fclose(a0);
 	return (0);
 
 }

@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include "../../BBBio_lib/BBBiolib.h"
 /* ----------------------------------------------------------- */
-#define BUFFER_SIZE 1
-#define SAMPLE_SIZE 1
+#define BUFFER_SIZE 100
+#define SAMPLE_SIZE 10
 /* ----------------------------------------------------------- */
 int main(void)
 {
@@ -12,9 +12,7 @@ int main(void)
 	int i ,j;
 	unsigned int buffer_AIN_0[BUFFER_SIZE] ={0};
 	unsigned int buffer_AIN_1[BUFFER_SIZE] ={0};
-	unsigned int buffer_AIN_2[BUFFER_SIZE] ={0};
-	unsigned int buffer_AIN_3[BUFFER_SIZE] ={0};
-	unsigned int buffer_AIN_4[BUFFER_SIZE] ={0};
+
 	/* BBBIOlib init*/
 	iolib_init();
 
@@ -47,17 +45,6 @@ int main(void)
 				BBBIO_ADC_STEP_AVG_1, buffer_AIN_1, BUFFER_SIZE);
 	
 
-	BBBIO_ADCTSC_channel_ctrl(BBBIO_ADC_AIN2, BBBIO_ADC_STEP_MODE_SW_CONTINUOUS, open_dly, sample_dly, \
-				BBBIO_ADC_STEP_AVG_1, buffer_AIN_2, BUFFER_SIZE);
-
-	BBBIO_ADCTSC_channel_ctrl(BBBIO_ADC_AIN3, BBBIO_ADC_STEP_MODE_SW_CONTINUOUS, open_dly, sample_dly, \
-				BBBIO_ADC_STEP_AVG_1, buffer_AIN_3, BUFFER_SIZE);
-	
-	BBBIO_ADCTSC_channel_ctrl(BBBIO_ADC_AIN4, BBBIO_ADC_STEP_MODE_SW_CONTINUOUS, open_dly, sample_dly, \
-				BBBIO_ADC_STEP_AVG_1, buffer_AIN_4, BUFFER_SIZE);
-	
-	
-
 	//BBBIO_ADCTSC_module_ctrl(BBBIO_ADCTSC_module_ctrl(BBBIO_ADC_WORK_MODE_BUSY_POLLING, 1);
 
 //	BBBIO_ADCTSC_channel_ctrl(BBBIO_ADC_AIN1, BBBIO_ADC_STEP_MODE_SW_CONTINUOUS, 0, 1, BBBIO_ADC_STEP_AVG_1, buffer_AIN_1, 100);
@@ -66,9 +53,6 @@ int main(void)
 		printf("Start sample , fetch %d sample \n", BUFFER_SIZE);
 		BBBIO_ADCTSC_channel_enable(BBBIO_ADC_AIN0);
 		BBBIO_ADCTSC_channel_enable(BBBIO_ADC_AIN1);
-		BBBIO_ADCTSC_channel_enable(BBBIO_ADC_AIN2);
-		BBBIO_ADCTSC_channel_enable(BBBIO_ADC_AIN3);
-		BBBIO_ADCTSC_channel_enable(BBBIO_ADC_AIN4);
 		BBBIO_ADCTSC_work(SAMPLE_SIZE);
 
 		printf("AIN 0 :\n");
@@ -79,18 +63,6 @@ int main(void)
 		printf("AIN 1 :\n");
 		for(j = 0 ; j < SAMPLE_SIZE ; j++) {
 			sample = buffer_AIN_1[j];
-			printf("\t[sample : %d , %f v]\n", sample, ((float)sample / 4095.0f) * 1.8f);
-                }
-        for(j = 0 ; j < SAMPLE_SIZE ; j++) {
-			sample = buffer_AIN_2[j];
-			printf("\t[sample : %d , %f v]\n", sample, ((float)sample / 4095.0f) * 1.8f);
-                }
-        for(j = 0 ; j < SAMPLE_SIZE ; j++) {
-			sample = buffer_AIN_3[j];
-			printf("\t[sample : %d , %f v]\n", sample, ((float)sample / 4095.0f) * 1.8f);
-                }
-        for(j = 0 ; j < SAMPLE_SIZE ; j++) {
-			sample = buffer_AIN_4[j];
 			printf("\t[sample : %d , %f v]\n", sample, ((float)sample / 4095.0f) * 1.8f);
                 }
 		printf("------------------------------\n");
