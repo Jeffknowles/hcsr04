@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "BBIOlib/BBBio_lib/BBBiolib.h"
+#include "BBBIOlib/BBBio_lib/BBBiolib.h"
 /* -------------------------------------------------------------- */
 int main(void)
 {
