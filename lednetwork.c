@@ -676,7 +676,7 @@ int main(void) {
 		ao_values[0] = (uint32_t) 4000; //readao(a3);
 		ao_values[1] = (uint32_t) buffer_AIN_4[0];
 		// printf("%d\n",ao_values[1]);
-		if (ao_values[1] > (uint8_t) 3000){ 
+		if (ao_values[1] > (uint32_t) 3000){ 
 				doStartupLightDisplay(leds, frame, frame_num, rgb_off, rgb_spike);
 		};
 
