@@ -662,7 +662,7 @@ int main(void) {
 		}
 		// set audio input nodes based on a1 (sensitivity) a2 (sound envelope; see spec) 
 		ao_values[0] = buffer_AIN_1[0];//readao(a1);
-		ao_values[1] =  buffer_AIN_2[0];//readao(a2);
+		ao_values[1] = buffer_AIN_2[0];//readao(a2);
 		// printf("%f \n", 0.1*(double) fmax( (double) log( (double) ao_values[1] / ((double) ao_values[0])/2),0));
 		for (ch = 0; ch < num_sound_inputs; ch++){
 			  // set v[0] based on sonar
