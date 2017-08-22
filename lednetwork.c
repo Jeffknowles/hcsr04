@@ -599,7 +599,7 @@ int main(void) {
 		rep_spikes = rep_spikes+loop_spikes; 
 
 		// read and interperate input 
-		ao_values[0] = buffer_AIN_0[0];
+		ao_values[0] = (uint32_t) buffer_AIN_0[0];
 		sense_thresh = (((double) ao_values[0]) / ao_max)*sense_thresh_i;
 		currentIPI = (double)(01 * sense_thresh * 2 * 29)/1000000; //set ipi based on a0
 
@@ -661,8 +661,8 @@ int main(void) {
 			 }
 		}
 		// set audio input nodes based on a1 (sensitivity) a2 (sound envelope; see spec) 
-		ao_values[0] = (uint8_t) buffer_AIN_1[0];//readao(a1);
-		ao_values[1] = (uint8_t) buffer_AIN_2[0];//readao(a2);
+		ao_values[0] = (uint32_t) buffer_AIN_1[0];//readao(a1);
+		ao_values[1] = (uint32_t) buffer_AIN_2[0];//readao(a2);
 		// printf("%f \n", 0.1*(double) fmax( (double) log( (double) ao_values[1] / ((double) ao_values[0])/2),0));
 		for (ch = 0; ch < num_sound_inputs; ch++){
 			  // set v[0] based on sonar
@@ -673,19 +673,19 @@ int main(void) {
 			 }
 		}
 		// set touch input nodes based on a3 (sensitivity) a4 (touch resistance analog circuit; see spec) 
-		ao_values[0] = (uint8_t) 4000; //readao(a3);
-		ao_values[1] = (uint8_t) buffer_AIN_4[0];
+		ao_values[0] = (uint32_t) 4000; //readao(a3);
+		ao_values[1] = (uint32_t) buffer_AIN_4[0];
 		// printf("%d\n",ao_values[1]);
 		// if (ao_values[1] > (uint8_t) 3000){ 
 		// 		doStartupLightDisplay(leds, frame, frame_num, rgb_off, rgb_spike);
 		// };
 
-		// for (ch = 0; ch < num_touch_inputs; ch++){
-		// 	  // set v[0] based on sonar
-		// 	 if ((double) ao_values[1] / ao_max >= 0.01 & v[touch_inputs[ch]] >= 0) {
-		// 	    v[touch_inputs[ch]] = v[touch_inputs[ch]] + ((double) 200*ao_values[0] / ao_max)*((double) ao_values[1] / ao_max);  // this equation will be tweaked
-		// 	 }
-		// }
+		for (ch = 0; ch < num_touch_inputs; ch++){
+			  // set v[0] based on sonar
+			 if ((double) ao_values[1] / ao_max >= 0.01 & v[touch_inputs[ch]] >= 0) {
+			    v[touch_inputs[ch]] = v[touch_inputs[ch]] + ((double) 200*ao_values[0] / ao_max)*((double) ao_values[1] / ao_max);  // this equation will be tweaked
+			 }
+		}
 
 		// loop thru neurons
 		 loop_spikes = 0; 
