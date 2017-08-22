@@ -24,6 +24,49 @@ int main(void)
 	BBBIO_ehrPWM_Disable(BBBIO_PWMSS0);
 	printf("close\n");
 
+
+	iolib_init();
+	BBBIO_sys_Enable_GPIO(BBBIO_GPIO2);
+
+	BBBIO_GPIO_set_dir(BBBIO_GPIO2 ,
+			   BBBIO_GPIO_PIN_10 |BBBIO_GPIO_PIN_11 | BBBIO_GPIO_PIN_12 |BBBIO_GPIO_PIN_13 ,	// Input
+			   BBBIO_GPIO_PIN_6 | BBBIO_GPIO_PIN_7 | BBBIO_GPIO_PIN_8 | BBBIO_GPIO_PIN_9);		// Output
+
+	int count =0;
+	int DIPvalue=0 ;		// finger switch value
+	int LEDvalue =0;
+	while(count < 100)
+	{
+	    // Read DIP value
+	    LEDvalue =0;
+	    DIPvalue = BBBIO_GPIO_get(BBBIO_GPIO2 ,BBBIO_GPIO_PIN_10 |BBBIO_GPIO_PIN_11 | BBBIO_GPIO_PIN_12 |BBBIO_GPIO_PIN_13 );
+
+	    // check value , and seting which LED must be glittered .
+	    if(DIPvalue & BBBIO_GPIO_PIN_11)
+		LEDvalue |=BBBIO_GPIO_PIN_7;
+
+	    if(DIPvalue & BBBIO_GPIO_PIN_10)
+		LEDvalue |=BBBIO_GPIO_PIN_6;
+
+	    if(DIPvalue & BBBIO_GPIO_PIN_13)
+		LEDvalue |=BBBIO_GPIO_PIN_9;
+
+	    if(DIPvalue & BBBIO_GPIO_PIN_12)
+		LEDvalue |=BBBIO_GPIO_PIN_8;
+
+	    // glitter LED
+	    BBBIO_GPIO_high(BBBIO_GPIO2 , LEDvalue);
+	    iolib_delay_ms(100);
+
+	    // close all
+            BBBIO_GPIO_low(BBBIO_GPIO2 , BBBIO_GPIO_PIN_6 | BBBIO_GPIO_PIN_7 | BBBIO_GPIO_PIN_8 | BBBIO_GPIO_PIN_9);
+	    iolib_delay_ms(100);
+	    count ++;
+	}
 	iolib_free();
 	return 0;
 }
+
+
+
+
