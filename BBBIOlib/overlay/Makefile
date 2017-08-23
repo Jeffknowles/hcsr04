@@ -7,6 +7,6 @@ all : BBBIO-EHRPWM-00A0.dts BBBIO-SPI1-00A0.dts
 install : all BBBIO-EHRPWM-00A0.dtbo BBBIO-SPI1-00A0.dtbo
 	cp BBBIO-EHRPWM-00A0.dtbo /lib/firmware/
 	cp BBBIO-SPI1-00A0.dtbo /lib/firmware/
-	cp BBBIO-EHRPWM-00A1.dtbo /lib/firmware/
+	cp BBBIO-JKPWM-00A1.dtbo /lib/firmware/
 clean :
 	rm BBBIO-EHRPWM-00A0.dtbo BBBIO-SPI1-00A0.dtbo
