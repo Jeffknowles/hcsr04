@@ -57,14 +57,14 @@
  
 
 	
-	fragment@3 {
+	fragment@1 {
                 target = <&epwmss1>;
                 __overlay__ {
                         status = "okay";
                         pinctrl-names = "default";
                 };
         };
-	fragment@4 {
+	fragment@2 {
                 target = <&ehrpwm1>;
                 __overlay__ {
                         status = "okay";
@@ -72,14 +72,14 @@
                         pinctrl-0 = <&bbb_ehrpwm1_pins>;
                 };
         };
-	fragment@5 {
+	fragment@3 {
                 target = <&epwmss2>;
                 __overlay__ {
                         status = "okay";
                         pinctrl-names = "default";
                 };
         };
-	fragment@6 {
+	fragment@4 {
                 target = <&ehrpwm2>;
                 __overlay__ {
                         status = "okay";
