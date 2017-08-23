@@ -9,7 +9,6 @@ export PINGROUPS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pingroups
 echo BB-ADC > $SLOTS
 
 # echo BBIO
-
 echo hcsr04 > $SLOTS
 
 
