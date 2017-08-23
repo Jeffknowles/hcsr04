@@ -16,6 +16,7 @@
 #include <pruss_intc_mapping.h>
 #include <openssl/rand.h>
 #include "BBBIOlib/BBBio_lib/BBBiolib.h"
+// #include "tinycsv.c"
 #define prunum 1
 #define BUFFER_SIZE 1
 #define SAMPLE_SIZE 1
@@ -42,7 +43,7 @@ const float duty_B = 50.0f ;	/* 50% Duty cycle for PWM 0_B output*/
 
 
 const double thresh = 20;
-const double k = 15; // magnitude of the leak
+const double k = 3; // magnitude of the leak
 const double sensory_factor = 5;
 const double ao_max = 4096;
 // connection settings - declare connections between neurons
@@ -51,39 +52,40 @@ const double ao_max = 4096;
 #define nch 800 // number of neurons
 #define num_pixels 700
 #define num_sonar_inputs 1 
-#define num_sound_inputs 10
+#define num_sound_inputs 4
 #define num_touch_inputs 1
 
 // matrix_definitions 
-#define m0 9
+#define m0 10
 #define n0 70
 
 int initMotor()
 {
-	// BBBIO_PWMSS_Setting(BBBIO_PWMSS1, PWM_HZ ,duty_A , duty_B);    // motor pwm = P9_14
-	// BBBIO_ehrPWM_Enable(BBBIO_PWMSS1);
+	BBBIO_PWMSS_Setting(BBBIO_PWMSS1, PWM_HZ ,duty_A , duty_B);    // motor pwm = P9_14
+	BBBIO_ehrPWM_Enable(BBBIO_PWMSS1);
 
-	// BBBIO_sys_Enable_GPIO(BBBIO_GPIO2);
-	// BBBIO_GPIO_set_dir(BBBIO_GPIO2 ,
-	// 		   BBBIO_GPIO_PIN_10,	// Input
-	// 		   BBBIO_GPIO_PIN_6 | BBBIO_GPIO_PIN_7 | BBBIO_GPIO_PIN_8);		// Output GPIO2[6] = P8_45 GPIO2[7]=P8_46
- //    BBBIO_GPIO_low(BBBIO_GPIO2 , BBBIO_GPIO_PIN_6 |  BBBIO_GPIO_PIN_7);     // OUTPUT GPIO2[8] = P8_43
- //    BBBIO_GPIO_high(BBBIO_GPIO2 , BBBIO_GPIO_PIN_8);
+	BBBIO_sys_Enable_GPIO(BBBIO_GPIO2);
+	BBBIO_GPIO_set_dir(BBBIO_GPIO2 ,
+			   BBBIO_GPIO_PIN_10,	// Input
+			   BBBIO_GPIO_PIN_6 | BBBIO_GPIO_PIN_7 | BBBIO_GPIO_PIN_8);		// Output GPIO2[6] = P8_45 GPIO2[7]=P8_46
+    BBBIO_GPIO_low(BBBIO_GPIO2 , BBBIO_GPIO_PIN_6 |  BBBIO_GPIO_PIN_7);     // OUTPUT GPIO2[8] = P8_43
+    BBBIO_GPIO_high(BBBIO_GPIO2 , BBBIO_GPIO_PIN_8);
 }
 
 int startMotor()
 {
 
-	// BBBIO_PWMSS_Setting(BBBIO_PWMSS1, PWM_HZ ,duty_A , duty_B);
-	// BBBIO_ehrPWM_Enable(BBBIO_PWMSS1);
-	// BBBIO_GPIO_high(BBBIO_GPIO2 , BBBIO_GPIO_PIN_6);
+	BBBIO_PWMSS_Setting(BBBIO_PWMSS1, PWM_HZ ,duty_A , duty_B);
+	BBBIO_ehrPWM_Enable(BBBIO_PWMSS1);
+	BBBIO_GPIO_high(BBBIO_GPIO2 , BBBIO_GPIO_PIN_6);
 }
 
 int stopMotor()
 {
-	// BBBIO_ehrPWM_Disable(BBBIO_PWMSS1);
-	// BBBIO_GPIO_low(BBBIO_GPIO2 , BBBIO_GPIO_PIN_6);
+	BBBIO_ehrPWM_Disable(BBBIO_PWMSS1);
+	BBBIO_GPIO_low(BBBIO_GPIO2 , BBBIO_GPIO_PIN_6);
 }
+
 
 // int motorChange()
 // {
@@ -92,6 +94,26 @@ int stopMotor()
 // 	BBBIO_GPIO_high(BBBIO_GPIO2 , BBBIO_GPIO_PIN_8);
 //     BBBIO_GPIO_low(BBBIO_GPIO2 , BBBIO_GPIO_PIN_9);
 // }
+
+
+int parseFile( char filename, uint32_t bufr, uint32_t MAXLINESS ){
+	FILE * fp;
+	char cbufr[MAXLINE];
+
+	if((fp = fopen(filename, "r") != NULL)){
+    	while(! feof(fp)){
+         	fgets(bufr, MAXLINE, fp);
+         /* Do stuff */
+    	}
+    }
+	else {
+    /* error processing, couldn't open file */
+	}
+}
+
+
+
+
 
 /* -------------------------------------------------------------- */
 // int doPWM(void)
@@ -265,6 +287,7 @@ int main(void) {
 	// printf("poop0");
 	srand(time);
 	// initialize variables
+	float weight_by_distance[4] = {10,10,-5, -15};
 	uint32_t ch;
 	uint32_t i; // itteraters
 	uint32_t ii;
@@ -311,29 +334,9 @@ int main(void) {
 	double sense_thresh = sense_thresh_i;
 	double currentIPI = minIPI;
 
-	// setup input parameters
-	uint32_t sonar_inputs[num_sonar_inputs];
-	sonar_inputs[0] = (uint32_t) 480;
-	// sonar_inputs[1] = (uint32_t) 50;
-	uint32_t sound_inputs[num_sound_inputs];
-	for (ii = 0; ii<num_sound_inputs; ii++) {
-		sound_inputs[ii] = (uint32_t) 200+ii;
-	}
-	uint32_t touch_inputs[num_sound_inputs];
-	touch_inputs[0] = (uint32_t) 300;
-	touch_inputs[1] = (uint32_t) 301;
 
-	printf("%f", thresh);
-	// initialize neurons 
-	double v[nch] =  {0};
-	double dv[nch] = {0};
-	double spike_len[nch] =   {20};
-	for (ii=1; ii<nch; ii++){
-		spike_len[ii] = (double) random_float((float) 40, (float) 60);
-	}
 
-	//
-    // 
+
     // set matrix parameters 
     m = m0; 
     n = n0; 
@@ -356,17 +359,46 @@ int main(void) {
 
     	// extra loop at beginning
 	// column_lengths[0] = 32;
-    column_lengths[0] = 67;
+    column_lengths[0] = 67; // 0 face start
     column_lengths[1] = 68;
     column_lengths[2] = 68;
     column_lengths[3] = 67;
-    column_lengths[5] = 32;
+    column_lengths[4] = 15; // 32 fake total
+    column_lengths[5] = 15;
     column_lengths[6] = 67;
-    column_lengths[7] = 68;
-    column_lengths[8] = 68;
+    column_lengths[7] = 67;
+    column_lengths[8] = 67;
     column_lengths[9] = 67;
 
 
+
+	// setup input parameters
+	uint32_t sonar_inputs[num_sonar_inputs];
+	sonar_inputs[0] = (uint32_t) 383;
+	// sonar_inputs[1] = (uint32_t) 50;
+	uint32_t sound_inputs[num_sound_inputs];
+	// for (ii = 0; ii<num_sound_inputs; ii++) {
+	// 	sound_inputs[ii] = (uint32_t) 125+ii;
+	// }
+	sound_inputs[0] = 0; //column_lengths[0] + column_lengths[1];
+	sound_inputs[1] = column_lengths[0] + column_lengths[1]; // + column_lengths[2] + column_lengths[3];
+	sound_inputs[2] = column_lengths[0] + column_lengths[1] + column_lengths[2] + column_lengths[3] +  column_lengths[4] + column_lengths[5] + column_lengths[6] + column_lengths[7];
+	sound_inputs[3] = column_lengths[0] + column_lengths[1] + column_lengths[2] + column_lengths[3] +  column_lengths[4] + column_lengths[5] + column_lengths[6] + column_lengths[7] + column_lengths[8] + column_lengths[9];
+	uint32_t touch_inputs[num_sound_inputs];
+	touch_inputs[0] = (uint32_t) 500;
+	touch_inputs[1] = (uint32_t) 501;
+
+	printf("%f", thresh);
+	// initialize neurons 
+	double v[nch] =  {0};
+	double dv[nch] = {0};
+	double spike_len[nch] =   {20};
+	for (ii=1; ii<nch; ii++){
+		spike_len[ii] = (double) random_float((float) 20, (float) 60);
+	}
+
+	//
+    // 
     // make matrix map
     i5 = 0; 
     
@@ -407,69 +439,90 @@ int main(void) {
 			i4=0; 
 			if ((iii+1)<column_lengths[ii]) { // same column, one up
 				connections[i][i4] = matrix_map[iii+1][ii];
-				weights[i][i4]=15;
+				weights[i][i4]=weight_by_distance[0];
 				i4 = i4+1; 
 			}
 			if ((iii+2)<column_lengths[ii]) { // same column, 2 up
 				connections[i][i4] = matrix_map[iii+2][ii];
-				weights[i][i4]=5;
+				weights[i][i4]=weight_by_distance[0];
 				i4 = i4+1; 
 			}			
 			if ((iii+3)<column_lengths[ii]) { // same column, 3 up
 				connections[i][i4] = matrix_map[iii+3][ii];
-				weights[i][i4]=-15;
+				weights[i][i4]=weight_by_distance[1];
+				i4 = i4+1; 
+			}
+			if ((iii+4)<column_lengths[ii]) { // same column, 4 up
+				connections[i][i4] = matrix_map[iii+4][ii];
+				weights[i][i4]=weight_by_distance[1];
 				i4 = i4+1; 
 			}
 			if (((float) iii-1)>=0) { // same column, one down
 				connections[i][i4] = matrix_map[iii-1][ii];
-				weights[i][i4]=15;
+				weights[i][i4]=weight_by_distance[0];
 				i4 = i4+1; 
 			}
 			if (((float) iii-2)>=0) { // same column, two down
 				connections[i][i4] = matrix_map[iii-2][ii];
-				weights[i][i4]=5;
+				weights[i][i4]=weight_by_distance[3];
 				i4 = i4+1; 
 			}
 			if (((float) iii-3)>=0) { // same column, 3 down
 				connections[i][i4] = matrix_map[iii-3][ii];
-				weights[i][i4]=-15;
+				weights[i][i4]=weight_by_distance[3];
+				i4 = i4+1; 
+			}
+			if (((float) iii-4)>=0) { // same column, 4 down
+				connections[i][i4] = matrix_map[iii-4][ii];
+				weights[i][i4]=weight_by_distance[3];
 				i4 = i4+1; 
 			}
 			if ((ii+1)< m) { // same row, one over 
 				connections[i][i4] = matrix_map[iii][ii+1];
-				weights[i][i4]=15;
+				weights[i][i4]=weight_by_distance[0];
 				i4 = i4+1; 
 			}
 		    if ((ii+2)< m) { // same row, two over 
 				connections[i][i4] = matrix_map[iii][ii+2];
-				weights[i][i4]=5;
+				weights[i][i4]=weight_by_distance[1];
 				i4 = i4+1; 
 			}
 			if ((ii+3)< m) { // same row, 3 over 
 				connections[i][i4] = matrix_map[iii][ii+3];
-				weights[i][i4]=-15;
+				weights[i][i4]=weight_by_distance[3];
+				i4 = i4+1; 
+			}
+			if ((ii+4)< m) { // same row, 3 over 
+				connections[i][i4] = matrix_map[iii][ii+4];
+				weights[i][i4]=weight_by_distance[1];
 				i4 = i4+1; 
 			}
 			if (((float) ii-1) >= 0) { // same column, minus one over
 				connections[i][i4] = matrix_map[iii][ii-1];
-				weights[i][i4]=15;
+				weights[i][i4]=weight_by_distance[0];
 				i4 = i4+1; 
 			}
 			if (((float) ii-2) >= 0) { // same column, minus two over
 				connections[i][i4] = matrix_map[iii][ii-2];
-				weights[i][i4]=5;
+				weights[i][i4]=weight_by_distance[1];
 				i4 = i4+1; 
 			}
-			if (((float) ii-3) >= 0) { // same column, minus two over
+			if (((float) ii-3) >= 0) { // same column, minus three over
 				connections[i][i4] = matrix_map[iii][ii-3];
-				weights[i][i4]=-15;
+				weights[i][i4]=weight_by_distance[1];
 				i4 = i4+1; 
 			}
+			if (((float) ii-4) >= 0) { // same column, minus three over
+				connections[i][i4] = matrix_map[iii][ii-4];
+				weights[i][i4]=weight_by_distance[3];
+				i4 = i4+1; 
+			}
+			
 
 			for (i5=i4; i5<maxCon; i5++){
 				// connections[i][i5]= (uint32_t) NaN;
 				connections[i][i5]= (uint32_t) myrandint( (uint32_t) (nch));
-				weights[i][i5]= (float) -15;
+				weights[i][i5]= (float) -5;
 			}
 			// printf("%d\n",connections[i][0]);
 			printf("connections %d (iii=%d,ii=%d): %d %d %d %d %d \n",i, iii, ii, connections[i][0], connections[i][1], connections[i][2], connections[i][3], connections[i][4]);
@@ -626,7 +679,7 @@ int main(void) {
 
 
 			if ( printout ) {
-			   	printf("%d: Distance = %05.1f cm    loop_spikes = %03d   spike rate = %06.1f Hz   dt= %08f  max_dt=%08f ipi=%08f ", i, target_distance,loop_spikes, (double) rep_spikes / (double) time_since_last_ping, dt, max_dt, time_since_last_ping);
+			   	printf("%d: Distance = %05.1f cm  spike rate = %06.1f Hz   dt= %08f  max_dt=%08f ipi=%08f ", i, target_distance, (double) rep_spikes / (double) time_since_last_ping, dt, max_dt, time_since_last_ping);
                 // ao_values[0] = readao(a0);
                 printf("a0 %d ", buffer_AIN_0[0]);
                 printf("a1 %d ", buffer_AIN_1[0]);
@@ -646,13 +699,6 @@ int main(void) {
 		}
 
 
-		// printf("%05.5f  %05.5f  \n", dt, time_since_last_ping);
-		// // printf("%d: Distance = %04.1f cm   ", i, target_distance);
-		// // for (ii=0;ii<20;++ii) {
- 	// // 		 printf("% 04.1f ", v[ii]);
-		// //  }
-  //       printf("\n");
-
 		// set sonar input nodes based on sonar
 		for (ch = 0; ch < num_sonar_inputs; ch++){
 			  // set v[0] based on sonar
@@ -669,23 +715,23 @@ int main(void) {
 			 if (v[sound_inputs[ch]] >= 0) {
 			  //  v[sound_inputs[ch]] = v[sound_inputs[ch]] + fabs((double) 1*ao_values[0] / ao_max)*(log((double) 20 * ao_values[1] / ao_max));  // this equation will be tweaked
 			 // v[sound_inputs[ch]] = v[sound_inputs[ch]] + ((double) ao_values[1] / ao_max) / ((double) 10*ao_values[0] / ao_max);
-			 v[sound_inputs[ch]] = v[sound_inputs[ch]] + 10*(double) fmax( (double) log( (double) ao_values[1] / (double)(1000 *((double) ao_values[0]/(double)ao_max))),0);
+			 v[sound_inputs[ch]] = v[sound_inputs[ch]] + 20*(double) fmax( (double) log( (double) ao_values[1] / (double)(1000 *((double) ao_values[0]/(double)ao_max))),0);
 			 }
 		}
 		// set touch input nodes based on a3 (sensitivity) a4 (touch resistance analog circuit; see spec) 
 		ao_values[0] = (uint32_t) 4000; //readao(a3);
 		ao_values[1] = (uint32_t) buffer_AIN_4[0];
 		// printf("%d\n",ao_values[1]);
-		if (ao_values[1] > (uint32_t) 3000){ 
+		if (ao_values[1] > (uint32_t) 1000){ 
 				doStartupLightDisplay(leds, frame, frame_num, rgb_off, rgb_spike);
 		};
 
-		for (ch = 0; ch < num_touch_inputs; ch++){
-			  // set v[0] based on sonar
-			 if ((double) ao_values[1] / ao_max >= 0.01 & v[touch_inputs[ch]] >= 0) {
-			    v[touch_inputs[ch]] = v[touch_inputs[ch]] + ((double) 200*ao_values[0] / ao_max)*((double) ao_values[1] / ao_max);  // this equation will be tweaked
-			 }
-		}
+		// for (ch = 0; ch < num_touch_inputs; ch++){
+		// 	  // set v[0] based on sonar
+		// 	 if ((double) ao_values[1] / ao_max >= 0.01 & v[touch_inputs[ch]] >= 0) {
+		// 	    v[touch_inputs[ch]] = v[touch_inputs[ch]] + ((double) 200*ao_values[0] / ao_max)*((double) ao_values[1] / ao_max);  // this equation will be tweaked
+		// 	 }
+		// }
 
 		// loop thru neurons
 		 loop_spikes = 0; 
