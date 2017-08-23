@@ -16,7 +16,7 @@
    	compatible = "ti,beaglebone", "ti,beaglebone-black";
  
         /* identification */
-	part-number = "BBB-EHRPWM0";
+	part-number = "BBB-JKPWM0";
 	version = "00A0";
 
 
