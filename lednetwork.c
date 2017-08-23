@@ -96,20 +96,20 @@ int stopMotor()
 // }
 
 
-int parseFile( char filename, uint32_t bufr, uint32_t MAXLINESS ){
-	FILE * fp;
-	char cbufr[MAXLINE];
+// int parseFile( char filename, uint32_t bufr, uint32_t MAXLINESS ){
+// 	FILE * fp;
+// 	char cbufr[MAXLINE];
 
-	if((fp = fopen(filename, "r") != NULL)){
-    	while(! feof(fp)){
-         	fgets(bufr, MAXLINE, fp);
-         /* Do stuff */
-    	}
-    }
-	else {
-    /* error processing, couldn't open file */
-	}
-}
+// 	if((fp = fopen(filename, "r") != NULL)){
+//     	while(! feof(fp)){
+//          	fgets(bufr, MAXLINE, fp);
+//          /* Do stuff */
+//     	}
+//     }
+// 	else {
+//     /* error processing, couldn't open file */
+// 	}
+// }
 
 
 
