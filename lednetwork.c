@@ -38,7 +38,7 @@ const bool pong_only_in_range = true;
 	
 
 const float PWM_HZ = 2000.0f ;	/* 100 Hz */
-const float duty_A = 50.0f ; 	/* 20% Duty cycle for PWM 0_A output */
+const float duty_A = 80.0f ; 	/* 20% Duty cycle for PWM 0_A output */
 const float duty_B = 50.0f ;	/* 50% Duty cycle for PWM 0_B output*/
 
 
@@ -56,7 +56,7 @@ const double ao_max = 4096;
 #define num_touch_inputs 1
 
 // matrix_definitions 
-#define m0 10
+#define m0 12
 #define n0 70
 
 int initMotor()
@@ -221,21 +221,28 @@ void doStartupLightDisplay(ledscape_t *leds, ledscape_frame_t *frame,  unsigned 
 		printf("%d",i);
 		for (ii=0; ii<np; ii++){
 	  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
-	  		ledscape_set_color(frame, 0, ii,( uint8_t) 100, (uint8_t) 0, (uint8_t) 0);
+	  		ledscape_set_color(frame, 0, ii,( uint8_t) 50, (uint8_t) 0, (uint8_t) 0);
 	  			
 	  	}
 	  	ledscape_draw(leds, frame_num);
 	  	nanosleep(&tim , &tim2);
 	  	for (ii=0; ii<np; ii++){
 	  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
-	  		ledscape_set_color(frame, 0, ii,( uint8_t) 0, (uint8_t) 100, (uint8_t) 0);
+	  		ledscape_set_color(frame, 0, ii,( uint8_t) 0, (uint8_t) 50, (uint8_t) 0);
 	  			
 	  	}
 	  	ledscape_draw(leds, frame_num);
 	  	nanosleep(&tim , &tim2);
 	  	for (ii=0; ii<np; ii++){
 	  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
-	  		ledscape_set_color(frame, 0, ii,( uint8_t) 0, (uint8_t) 0, (uint8_t) 100);
+	  		ledscape_set_color(frame, 0, ii,( uint8_t) 0, (uint8_t) 0, (uint8_t) 50);
+	  			
+	  	}
+	  	ledscape_draw(leds, frame_num);
+	  	nanosleep(&tim , &tim2);
+	  	for (ii=0; ii<np; ii++){
+	  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
+	  		ledscape_set_color(frame, 0, ii,( uint8_t) 50, (uint8_t) 50, (uint8_t) 50);
 	  			
 	  	}
 	  	ledscape_draw(leds, frame_num);
@@ -345,30 +352,32 @@ int main(void) {
 	float weights[nch][maxCon];
 	uint32_t column_lengths[m0];//{n,n,n,n,n,n,n,n};
 
-	// extra loop at beginning
-	// column_lengths[0] = 32;
- //    column_lengths[1] = 65;
- //    column_lengths[2] = 68;
- //    column_lengths[3] = 68;
- //    column_lengths[4] = 67;
- //    column_lengths[5] = 34;
- //    column_lengths[6] = 63;
- //    column_lengths[7] = 64;
- //    column_lengths[8] = 66;
- //    column_lengths[9] = 67;
+	// for #1
+	
+	column_lengths[0] = 16; // extra loop at beginning
+	column_lengths[1] = 16;
+    column_lengths[2] = 65;
+    column_lengths[3] = 68;
+    column_lengths[4] = 68;
+    column_lengths[5] = 67;
+    column_lengths[6] = 17;
+    column_lengths[7] = 17;    
+    column_lengths[8] = 63;
+    column_lengths[9] = 64;
+    column_lengths[10] = 66;
+    column_lengths[11] = 67;
 
-    	// extra loop at beginning
-	// column_lengths[0] = 32;
-    column_lengths[0] = 67; // 0 face start
-    column_lengths[1] = 68;
-    column_lengths[2] = 68;
-    column_lengths[3] = 67;
-    column_lengths[4] = 15; // 32 fake total
-    column_lengths[5] = 15;
-    column_lengths[6] = 67;
-    column_lengths[7] = 67;
-    column_lengths[8] = 67;
-    column_lengths[9] = 67;
+    // for #2
+    // column_lengths[0] = 67; // 0 face start
+    // column_lengths[1] = 68;
+    // column_lengths[2] = 68;
+    // column_lengths[3] = 67;
+    // column_lengths[4] = 15; // 32 fake total
+    // column_lengths[5] = 15;
+    // column_lengths[6] = 67;
+    // column_lengths[7] = 67;
+    // column_lengths[8] = 67;
+    // column_lengths[9] = 67;
 
 
 
@@ -625,6 +634,7 @@ int main(void) {
 	// // init motor
 	initMotor(); 
 	motor_going = 0; 
+	stopMotor();
 
 	doStartupLightDisplay(leds, frame, frame_num, rgb_off, rgb_spike);
 	printf("starting main loop");
@@ -722,7 +732,7 @@ int main(void) {
 		ao_values[0] = (uint32_t) 4000; //readao(a3);
 		ao_values[1] = (uint32_t) buffer_AIN_4[0];
 		// printf("%d\n",ao_values[1]);
-		if (ao_values[1] > (uint32_t) 1000){ 
+		if (ao_values[1] > (uint32_t) 3000){ 
 				doStartupLightDisplay(leds, frame, frame_num, rgb_off, rgb_spike);
 		};
 

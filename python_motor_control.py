@@ -25,15 +25,15 @@
 import Adafruit_BBIO.GPIO as GPIO
 import Adafruit_BBIO.PWM as PWM
 import time
-STBY = 'P8_9'       # STBY pin on the breakout, must go low to enable motion
-A01 = 'P8_7'        # A01 pin on board, controls direction along with A02
-A02 = 'P8_8'        # A02 pin on board, controls direction along with A01
+# STBY = 'P8_9'       # STBY pin on the breakout, must go low to enable motion
+# A01 = 'P8_7'        # A01 pin on board, controls direction along with A02
+# A02 = 'P8_8'        # A02 pin on board, controls direction along with A01
 # PWMA = 'P8_13'      # PWMA pin on board, controls the speed of Motor A
 
 # # Set up the pins - These are mutable, but *don't* change them
-# STBY = 'P8_45'       # STBY pin on the breakout, must go low to enable motion
-# A01 = 'P8_46'        # A01 pin on board, controls direction along with A02
-# A02 = 'P8_43'        # A02 pin on board, controls direction along with A01
+STBY = 'P8_45'       # STBY pin on the breakout, must go low to enable motion
+A01 = 'P8_46'        # A01 pin on board, controls direction along with A02
+A02 = 'P8_43'        # A02 pin on board, controls direction along with A01
 PWMA = 'P9_14'      # PWMA pin on board, controls the speed of Motor A
 
 # Set up the GPIO pins as output
@@ -65,7 +65,7 @@ PWM.start(PWMA, 50)
 # PWM.start("P9_14", 50, 1000, 1)
 
 # Run the motor for 10s
-time.sleep(5)
+time.sleep(50)
 
 # Stop the motor and cleanup the PWM
 PWM.stop(PWMA)
