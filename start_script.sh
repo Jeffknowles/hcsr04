@@ -1,8 +1,5 @@
 #/bin/sh
 
-sh /opt/sln/install-driver.sh
-
-
 
 export SLOTS=/sys/devices/bone_capemgr.9/slots
 # export PINS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pins
@@ -17,6 +14,6 @@ echo hcsr04 > $SLOTS
 
 sleep 20
 
-
-exec /opt/sln/letnetwork > /dev/null
+cd /opt/sln
+exec /opt/sln/lednetwork > /dev/null
 
