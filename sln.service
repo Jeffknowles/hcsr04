@@ -1,0 +1,9 @@
+[Unit]
+After=syslog.target network.target
+[Service]
+WorkingDirectory=/opt/sln/
+ExecStart=/opt/sln/lednetwork
+KillMode=process
+[Install]
+WantedBy=multi-user.target
+

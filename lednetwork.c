@@ -35,10 +35,11 @@ const double sense_thresh_i = 400; // threshold where responses turn on
 //const int buttonPin = 2;  // pin for the tigger button
 const bool printout = true;
 const bool pong_only_in_range = true;
-	
+const bool rain = true;
+		
 
 const float PWM_HZ = 2000.0f ;	/* 100 Hz */
-const float duty_A = 80.0f ; 	/* 20% Duty cycle for PWM 0_A output */
+const float duty_A = 99.0f ; 	/* 20% Duty cycle for PWM 0_A output */
 const float duty_B = 50.0f ;	/* 50% Duty cycle for PWM 0_B output*/
 
 
@@ -66,7 +67,7 @@ int initMotor()
 
 	BBBIO_sys_Enable_GPIO(BBBIO_GPIO2);
 	BBBIO_GPIO_set_dir(BBBIO_GPIO2 ,
-			   BBBIO_GPIO_PIN_10,	// Input
+			   BBBIO_GPIO_PIN_11,	// Input
 			   BBBIO_GPIO_PIN_6 | BBBIO_GPIO_PIN_7 | BBBIO_GPIO_PIN_8);		// Output GPIO2[6] = P8_45 GPIO2[7]=P8_46
     BBBIO_GPIO_low(BBBIO_GPIO2 , BBBIO_GPIO_PIN_6 |  BBBIO_GPIO_PIN_7);     // OUTPUT GPIO2[8] = P8_43
     BBBIO_GPIO_high(BBBIO_GPIO2 , BBBIO_GPIO_PIN_8);
@@ -209,9 +210,9 @@ void doStartupLightDisplay(ledscape_t *leds, ledscape_frame_t *frame,  unsigned 
 	uint32_t iii;
     struct timespec tim, tim2, tim3;
     tim.tv_sec = 0;
-    tim.tv_nsec = 50000000L;
+    tim.tv_nsec = 90000000L;
     tim3.tv_sec = 0;
-    tim3.tv_nsec = 50000000L;
+    tim3.tv_nsec = 90000000L;
     uint32_t np = (uint32_t) num_pixels-60;
 
 
@@ -224,13 +225,13 @@ void doStartupLightDisplay(ledscape_t *leds, ledscape_frame_t *frame,  unsigned 
 	  		ledscape_set_color(frame, 0, ii,( uint8_t) 50, (uint8_t) 0, (uint8_t) 0);
 	  			
 	  	}
-	  	ledscape_draw(leds, frame_num);
+/*	  	ledscape_draw(leds, frame_num);
 	  	nanosleep(&tim , &tim2);
 	  	for (ii=0; ii<np; ii++){
 	  		// ledscape_set_color(frame, 0, ii, rgb_spike[ii][0], rgb_spike[ii][1], rgb_spike[ii][2]);
 	  		ledscape_set_color(frame, 0, ii,( uint8_t) 0, (uint8_t) 50, (uint8_t) 0);
 	  			
-	  	}
+	  	}*/
 	  	ledscape_draw(leds, frame_num);
 	  	nanosleep(&tim , &tim2);
 	  	for (ii=0; ii<np; ii++){
@@ -341,8 +342,8 @@ int main(void) {
 	double sense_thresh = sense_thresh_i;
 	double currentIPI = minIPI;
 
-
-
+	bool backup_mode = false; 
+	bool BU_PIN_VALUE = false;
 
     // set matrix parameters 
     m = m0; 
@@ -352,9 +353,8 @@ int main(void) {
 	float weights[nch][maxCon];
 	uint32_t column_lengths[m0];//{n,n,n,n,n,n,n,n};
 
-	// for #1
-	
-	column_lengths[0] = 16; // extra loop at beginning
+	// for dude2
+	column_lengths[0] = 16; // extra loop at beginning # dude 2 
 	column_lengths[1] = 16;
     column_lengths[2] = 65;
     column_lengths[3] = 68;
@@ -367,7 +367,7 @@ int main(void) {
     column_lengths[10] = 66;
     column_lengths[11] = 67;
 
-    // for #2
+    // for # dude 1
     // column_lengths[0] = 67; // 0 face start
     // column_lengths[1] = 68;
     // column_lengths[2] = 68;
@@ -636,6 +636,16 @@ int main(void) {
 	motor_going = 0; 
 	stopMotor();
 
+	// check for backupmode
+	BU_PIN_VALUE = (bool) BBBIO_GPIO_get(BBBIO_GPIO2 ,BBBIO_GPIO_PIN_11);
+	printf("BU pin is %d\n", (int) BU_PIN_VALUE);
+	if ( BU_PIN_VALUE == false )
+	{
+		printf("entering backup make\n");
+		backup_mode = true;  
+	}
+
+
 	doStartupLightDisplay(leds, frame, frame_num, rgb_off, rgb_spike);
 	printf("starting main loop");
 	/* Main Loop */
@@ -663,14 +673,14 @@ int main(void) {
 
 		// read and interperate input 
 		ao_values[0] = (uint32_t) buffer_AIN_0[0];
-		sense_thresh = (((double) ao_values[0]) / ao_max)*sense_thresh_i;
+		sense_thresh = 150;//(((double) ao_values[0]) / ao_max)*sense_thresh_i;
 		currentIPI = (double)(01 * sense_thresh * 2 * 29)/1000000; //set ipi based on a0
 
 		// measure distance
 		if (time_since_last_ping > currentIPI) {
 			duration = doPing(pruData);
 			target_distance = dur2cm(duration);
-			if (target_distance < (float) 100){
+			if (target_distance < sense_thresh){
 				if ( motor_going == 0 ) {
 					startMotor();
 					// doStartupLightDisplay(leds, frame, frame_num, rgb_off, rgb_spike);
@@ -717,7 +727,13 @@ int main(void) {
 			 }
 		}
 		// set audio input nodes based on a1 (sensitivity) a2 (sound envelope; see spec) 
-		ao_values[0] = (uint32_t) buffer_AIN_1[0];//readao(a1);
+		if ( motor_going==1 ){
+			ao_values[0] = (uint32_t) buffer_AIN_1[0];
+		}
+		else 
+		{
+			ao_values[0] = (uint32_t) buffer_AIN_1[0] - (uint32_t) 500;
+		}
 		ao_values[1] = (uint32_t) buffer_AIN_2[0];//readao(a2);
 		// printf("%f \n", 0.1*(double) fmax( (double) log( (double) ao_values[1] / ((double) ao_values[0])/2),0));
 		for (ch = 0; ch < num_sound_inputs; ch++){
@@ -732,7 +748,7 @@ int main(void) {
 		ao_values[0] = (uint32_t) 4000; //readao(a3);
 		ao_values[1] = (uint32_t) buffer_AIN_4[0];
 		// printf("%d\n",ao_values[1]);
-		if (ao_values[1] > (uint32_t) 3000){ 
+		if (ao_values[1] > (uint32_t) 2800){ 
 				doStartupLightDisplay(leds, frame, frame_num, rgb_off, rgb_spike);
 		};
 
@@ -747,12 +763,22 @@ int main(void) {
 		 loop_spikes = 0; 
 		for (ch = 0; ch < nch; ch++) {
 			if (v[ch] >= 0) { // if neuron is in integrate mode
+				if (rain){
+					if (   myrandint( (uint32_t) 10000) > (uint32_t) 9950   ){
+						dv[ch] = dv[ch] + (double) 10;
+					}
+					if ( backup_mode == true ){
+						if (   myrandint( (uint32_t) 10000) > (uint32_t) 9000   ){
+						dv[ch] = dv[ch] + (double) 10;
+						}
+					}
+				}
 		    	v[ch] = v[ch]  + dv[ch] - k * v[ch] * (double) dt; // decay v to 0
 		    	dv[ch] = 0; 
 		    	v[ch] = fmax(v[ch], 0);
 		    	v[ch] = fmin(v[ch], thresh+1);
 		    	if (ch < num_pixels){
-		    		ledscape_set_color(frame, 0, ch, (uint8_t) 0, (uint8_t) 0,(uint8_t) round(50* v[ch] / (thresh*1.5))); 
+		    		ledscape_set_color(frame, 0, ch, (uint8_t) round(50* v[ch] / (thresh*1.5)), (uint8_t) 0, (uint8_t) 0); 
 			    }
 		        // if the neuron crosses threshold, fire and increment outputs
 			    if (v[ch] > thresh) {
