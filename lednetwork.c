@@ -57,7 +57,7 @@ const double ao_max = 4096;
 #define num_touch_inputs 1
 
 // matrix_definitions 
-#define m0 12
+#define m0 10
 #define n0 70
 
 int initMotor()
@@ -354,30 +354,30 @@ int main(void) {
 	uint32_t column_lengths[m0];//{n,n,n,n,n,n,n,n};
 
 	// for dude2
-	column_lengths[0] = 16; // extra loop at beginning # dude 2 
-	column_lengths[1] = 16;
-    column_lengths[2] = 65;
-    column_lengths[3] = 68;
-    column_lengths[4] = 68;
-    column_lengths[5] = 67;
-    column_lengths[6] = 17;
-    column_lengths[7] = 17;    
-    column_lengths[8] = 63;
-    column_lengths[9] = 64;
-    column_lengths[10] = 66;
-    column_lengths[11] = 67;
+	// column_lengths[0] = 16; // extra loop at beginning # dude 2 
+	// column_lengths[1] = 16;
+ //    column_lengths[2] = 65;
+ //    column_lengths[3] = 68;
+ //    column_lengths[4] = 68;
+ //    column_lengths[5] = 67;
+ //    column_lengths[6] = 17;
+ //    column_lengths[7] = 17;    
+ //    column_lengths[8] = 63;
+ //    column_lengths[9] = 64;
+ //    column_lengths[10] = 66;
+ //    column_lengths[11] = 67;
 
     // for # dude 1
-    // column_lengths[0] = 67; // 0 face start
-    // column_lengths[1] = 68;
-    // column_lengths[2] = 68;
-    // column_lengths[3] = 67;
-    // column_lengths[4] = 15; // 32 fake total
-    // column_lengths[5] = 15;
-    // column_lengths[6] = 67;
-    // column_lengths[7] = 67;
-    // column_lengths[8] = 67;
-    // column_lengths[9] = 67;
+    column_lengths[0] = 67; // 0 face start
+    column_lengths[1] = 68;
+    column_lengths[2] = 68;
+    column_lengths[3] = 67;
+    column_lengths[4] = 15; // 32 fake total
+    column_lengths[5] = 15;
+    column_lengths[6] = 67;
+    column_lengths[7] = 67;
+    column_lengths[8] = 67;
+    column_lengths[9] = 67;
 
 
 
@@ -748,7 +748,7 @@ int main(void) {
 		ao_values[0] = (uint32_t) 4000; //readao(a3);
 		ao_values[1] = (uint32_t) buffer_AIN_4[0];
 		// printf("%d\n",ao_values[1]);
-		if (ao_values[1] > (uint32_t) 2800){ 
+		if (ao_values[1] > (uint32_t) 1500){ 
 				doStartupLightDisplay(leds, frame, frame_num, rgb_off, rgb_spike);
 		};
 
@@ -778,7 +778,7 @@ int main(void) {
 		    	v[ch] = fmax(v[ch], 0);
 		    	v[ch] = fmin(v[ch], thresh+1);
 		    	if (ch < num_pixels){
-		    		ledscape_set_color(frame, 0, ch, (uint8_t) round(50* v[ch] / (thresh*1.5)), (uint8_t) 0, (uint8_t) 0); 
+		    		ledscape_set_color(frame, 0, ch, (uint8_t) 0, (uint8_t) 0, (uint8_t) round(50* v[ch] / (thresh*1.5))); 
 			    }
 		        // if the neuron crosses threshold, fire and increment outputs
 			    if (v[ch] > thresh) {
