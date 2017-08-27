@@ -1,5 +1,11 @@
 #/bin/sh
 
+# disable hdmi
+sudo cp /boot/uEnv.txt /boot/uEnv.txt.backup
+sudo sed -i 's/#cape_disable=capemgr.disable_partno=BB-BONELT-HDMI,BB-BONELT-HDMIN$/cape_disable=capemgr.disable_partno=BB-BONELT-HDMI,BB-BONELT-HDMIN/g' /boot/uEnv.txt
+
+
+
 cd PixelBone
 make
 cd ..

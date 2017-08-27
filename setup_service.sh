@@ -19,17 +19,12 @@ ln /lib/systemd/sln.service /etc/systemd/system/sln.service
 
 
 
-
-
 echo "cape_enable=bone_capemgr.enable_partno=BBBIO-JKPWM" >> /boot/uboot/uEnv.txt
 echo "cape_enable=bone_capemgr.enable_partno=BB-ADC" >> /boot/uboot/uEnv.txt
 echo "cape_enable=bone_capemgr.enable_partno=hcsr04" >> /boot/uboot/uEnv.txt
-echo "cape_enable=bone_capemgr.enable_partno=BBBIO-JKPWM" >> /boot/uEnv.txt
-echo "cape_enable=bone_capemgr.enable_partno=BB-ADC" >> /boot/uEnv.txt
-echo "cape_enable=bone_capemgr.enable_partno=hcsr04" >> /boot/uEnv.txt
 
 
-echo "CAPE=BBIO-JKPWM:00A0" >> /
+# echo "CAPE=BBIO-JKPWM:00A0" >> /
 
 
 cp ./dbto_blank /etc/initramfs-tools/hooks/dtbo
